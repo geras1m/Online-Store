@@ -1,0 +1,59 @@
+* {
+  font-family: "Noto Sans", sans-serif;
+}
+
+.logo {
+  font-size: 24px;
+  font-family: "Orbitron", sans-serif;
+}
+
+header {
+  padding: 20px 1px;
+}
+
+.cart__items {
+  background-color: #FFB745;
+  border-radius: 50%;
+  padding: 1px 7px;
+  color: white;
+  z-index: 1;
+  position: relative;
+}
+.cart__items::before {
+  content: "";
+  height: 40px;
+  width: 40px;
+  background-image: url(../src/icons/Buy.svg);
+  background-repeat: no-repeat;
+  position: absolute;
+  z-index: 1;
+  right: 5px;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: currentColor;
+}
+
+.btn {
+  color: #F2F2F2;
+  margin: 0;
+  background-color: #4174CB;
+}
+
+.filter-btn {
+  width: 100%;
+}
+
+.cards__header {
+  align-items: center;
+}
+
+.price {
+  text-decoration: line-through;
+}
+
+.final-price {
+  color: #E7552C;
+}
