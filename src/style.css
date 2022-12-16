@@ -30,3 +30,30 @@ header {
   right: 5px;
   cursor: pointer;
 }
+
+a {
+  text-decoration: none;
+  color: currentColor;
+}
+
+.btn {
+  color: #F2F2F2;
+  margin: 0;
+  background-color: #4174CB;
+}
+
+.filter-btn {
+  width: 100%;
+}
+
+.cards__header {
+  align-items: center;
+}
+
+.price {
+  text-decoration: line-through;
+}
+
+.final-price {
+  color: #E7552C;
+}
