@@ -9,9 +9,12 @@ export function renderCards(data: ICard[]) {
                   <div class="card-body">
                     <h5 class="card-title">${data[i].title}</h5>
                     <p class="card-text">
-                      <small class="text-muted category">${data[i].category}</small>,
-                      <small class="text-muted brand">${data[i].brand}</small>,
-                      <small class="text-muted rating">${data[i].rating}</small>★
+                      <small class="text-muted category">${data[i].category},</small>
+                      <small class="text-muted brand">${data[i].brand},</small>
+                      <small class="text-muted rating">${data[i].rating}★</small>
+                    </p>
+                    <p class="card-text"> In stock:
+                    <span class="stock">${data[i].stock}</span>
                     </p>
                     <p class="card-text text-end">
                       <span class="price">€${data[i].price}</span>

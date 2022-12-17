@@ -1,34 +1,23 @@
 import {ICard} from '../types';
 
-export function createFilter(data: ICard[]) {
-  const category = <HTMLDivElement>document.querySelector('.category');
-  const brand = <HTMLDivElement>document.querySelector('.brand');
-  const categoryList:string[] = [];
-  const brandList:string[] = [];
+export function createCheckbox(data: ICard[], attribute: 'category' | 'brand', path: HTMLElement) {
+  const result:string[] = [];
   for (let i = 0; i < data.length; i++){
-    if (!categoryList.includes(data[i].category)) {
-      categoryList.push(String(data[i].category))
+    let current = data[i].category;
+    if (attribute === 'brand') {
+      current = data[i].brand;
     }
-    if (!brandList.includes(data[i].brand)) {
-      brandList.push(String(data[i].brand))
+    if (!result.includes(current)) {
+      result.push(String(current))
     }
   }
-  for (let i = 0; i < categoryList.length; i++){
-    const checkboxCategory = `<div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="category-${categoryList[i]}">
-      <label class="form-check-label" for="category-${categoryList[i]}">
-      ${categoryList[i]}
-      </label>
-    </div>`;
-    category.innerHTML += checkboxCategory;
-  }
-  for (let i = 0; i < brandList.length; i++){
-    const checkboxBrand = `<div class="form-check">
-    <input class="form-check-input" type="checkbox" value="" id="brand-${brandList[i]}">
-    <label class="form-check-label" for="brand-${brandList[i]}">
-      ${brandList[i]}
+  for (let i = 0; i < result.length; i++){
+    const checkbox = `<div class="form-check">
+    <input class="form-check-input" type="checkbox" value="" id="${result[i]}">
+    <label class="form-check-label" for="${result[i]}">
+      ${result[i]}
     </label>
-  </div>`;
-    brand.innerHTML += checkboxBrand;
+    </div>`;
+    path.innerHTML += checkbox;
   }
 }
