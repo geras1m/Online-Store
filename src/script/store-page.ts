@@ -3,7 +3,7 @@ import {ICard} from '../types';
 export function renderCards(data: ICard[]) {
     const CARDS_BOX = <HTMLDivElement>document.querySelector('.items-cards');
     for (let i = 0; i < data.length; i++){
-        const finalPrice = Math.round((data[i].price / 100) * data[i].discountPercentage);
+        const finalPrice = ((data[i].price / 100) * (100 - data[i].discountPercentage)).toFixed(1);
         const card = `<div class="card h-100" data-id = '${data[i].id}'>
                   <img src="${data[i].thumbnail}" class="img-thumbnail" alt="Card image">
                   <div class="card-body">
