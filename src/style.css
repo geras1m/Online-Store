@@ -88,6 +88,6 @@ a {
   background-color: #4174CB;
 }
 
-.filter-btn {
+.filter-btn, .dropdown-toggle {
   width: 100%;
 }
