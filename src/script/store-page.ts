@@ -1,7 +1,7 @@
 import {ICard} from '../types';
-
+export const CARDS_BOX = <HTMLDivElement>document.querySelector('.items-cards');
 export function renderCards(data: ICard[]) {
-    const CARDS_BOX = <HTMLDivElement>document.querySelector('.items-cards');
+
     for (let i = 0; i < data.length; i++){
         const finalPrice = ((data[i].price / 100) * (100 - data[i].discountPercentage)).toFixed(1);
         const card = `<div class="card h-100" data-id = '${data[i].id}'>

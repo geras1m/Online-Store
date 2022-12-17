@@ -1,5 +1,4 @@
 import {renderCards} from './script/store-page';
-import {createFilter} from './script/create-filter';
 import {filterData} from './script/filter-function';
 import {ICard} from "./types";
 export let defaultData: Readonly<ICard[]>;
@@ -17,6 +16,5 @@ fetch('https://dummyjson.com/products?limit=100')
         renderCards(data.products);
         createCheckbox(data.products, 'category', categoryPath);
         createCheckbox(data.products, 'brand', brandPath);
-        createFilter(data.products);
         filterData();
     });
