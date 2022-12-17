@@ -1,0 +1,29 @@
+.cards__header {
+  align-items: center;
+}
+
+.price {
+  text-decoration: line-through;
+}
+.final-price {
+  color: $price-color;
+}
+
+.card {
+  min-height: 300px;
+  max-width: 500px;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #4174cb60;
+    transition: 1s;
+  }
+}
+.card > img {
+  max-height: 150px;
+  object-fit: cover;
+  margin-top: 2px;
+}
+.card-text {
+  margin-bottom: 0;
+}

@@ -31,6 +31,52 @@ header {
   cursor: pointer;
 }
 
+.cards__header {
+  align-items: center;
+}
+
+.price {
+  text-decoration: line-through;
+}
+
+.final-price {
+  color: #E7552C;
+}
+
+.card {
+  min-height: 300px;
+  max-width: 500px;
+  border: none;
+  cursor: pointer;
+}
+.card:hover {
+  background-color: rgba(65, 116, 203, 0.3764705882);
+  transition: 1s;
+}
+
+.card > img {
+  max-height: 150px;
+  object-fit: cover;
+  margin-top: 2px;
+}
+
+.card-text {
+  margin-bottom: 0;
+}
+
+.footer {
+  background-color: #4174CB;
+  margin-top: 10px;
+}
+
+.footer__content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: #F2F2F2;
+  padding: 10px 2%;
+}
+
 a {
   text-decoration: none;
   color: currentColor;
@@ -44,16 +90,4 @@ a {
 
 .filter-btn {
   width: 100%;
-}
-
-.cards__header {
-  align-items: center;
-}
-
-.price {
-  text-decoration: line-through;
-}
-
-.final-price {
-  color: #E7552C;
 }

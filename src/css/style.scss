@@ -1,6 +1,8 @@
 @import '__colors';
 @import '__logo&font';
 @import '__header';
+@import '__cards';
+@import '__footer';
 
 a {
   text-decoration: none;
@@ -12,18 +14,6 @@ a {
   background-color: $accent-color;
 }
 
-
 .filter-btn {
    width: 100%;
-}
-
-.cards__header {
-  align-items: center;
-}
-
-.price {
-  text-decoration: line-through;
-}
-.final-price {
-  color: $price-color;
 }
