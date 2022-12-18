@@ -17,3 +17,18 @@ a {
 .filter-btn, .dropdown-toggle {
   width: 100%;
 }
+.hidden {
+  display: none;
+}
+.view-btns {
+  & > * {
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.2);
+      transition: 1s;
+    }
+  }
+  .active {
+    filter: invert(67%) sepia(60%) saturate(482%) hue-rotate(350deg) brightness(101%) contrast(102%);
+  }
+}

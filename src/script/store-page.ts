@@ -8,13 +8,16 @@ export function renderCards(data: ICard[]) {
                   <img src="${data[i].thumbnail}" class="img-thumbnail" alt="Card image">
                   <div class="card-body">
                     <h5 class="card-title">${data[i].title}</h5>
+                    <p class="text-muted card-text">
+                    <small class="stock">In stock: ${data[i].stock}</small>
+                    </p>
                     <p class="card-text">
                       <small class="text-muted category">${data[i].category},</small>
                       <small class="text-muted brand">${data[i].brand},</small>
                       <small class="text-muted rating">${data[i].rating}★</small>
                     </p>
-                    <p class="card-text"> In stock:
-                    <span class="stock">${data[i].stock}</span>
+                    <p class="card-text">
+                      <small class="text-muted description hidden">${data[i].description}</small>
                     </p>
                     <p class="card-text text-end">
                       <span class="price">€${data[i].price}</span>
