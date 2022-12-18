@@ -31,6 +31,9 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
+    "@types/nouislider": "^15.0.0",
+    "bootstrap-slider": "^11.0.2",
+    "nouislider": "^15.6.1",
     "path": "^0.12.7",
     "webpack-merge": "^5.8.0"
   }

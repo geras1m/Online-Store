@@ -91,3 +91,45 @@ a {
 .filter-btn, .dropdown-toggle {
   width: 100%;
 }
+
+.mb-30{
+  margin-bottom: 30px;
+}
+
+.no-products{
+  font-weight: 800;
+  text-align: center;
+  margin: 100px auto 0;
+  font-size: 30px;
+  width: 100%;
+  max-width: 300px;
+}
+
+/*
+* double slider
+*/
+
+.noUi-horizontal {
+  height: 8px;
+}
+
+.noUi-horizontal .noUi-handle {
+  width: 20px;
+  height: 20px;
+  right: -8px;
+  top: -7px;
+}
+.noUi-handle {
+  border-radius: 50%;
+  background: #0882ff;
+  box-shadow: none;
+}
+
+.noUi-connect {
+  background: #95b9ff;
+}
+
+.noUi-handle:before,
+.noUi-handle:after {
+  display: none;
+}
