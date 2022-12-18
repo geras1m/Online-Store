@@ -1,6 +1,9 @@
-const cardBlock = <HTMLDivElement>document.querySelector(".items-cards");
+import {addActive} from './utility';
 
-export function sortCards(arg: string, order: string) {
+const cardBlock = <HTMLDivElement>document.querySelector(".items-cards");
+const sortBtns = document.querySelectorAll('.dropdown-item');
+
+function sortCards(arg: string, order: string) {
   const cards: NodeListOf<HTMLElement> = document.querySelectorAll('.card');
   const data: (string | undefined)[] = [];
   const result: HTMLElement[] = [];
@@ -45,4 +48,23 @@ export function sortCards(arg: string, order: string) {
   result.forEach( el => {
     cardBlock.innerHTML += el.outerHTML;
   });
+}
+
+export function sort() {
+  sortBtns.forEach(element => {
+    element.addEventListener('click', (event) => {
+        let order = 'asc';
+        let param = 'discount';
+        if ((event.target as Element).classList.contains('des')) {
+            order = 'des';
+        }
+        if ((event.target as Element).classList.contains('price')) {
+            param = 'price';
+        } else if ((event.target as Element).classList.contains('rating')) {
+            param = 'rating';
+        }
+        addActive(event.target as Element)
+        sortCards(param, order);
+    })
+});
 }
