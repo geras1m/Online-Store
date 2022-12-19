@@ -1,7 +1,9 @@
 import {addActive} from './utility';
 
 const cardBlock = <HTMLDivElement>document.querySelector(".items-cards");
-const sortBtns = document.querySelectorAll('.dropdown-item');
+const sortBtns: NodeListOf<HTMLElement> = document.querySelectorAll('.dropdown-item');
+const urlParams = new URLSearchParams(window.location.search);
+const address = urlParams.get('sort');
 
 function sortCards(arg: string, order: string) {
   const cards: NodeListOf<HTMLElement> = document.querySelectorAll('.card');
@@ -48,6 +50,12 @@ function sortCards(arg: string, order: string) {
   result.forEach( el => {
     cardBlock.innerHTML += el.outerHTML;
   });
+  if (address) {
+    urlParams.set('sort',`${arg}-${order}`);
+  } else {
+    urlParams.append('sort',`${arg}-${order}`);
+  }
+  window.location.search = urlParams.toString();
 }
 
 export function sort() {
@@ -67,4 +75,9 @@ export function sort() {
         sortCards(param, order);
     })
 });
+  if (address) {
+    const array = address.toString().split("-");
+    addActive(document.querySelector(`.${array[0]} .${array[1]}`) as Element);
+    sortCards(array[0], array[1]);
+  }
 }

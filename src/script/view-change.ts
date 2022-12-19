@@ -2,6 +2,8 @@ import {addActive} from './utility';
 
 const changeViewB = document.querySelectorAll('.btn__view');
 const items = document.querySelector('.items-cards');
+const urlParams = new URLSearchParams(window.location.search);
+const address = urlParams.get('view');
 
 
 function changeView(view: string) {
@@ -23,6 +25,12 @@ function changeView(view: string) {
       items.classList.add('row-cols-md-4');
     }
   }
+  if (address) {
+    urlParams.set('view', view);
+  } else {
+    urlParams.append('view', view);
+  }
+  window.location.search = urlParams.toString();
 }
 
 export function viewChange() {
@@ -36,4 +44,8 @@ export function viewChange() {
         changeView(param);
     })
 });
+  if (address) {
+    addActive(document.querySelector(address.toString()) as Element);
+    changeView(address.toString());
+  }
 }
