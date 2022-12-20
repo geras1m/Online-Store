@@ -7,6 +7,7 @@ export const urlParams = new URLSearchParams(window.location.search);
 
 export function sortCards(arg: string, order: string) {
   const cards: NodeListOf<HTMLElement> = document.querySelectorAll('.card');
+  const active: string = '.' + arg + '.' + order;
   const data: (string | undefined)[] = [];
   const result: HTMLElement[] = [];
   if (arg === 'price') {
@@ -51,6 +52,7 @@ export function sortCards(arg: string, order: string) {
     cardBlock.innerHTML += el.outerHTML;
   });
   addQueryParam('sort', `${arg}-${order}`);
+  addActive(document.querySelector(active) as Element);
 }
 
 export function sort() {
@@ -66,7 +68,6 @@ export function sort() {
         } else if ((event.target as Element).classList.contains('rating')) {
             param = 'rating';
         }
-        addActive(event.target as Element)
         sortCards(param, order);
     })
 });

@@ -10,7 +10,6 @@
 }
 
 .card {
-  min-height: 300px;
   border: none;
   cursor: pointer;
   &:hover {
@@ -31,8 +30,29 @@
     object-fit: contain;
     margin-top: 2px;
   }
+  .card {
+    display: flex;
+    flex-direction: row;
+    min-height: 10px;
+  }
+  .add {
+    width: auto;
+  }
 }
 
+
 .card-text {
-  margin-bottom: 0;
+  margin: 0;
+
 }
+.text-end {
+  margin: 0;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+

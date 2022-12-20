@@ -24,6 +24,7 @@ export function changeView(view: string) {
     }
   }
   addQueryParam('view', view);
+  addActive(document.querySelector(`.${view}`) as Element);
 }
 
 export function viewChange() {
@@ -33,7 +34,6 @@ export function viewChange() {
         if ((event.target as Element).classList.contains('main-view')) {
             param = 'main-view';
         }
-        addActive(event.target as Element);
         changeView(param);
     })
 });

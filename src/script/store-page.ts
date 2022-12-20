@@ -10,19 +10,20 @@ export function renderCards(data: ICard[]) {
                     <h5 class="card-title">${data[i].title}</h5>
                     <p class="text-muted card-text">
                     <small class="stock">In stock: ${data[i].stock}</small>
-                    </p>
-                    <p class="card-text">
+                    <p>
                       <small class="text-muted category">${data[i].category},</small>
                       <small class="text-muted brand">${data[i].brand},</small>
                       <small class="text-muted rating">${data[i].rating}★</small>
                     </p>
-                    <p class="card-text">
+                    <p>
                       <small class="text-muted description hidden">${data[i].description}</small>
                     </p>
-                    <p class="card-text text-end">
+                    <p class="text-end">
                       <span class="price">€${data[i].price}</span>
                       <small class="text-muted sale">-${data[i].discountPercentage}%</small>
-                      €<span class="final-price h3">${finalPrice}</span>
+                      €<span class="final-price h4">${finalPrice}</span>
+                      <button type="button" class="btn add">+Add to cart</button>
+                    </p>
                     </p>
                   </div>
                 </div>`;
