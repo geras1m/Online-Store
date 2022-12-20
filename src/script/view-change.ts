@@ -1,12 +1,10 @@
+import { addQueryParam } from './querySet';
 import {addActive} from './utility';
 
 const changeViewB = document.querySelectorAll('.btn__view');
 const items = document.querySelector('.items-cards');
-const urlParams = new URLSearchParams(window.location.search);
-const address = urlParams.get('view');
 
-
-function changeView(view: string) {
+export function changeView(view: string) {
   const description = document.querySelectorAll('.description');
   if (view === 'add-view') {
     description.forEach(el => {
@@ -25,12 +23,7 @@ function changeView(view: string) {
       items.classList.add('row-cols-md-4');
     }
   }
-  if (address) {
-    urlParams.set('view', view);
-  } else {
-    urlParams.append('view', view);
-  }
-  window.location.search = urlParams.toString();
+  addQueryParam('view', view);
 }
 
 export function viewChange() {
@@ -44,8 +37,4 @@ export function viewChange() {
         changeView(param);
     })
 });
-  if (address) {
-    addActive(document.querySelector(address.toString()) as Element);
-    changeView(address.toString());
-  }
 }
