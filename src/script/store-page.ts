@@ -4,22 +4,25 @@ export function renderCards(data: ICard[]) {
 
     for (let i = 0; i < data.length; i++){
         const finalPrice = ((data[i].price / 100) * (100 - data[i].discountPercentage)).toFixed(1);
-        const card = `<div class="card h-100" data-id = '${data[i].id}'>
+        const card = `<div class="card h-100" data-id = '${data[i].id}' data-price = "${finalPrice}" data-rating = "${data[i].rating}" data-discount = "${data[i].discountPercentage}">
                   <img src="${data[i].thumbnail}" class="img-thumbnail" alt="Card image">
                   <div class="card-body">
                     <h5 class="card-title">${data[i].title}</h5>
+                    <p class="text-muted card-text">
+                    <small class="stock">In stock: ${data[i].stock}</small>
+                    </p>
                     <p class="card-text">
                       <small class="text-muted category">${data[i].category},</small>
                       <small class="text-muted brand">${data[i].brand},</small>
                       <small class="text-muted rating">${data[i].rating}★</small>
                     </p>
-                    <p class="card-text"> In stock:
-                    <span class="stock">${data[i].stock}</span>
+                    <p class="card-text">
+                      <small class="text-muted description hidden">${data[i].description}</small>
                     </p>
                     <p class="card-text text-end">
                       <span class="price">€${data[i].price}</span>
                       <small class="text-muted sale">-${data[i].discountPercentage}%</small>
-                      <span class="final-price h3">€${finalPrice}</span>
+                      €<span class="final-price h3">${finalPrice}</span>
                     </p>
                   </div>
                 </div>`;
