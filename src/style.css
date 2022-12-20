@@ -90,6 +90,10 @@ header {
   height: 100%;
 }
 
+.add:hover {
+  background-color: #FFB745;
+}
+
 .footer {
   background-color: #4174CB;
   margin-top: 10px;
