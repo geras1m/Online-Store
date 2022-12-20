@@ -1,10 +1,10 @@
+import { addQueryParam } from './querySet';
 import {addActive} from './utility';
 
 const changeViewB = document.querySelectorAll('.btn__view');
 const items = document.querySelector('.items-cards');
 
-
-function changeView(view: string) {
+export function changeView(view: string) {
   const description = document.querySelectorAll('.description');
   if (view === 'add-view') {
     description.forEach(el => {
@@ -23,6 +23,7 @@ function changeView(view: string) {
       items.classList.add('row-cols-md-4');
     }
   }
+  addQueryParam('view', view);
 }
 
 export function viewChange() {

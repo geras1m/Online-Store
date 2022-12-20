@@ -1,9 +1,11 @@
+import { addQueryParam } from './querySet';
 import {addActive} from './utility';
 
 const cardBlock = <HTMLDivElement>document.querySelector(".items-cards");
-const sortBtns = document.querySelectorAll('.dropdown-item');
+const sortBtns: NodeListOf<HTMLElement> = document.querySelectorAll('.dropdown-item');
+export const urlParams = new URLSearchParams(window.location.search);
 
-function sortCards(arg: string, order: string) {
+export function sortCards(arg: string, order: string) {
   const cards: NodeListOf<HTMLElement> = document.querySelectorAll('.card');
   const data: (string | undefined)[] = [];
   const result: HTMLElement[] = [];
@@ -48,6 +50,7 @@ function sortCards(arg: string, order: string) {
   result.forEach( el => {
     cardBlock.innerHTML += el.outerHTML;
   });
+  addQueryParam('sort', `${arg}-${order}`);
 }
 
 export function sort() {
