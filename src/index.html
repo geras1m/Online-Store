@@ -81,15 +81,27 @@
 
                     <div class="col text-end">€<span class="max-price">2000</span></div>
                 </div>
-                <div id="slider-price"></div>
+
+                <div class="range_container price-container">
+                    <div class="sliders_control price-control">
+                        <input id="fromSliderPrice" type="range" value="0" min="0" max="100"/>
+                        <input id="toSliderPrice" type="range" value="100" min="0" max="100"/>
+                    </div>
+                </div>
+
                 <label class="form-label fw-bold">Stock</label>
                 <div class="stock-range row">
                     <div class="col text-start">0</div>
 
                     <div class="col text-end">200</div>
                 </div>
-                <div id="slider-stock"></div>
 
+                <div class="range_container stock-container">
+                    <div class="sliders_control stock-control">
+                        <input id="fromSliderStock" type="range" value="0" min="0" max="100"/>
+                        <input id="toSliderStock" type="range" value="100" min="0" max="100"/>
+                    </div>
+                </div>
 
             </div>
             <div class="col cards">
