@@ -4,29 +4,27 @@ import {ICard} from "./types";
 import {createCheckbox} from './script/create-filter';
 import { changeView, viewChange } from './script/view-change';
 import { sort, sortCards, urlParams } from './script/sort';
+import { MainPageView } from './script/pages/MainPageView';
 
-const categoryPath = <HTMLDivElement>document.querySelector('.category');
-const brandPath = <HTMLDivElement>document.querySelector('.brand');
 const addressSort = urlParams.get('sort');
 const addressView = urlParams.get('view');
 
 export let defaultData: Readonly<ICard[]>;
-sort();
-viewChange();
 
-fetch('https://dummyjson.com/products?limit=100')
-    .then(response => response.json())
-    .then(data => {
-        defaultData = data.products;
-        renderCards(data.products);
-        createCheckbox(data.products, 'category', categoryPath);
-        createCheckbox(data.products, 'brand', brandPath);
-        filterData();
-        if (addressSort) {
-            const array = addressSort.toString().split("-");
-            sortCards(array[0], array[1]);
-        }
-        if (addressView) {
-            changeView(addressView);
-        }
-    });
+
+const page = new MainPageView;
+
+page.loadData();
+
+// fetch('https://dummyjson.com/products?limit=100')
+//     .then(response => response.json())
+//     .then(data => {
+//         defaultData = data.products;
+//         if (addressSort) {
+//             const array = addressSort.toString().split("-");
+//             sortCards(array[0], array[1]);
+//         }
+//         if (addressView) {
+//             changeView(addressView);
+//         }
+//     });
