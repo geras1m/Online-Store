@@ -86,8 +86,8 @@ export class MainPageModel {
   controlFromSlider(fromSlider: HTMLInputElement, toSlider: HTMLInputElement) {
     const [from, to] = this.getParsed(fromSlider, toSlider);
     this.fillSlider(fromSlider, toSlider, '#C6C6C6', '#1566d7', toSlider);
-    if (from > to) {
-      fromSlider.value = to.toString();
+    if (from + +fromSlider.max * 0.1 > to) {
+      fromSlider.value = (to - +fromSlider.max * 0.1).toString();
     }
   }
 
@@ -95,10 +95,10 @@ export class MainPageModel {
     const [from, to] = this.getParsed(fromSlider, toSlider);
     this.fillSlider(fromSlider, toSlider, '#C6C6C6', '#1566d7', toSlider);
     this.setToggleAccessible(toSlider, `${toSet}`);
-    if (from <= to) {
-      toSlider.value = to.toString();
+    if (from + +fromSlider.max * 0.1 <= to) {
+      toSlider.value = (to).toString();
     } else {
-      toSlider.value = from.toString();
+      toSlider.value = (from + +fromSlider.max * 0.1).toString();
     }
   }
 
@@ -109,9 +109,14 @@ export class MainPageModel {
   }
 
   fillSlider(from: HTMLInputElement, to: HTMLInputElement, sliderColor: string, rangeColor: string, controlSlider: HTMLInputElement) {
-    const rangeDistance: number = +to.max - +to.min;
-    const fromPosition: number = +from.value - +to.min;
-    const toPosition: number = +to.value - +to.min;
+    // const dif: number = ((+to.value - +from.value) / (+to.max - +to.min)) * 100;
+    // console.log(dif)
+    // if (dif > 17){
+      const rangeDistance: number = +to.max - +to.min;
+      const fromPosition: number = +from.value - +to.min;
+      const toPosition: number = +to.value - +to.min;
+    // console.log(from.value);
+    // console.log(to.value);
     controlSlider.style.background = `linear-gradient(
   to right,
   ${sliderColor} 0%,
@@ -120,6 +125,8 @@ export class MainPageModel {
   ${rangeColor} ${(toPosition) / (rangeDistance) * 100}%,
   ${sliderColor} ${(toPosition) / (rangeDistance) * 100}%,
   ${sliderColor} 100%)`;
+    // }
+
   }
 
   setToggleAccessible(currentTarget: HTMLInputElement, item: string) {
@@ -130,6 +137,7 @@ export class MainPageModel {
       toSlider.style.zIndex = '0';
     }
   }
+
   elemEvent(filteredData: ICard[], defaultData: ICard[]): void {
     const CARDS_BOX = <HTMLDivElement>document.querySelector('.items-cards');
     const fromSliderPrice = <HTMLInputElement>document.querySelector('#fromSliderPrice');
@@ -172,7 +180,8 @@ export class MainPageModel {
       const data = filteredData;
       for (let i = 0; i < data.length; i++) {
         const finalPrice = ((data[i].price / 100) * (100 - data[i].discountPercentage)).toFixed(1);
-        const card = `<div class="card h-100" data-id = '${data[i].id}' data-price = "${finalPrice}" data-rating = "${data[i].rating}" data-discount = "${data[i].discountPercentage}">
+        const card = `
+        <div class="card h-100" data-id = '${data[i].id}' data-price = "${finalPrice}" data-rating = "${data[i].rating}" data-discount = "${data[i].discountPercentage}">
                 <img src="${data[i].thumbnail}" class="img-thumbnail" alt="Card image">
                 <div class="card-body">
                   <h5 class="card-title">${data[i].title}</h5>
