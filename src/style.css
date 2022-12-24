@@ -73,9 +73,34 @@ header {
     object-fit: contain;
     margin-top: 2px;
 }
+.row-cols-md-1 .card {
+  display: flex;
+  flex-direction: row;
+  min-height: 10px;
+}
+.row-cols-md-1 .add {
+  width: auto;
+}
 
 .card-text {
+
     margin-bottom: 0;
+  margin: 0;
+}
+
+.text-end {
+  margin: 0;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.add:hover {
+  background-color: #FFB745;
 }
 
 .footer {
@@ -102,8 +127,9 @@ a {
     background-color: #4174CB;
 }
 
-.filter-btn, .dropdown-toggle {
-    width: 100%;
+
+.filter-btn, .dropdown-toggle, .add {
+  width: 100%;
 }
 
 .hidden {
