@@ -8,6 +8,10 @@ export class MainPageView {
   addressSort: string | null;
   URL: URLSearchParams;
   addressView: string | null;
+  categoryFilter: string | null;
+  brandFilter: string | null;
+  rangePrice: string[];
+  rangeStock: string[];
 
   constructor() {
     this.rootNode = <HTMLElement>document.getElementById('main');
@@ -17,6 +21,10 @@ export class MainPageView {
     this.URL = new URLSearchParams(window.location.search);
     this.addressSort = this.URL.get('sort');
     this.addressView = this.URL.get('view');
+    this.categoryFilter = this.URL.get('category');
+    this.brandFilter = this.URL.get('brand');
+    this.rangePrice = [this.URL.get('price_min'), this.URL.get('price_max')] as string[];
+    this.rangeStock = [this.URL.get('stock_min'), this.URL.get('stock_max')] as string[];
   }
 
   createMainElement(): void {
@@ -135,6 +143,7 @@ export class MainPageView {
       this.selectedCards.push(el as ICard)
     });
     console.log(this.selectedCards);
+    await this.createMainElement();
     await this.renderCards();
   }
 
@@ -171,10 +180,12 @@ export class MainPageView {
               </div>`;
       CARDS_BOX.insertAdjacentHTML('beforeend', card);
     }
+
     this.createCheckbox(this.selectedCards, 'category', <HTMLDivElement>document.querySelector('.category'));
     this.createCheckbox(this.selectedCards, 'brand', <HTMLDivElement>document.querySelector('.brand'));
     this.controller.dualSlider('fromSliderPrice', 'toSliderPrice', 'fromSliderStock', 'toSliderStock');
     this.viewChange();
+    this.controller.sort();
     this.filterData(this.selectedCards);
     if (this.addressSort) {
       const array = this.addressSort.toString().split("-");
@@ -182,6 +193,39 @@ export class MainPageView {
     }
     if (this.addressView) {
       this.controller.changeView(this.addressView);
+    }
+    if (this.categoryFilter || this.brandFilter){
+      const filteredData: ICard[] = this.selectedCards.map(item => item);
+      document.querySelectorAll('.form-check-input').forEach(item => {
+        if(this.categoryFilter?.split(' ').includes(item.id)){
+          item.setAttribute('checked', 'checked');
+          this.controller.model.elemEvent(this.selectedCards, filteredData);
+        }
+        if(this.brandFilter?.split(' ').includes(item.id)){
+          item.setAttribute('checked', 'checked');
+          this.controller.model.elemEvent(this.selectedCards, filteredData);
+        }
+      })
+    }
+    if (this.rangePrice[0] && this.rangePrice[1]){
+      const PRICE_MIN = <HTMLSpanElement>document.querySelector('.price-range>.text-start>.min-price');
+      const PRICE_MAX = <HTMLSpanElement>document.querySelector('.price-range>.text-end>.max-price');
+      const fromRange = <HTMLInputElement>document.querySelector('#fromSliderPrice');
+      const toRange = <HTMLInputElement>document.querySelector('#toSliderPrice');
+      PRICE_MIN.innerText = `${this.rangePrice[0]}`;
+      PRICE_MAX.innerText = `${this.rangePrice[1]}`;
+      fromRange.value = this.rangePrice[0];
+      toRange.value = this.rangePrice[1];
+    }
+    if (this.rangeStock[0] && this.rangeStock[0]){
+      const STOCK_MIN = <HTMLDivElement>document.querySelector('.stock-range>.text-start');
+      const STOCK_MAX = <HTMLDivElement>document.querySelector('.stock-range>.text-end');
+      const fromRange = <HTMLInputElement>document.querySelector('#fromSliderStock');
+      const toRange = <HTMLInputElement>document.querySelector('#toSliderStock');
+      STOCK_MIN.innerText = `${this.rangeStock[0]}`;
+      STOCK_MAX.innerText = `${this.rangeStock[1]}`;
+      fromRange.value = this.rangeStock[0];
+      toRange.value = this.rangeStock[1];
     }
   }
 
@@ -251,3 +295,6 @@ export class MainPageView {
     this.controller.addFilterListeners(filteredData, defaultData);
   }
 }
+
+
+// сделать счетчик нвйденых товаров

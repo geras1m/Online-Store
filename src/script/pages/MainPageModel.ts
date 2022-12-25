@@ -109,24 +109,17 @@ export class MainPageModel {
   }
 
   fillSlider(from: HTMLInputElement, to: HTMLInputElement, sliderColor: string, rangeColor: string, controlSlider: HTMLInputElement) {
-    // const dif: number = ((+to.value - +from.value) / (+to.max - +to.min)) * 100;
-    // console.log(dif)
-    // if (dif > 17){
-      const rangeDistance: number = +to.max - +to.min;
-      const fromPosition: number = +from.value - +to.min;
-      const toPosition: number = +to.value - +to.min;
-    // console.log(from.value);
-    // console.log(to.value);
+    const rangeDistance: number = +to.max - +to.min;
+    const fromPosition: number = +from.value - +to.min;
+    const toPosition: number = +to.value - +to.min;
     controlSlider.style.background = `linear-gradient(
-  to right,
-  ${sliderColor} 0%,
-  ${sliderColor} ${(fromPosition) / (rangeDistance) * 100}%,
-  ${rangeColor} ${((fromPosition) / (rangeDistance)) * 100}%,
-  ${rangeColor} ${(toPosition) / (rangeDistance) * 100}%,
-  ${sliderColor} ${(toPosition) / (rangeDistance) * 100}%,
-  ${sliderColor} 100%)`;
-    // }
-
+    to right,
+    ${sliderColor} 0%,
+    ${sliderColor} ${(fromPosition) / (rangeDistance) * 100}%,
+    ${rangeColor} ${((fromPosition) / (rangeDistance)) * 100}%,
+    ${rangeColor} ${(toPosition) / (rangeDistance) * 100}%,
+    ${sliderColor} ${(toPosition) / (rangeDistance) * 100}%,
+    ${sliderColor} 100%)`;
   }
 
   setToggleAccessible(currentTarget: HTMLInputElement, item: string) {
@@ -144,34 +137,50 @@ export class MainPageModel {
     const toSliderPrice = <HTMLInputElement>document.querySelector('#toSliderPrice');
     const fromSliderStock = <HTMLInputElement>document.querySelector('#fromSliderStock');
     const toSliderStock = <HTMLInputElement>document.querySelector('#toSliderStock');
+    const PRICE_MIN = <HTMLSpanElement>document.querySelector('.price-range>.text-start>.min-price');
+    const PRICE_MAX = <HTMLSpanElement>document.querySelector('.price-range>.text-end>.max-price');
+    const STOCK_MIN = <HTMLDivElement>document.querySelector('.stock-range>.text-start');
+    const STOCK_MAX = <HTMLDivElement>document.querySelector('.stock-range>.text-end');
     const checkedCategories: string[] = [...document.querySelectorAll('.accordion-body.category input:checked')]
       .map(item => item.id);
     const checkedBrands: string[] = [...document.querySelectorAll('.accordion-body.brand input:checked')]
       .map(item => item.id);
 
-
     if (checkedBrands.length === 0 && checkedCategories.length === 0) {
       filteredData = defaultData.map(item => item);
-
-      filteredData = filteredData.filter(item =>
-        item.price >= +fromSliderPrice.value && item.price <= +toSliderPrice.value &&
-        item.stock >= +fromSliderStock.value && item.stock <= +toSliderStock.value);
-      // console.log(fromSliderPrice.value, toSliderPrice.value)
     } else if (checkedBrands.length > 0 && checkedCategories.length > 0) {
       filteredData = defaultData.filter(item => (
-        checkedCategories.includes(item.category) && checkedBrands.includes(item.brand) &&
-        item.price >= +fromSliderPrice.value && item.price <= +toSliderPrice.value &&
-        item.stock >= +fromSliderStock.value && item.stock <= +toSliderStock.value));
-      // console.log(fromSliderPrice.value, toSliderPrice.value)
+        checkedCategories.includes(item.category) && checkedBrands.includes(item.brand)));
     } else {
       filteredData = defaultData.filter(item =>
         checkedCategories.includes(item.category) || checkedBrands.includes(item.brand));
-      // console.log(priceMinValue, priceMaxValue)
-      filteredData = filteredData.filter(item =>
-        item.price >= +fromSliderPrice.value && item.price <= +toSliderPrice.value &&
-        item.stock >= +fromSliderStock.value && item.stock <= +toSliderStock.value)
-      // console.log(fromSliderPrice.value, toSliderPrice.value)
     }
+
+    filteredData = filteredData.filter(item =>
+      item.price >= +fromSliderPrice.value && item.price <= +toSliderPrice.value &&
+      item.stock >= +fromSliderStock.value && item.stock <= +toSliderStock.value);
+
+    const arrCategory: string[] = [...new Set( filteredData.map(item => item.category))];
+    const arrBrand: string[] = [...new Set( filteredData.map(item => item.brand))];
+    document.querySelectorAll('.form-check-label').forEach(item => {
+      if(arrCategory.includes(item.innerHTML.trim()) || arrBrand.includes(item.innerHTML.trim())){
+        item.classList.remove('grey-color');
+      }else{
+        item.classList.add('grey-color');
+      }
+    })
+
+    PRICE_MIN.innerText = `${fromSliderPrice.value}`;
+    PRICE_MAX.innerText = `${toSliderPrice.value}`;
+    STOCK_MIN.innerText = `${fromSliderStock.value}`;
+    STOCK_MAX.innerText = `${toSliderStock.value}`;
+
+    this.addQueryParam('price_min', PRICE_MIN.innerText);
+    this.addQueryParam('price_max', PRICE_MAX.innerText);
+    this.addQueryParam('stock_min', STOCK_MIN.innerText);
+    this.addQueryParam('stock_max', STOCK_MAX.innerText);
+    this.addQueryParam('category', checkedCategories.join(' '));
+    this.addQueryParam('brand', checkedBrands.join(' '));
 
     CARDS_BOX.innerHTML = '';
     if (filteredData.length === 0) {
@@ -206,6 +215,12 @@ export class MainPageModel {
               </div>`;
         CARDS_BOX.insertAdjacentHTML('beforeend', card);
       }
+    }
+
+    if (new URLSearchParams(window.location.search).get('sort')){
+      const sortSrt = new URLSearchParams(window.location.search).get('sort') as string;
+      const array = sortSrt.toString().split("-");
+      this.sortCards(array[0], array[1]);
     }
   }
 }
