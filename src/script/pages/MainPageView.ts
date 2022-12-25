@@ -185,7 +185,8 @@ export class MainPageView {
 
     this.createCheckbox(this.selectedCards, 'category', <HTMLDivElement>document.querySelector('.category'));
     this.createCheckbox(this.selectedCards, 'brand', <HTMLDivElement>document.querySelector('.brand'));
-    this.controller.dualSlider('fromSliderPrice', 'toSliderPrice', 'fromSliderStock', 'toSliderStock');
+    // this.controller.dualSlider('fromSliderPrice', 'toSliderPrice', 'fromSliderStock', 'toSliderStock');
+    console.dir(document.querySelectorAll('.form-check-input'))
     this.controller.resetFilters(this.selectedCards, this.filteredData);
     this.viewChange();
     this.controller.sort();
@@ -234,7 +235,7 @@ export class MainPageView {
       TO_RANGE.value = this.rangeStock[1];
       this.controller.model.elemEvent(this.selectedCards, filteredData);
     }
-
+    this.controller.dualSlider('fromSliderPrice', 'toSliderPrice', 'fromSliderStock', 'toSliderStock');
   }
 
   createCheckbox(data: Array<ICard>, attribute: 'category' | 'brand', path: HTMLElement) {
