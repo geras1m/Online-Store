@@ -131,6 +131,25 @@ export class MainPageModel {
     }
   }
 
+  resetFilterBtn(defaultData: ICard[], filteredData: ICard[]){
+    const PRICE_MIN = <HTMLSpanElement>document.querySelector('.price-range>.text-start>.min-price');
+    const PRICE_MAX = <HTMLSpanElement>document.querySelector('.price-range>.text-end>.max-price');
+    const FROM_RANGE = <HTMLInputElement>document.querySelector('#fromSliderPrice');
+    const TO_RANGE = <HTMLInputElement>document.querySelector('#toSliderPrice');
+    document.querySelectorAll('.form-check-input').forEach(item => {
+      item.removeAttribute('checked');
+    });
+    document.querySelectorAll('.form-check-label').forEach(item => {
+      item.classList.remove('grey-color');
+    });
+    const minMaxPrice: number[] = this.findMinMaxValueInArray(defaultData, "price");
+    FROM_RANGE.value = minMaxPrice[0].toString();
+    TO_RANGE.value = minMaxPrice[1].toString();
+    PRICE_MIN.innerHTML = minMaxPrice[0].toString();
+    PRICE_MAX.innerHTML = minMaxPrice[1].toString();
+    this.elemEvent(filteredData, defaultData);
+  }
+
   elemEvent(filteredData: ICard[], defaultData: ICard[]): void {
     const CARDS_BOX = <HTMLDivElement>document.querySelector('.items-cards');
     const fromSliderPrice = <HTMLInputElement>document.querySelector('#fromSliderPrice');
@@ -141,6 +160,7 @@ export class MainPageModel {
     const PRICE_MAX = <HTMLSpanElement>document.querySelector('.price-range>.text-end>.max-price');
     const STOCK_MIN = <HTMLDivElement>document.querySelector('.stock-range>.text-start');
     const STOCK_MAX = <HTMLDivElement>document.querySelector('.stock-range>.text-end');
+    const NUMBER_OF_FOUND_ELEM = <HTMLSpanElement>document.querySelector('.items-found');
     const checkedCategories: string[] = [...document.querySelectorAll('.accordion-body.category input:checked')]
       .map(item => item.id);
     const checkedBrands: string[] = [...document.querySelectorAll('.accordion-body.brand input:checked')]
@@ -159,6 +179,8 @@ export class MainPageModel {
     filteredData = filteredData.filter(item =>
       item.price >= +fromSliderPrice.value && item.price <= +toSliderPrice.value &&
       item.stock >= +fromSliderStock.value && item.stock <= +toSliderStock.value);
+
+    NUMBER_OF_FOUND_ELEM.innerHTML = `${filteredData.length}`;
 
     const arrCategory: string[] = [...new Set( filteredData.map(item => item.category))];
     const arrBrand: string[] = [...new Set( filteredData.map(item => item.brand))];

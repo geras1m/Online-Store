@@ -48,6 +48,12 @@ export class MainPageController {
         fromSliderStock.oninput = () => this.model.controlFromSlider(fromSliderStock, toSliderStock);
         toSliderStock.oninput = () => this.model.controlToSlider(fromSliderStock, toSliderStock, `${toStock}`);
     }
+
+    resetFilters(defaultData: ICard[], filteredData: ICard[]){
+        const RESET_BTN = <HTMLButtonElement>document.querySelector('#resetFilters');
+        RESET_BTN.addEventListener('click', () => this.model.resetFilterBtn(defaultData, filteredData));
+    }
+
     changeView(view: string) {
         const description = document.querySelectorAll('.description');
         const items = document.querySelector('.items-cards');
