@@ -9,6 +9,6 @@ class LoadData {
   async build() {
     return (await this.load('https://dummyjson.com/products?limit=100') as Array<ICard>)
   }
-};
+}
 
 export default new LoadData;
