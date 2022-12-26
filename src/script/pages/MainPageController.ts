@@ -33,16 +33,12 @@ export class MainPageController {
         const toSliderPrice = <HTMLInputElement>document.querySelector('#toSliderPrice');
         const fromSliderStock = <HTMLInputElement>document.querySelector('#fromSliderStock');
         const toSliderStock = <HTMLInputElement>document.querySelector('#toSliderStock');
-        // const fromSliderPrice = <HTMLInputElement>document.querySelector(`#${fromPrice}`);
-        // const toSliderPrice = <HTMLInputElement>document.querySelector(`#${toPrice}`);
         this.model.fillSlider(fromSliderPrice, toSliderPrice, '#C6C6C6', '#1566d7', toSliderPrice);
         this.model.setToggleAccessible(toSliderPrice, `${toPrice}`);
 
         fromSliderPrice.oninput = () => this.model.controlFromSlider(fromSliderPrice, toSliderPrice);
         toSliderPrice.oninput = () => this.model.controlToSlider(fromSliderPrice, toSliderPrice, `${toPrice}`);
 
-        // const fromSliderStock = <HTMLInputElement>document.querySelector(`#${fromStock}`);
-        // const toSliderStock = <HTMLInputElement>document.querySelector(`#${toStock}`);
         this.model.fillSlider(fromSliderStock, toSliderStock, '#C6C6C6', '#1566d7', toSliderStock);
 
         fromSliderStock.oninput = () => this.model.controlFromSlider(fromSliderStock, toSliderStock);

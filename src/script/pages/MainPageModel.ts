@@ -134,20 +134,38 @@ export class MainPageModel {
   resetFilterBtn(defaultData: ICard[], filteredData: ICard[]){
     const PRICE_MIN = <HTMLSpanElement>document.querySelector('.price-range>.text-start>.min-price');
     const PRICE_MAX = <HTMLSpanElement>document.querySelector('.price-range>.text-end>.max-price');
-    const FROM_RANGE = <HTMLInputElement>document.querySelector('#fromSliderPrice');
-    const TO_RANGE = <HTMLInputElement>document.querySelector('#toSliderPrice');
-    document.querySelectorAll('.form-check-input').forEach(item => {
-      item.removeAttribute('checked');
+    const STOCK_MIN = <HTMLDivElement>document.querySelector('.stock-range>.text-start');
+    const STOCK_MAX = <HTMLDivElement>document.querySelector('.stock-range>.text-end');
+    const PRICE_FROM_RANGE = <HTMLInputElement>document.querySelector('#fromSliderPrice');
+    const PRICE_TO_RANGE = <HTMLInputElement>document.querySelector('#toSliderPrice');
+    const STOCK_FROM_RANGE = <HTMLInputElement>document.querySelector('#fromSliderStock');
+    const STOCK_TO_RANGE = <HTMLInputElement>document.querySelector('#toSliderStock');
+
+    document.querySelectorAll('.accordion-body.category input:checked').forEach(item => {
+      const el = item as HTMLInputElement;
+      el.checked = false;
     });
+    document.querySelectorAll('.accordion-body.brand input:checked').forEach(item => {
+      const el = item as HTMLInputElement;
+      el.checked = false;
+    })
     document.querySelectorAll('.form-check-label').forEach(item => {
       item.classList.remove('grey-color');
     });
     const minMaxPrice: number[] = this.findMinMaxValueInArray(defaultData, "price");
-    FROM_RANGE.value = minMaxPrice[0].toString();
-    TO_RANGE.value = minMaxPrice[1].toString();
-    PRICE_MIN.innerHTML = minMaxPrice[0].toString();
-    PRICE_MAX.innerHTML = minMaxPrice[1].toString();
+    PRICE_FROM_RANGE.value = `${minMaxPrice[0]}`;
+    PRICE_TO_RANGE.value = `${minMaxPrice[1]}`;
+    PRICE_MIN.innerHTML = `${minMaxPrice[0]}`;
+    PRICE_MAX.innerHTML = `${minMaxPrice[1]}`;
+    this.controlToSlider(PRICE_FROM_RANGE, PRICE_TO_RANGE, 'toSliderStock');
+
+    const minMaxStock: number[] = this.findMinMaxValueInArray(defaultData, "stock");
+    STOCK_FROM_RANGE.value = `${minMaxStock[0]}`;
+    STOCK_TO_RANGE.value = `${minMaxStock[1]}`;
+    STOCK_MIN.innerHTML = `${minMaxStock[0]}`;
+    STOCK_MAX.innerHTML = `${minMaxStock[1]}`;
     this.elemEvent(filteredData, defaultData);
+    this.controlToSlider(STOCK_FROM_RANGE, STOCK_TO_RANGE, 'toSliderPrice');
   }
 
   elemEvent(filteredData: ICard[], defaultData: ICard[]): void {
@@ -197,12 +215,14 @@ export class MainPageModel {
     STOCK_MIN.innerText = `${fromSliderStock.value}`;
     STOCK_MAX.innerText = `${toSliderStock.value}`;
 
+    //Прописать условия__________________________________________________________
     this.addQueryParam('price_min', PRICE_MIN.innerText);
     this.addQueryParam('price_max', PRICE_MAX.innerText);
     this.addQueryParam('stock_min', STOCK_MIN.innerText);
     this.addQueryParam('stock_max', STOCK_MAX.innerText);
     this.addQueryParam('category', checkedCategories.join(' '));
     this.addQueryParam('brand', checkedBrands.join(' '));
+    //__________________________________________________________________________
 
     CARDS_BOX.innerHTML = '';
     if (filteredData.length === 0) {
