@@ -118,6 +118,8 @@ export class Render {
         data.push(el as ICard)
       });
     }
+    await this.Checkbox(data, 'category', <HTMLElement>document.querySelector('.category'));
+    await this.Checkbox(data, 'brand', <HTMLElement>document.querySelector('.brand'));
     let CARDS_BOX = <HTMLElement>document.querySelector('.items-cards');
     if (target) {
       CARDS_BOX = target;
@@ -149,6 +151,7 @@ export class Render {
               </div>`;
       CARDS_BOX.insertAdjacentHTML('beforeend', card);
     }
+
   }
 
   Checkbox(data: Array<ICard>, attribute: 'category' | 'brand', path: HTMLElement) {

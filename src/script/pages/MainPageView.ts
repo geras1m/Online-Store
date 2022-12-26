@@ -32,15 +32,18 @@ export class MainPageView {
     this.render = new Render;
   }
 
-  createMainElement(): void {
+  async createMainElement() {
     this.rootNode.innerHTML = this.render.templateMain();
+    const result = await fetch('https://dummyjson.com/products?limit=100');
+    const arr = await result.json();
+    arr.products.forEach((el: ICard) => {
+      this.selectedCards.push(el as ICard)
+    });
   }
 
   async loadData() {
     this.createMainElement();
-    this.render.items();
-    this.render.Checkbox(this.selectedCards, 'category', <HTMLElement>document.querySelector('.category'));
-    this.render.Checkbox(this.selectedCards, 'brand', <HTMLElement>document.querySelector('.brand'));
+    await this.render.items(this.selectedCards);
     // this.controller.dualSlider('fromSliderPrice', 'toSliderPrice', 'fromSliderStock', 'toSliderStock');
     console.dir(document.querySelectorAll('.form-check-input'))
     this.controller.resetFilters(this.selectedCards, this.filteredData);
