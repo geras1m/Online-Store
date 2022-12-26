@@ -1,16 +1,4 @@
-import {renderCards} from './script/store-page';
-import {filterData} from './script/filter-function';
-import {ICard} from "./types";
-import {createCheckbox} from './script/create-filter';
-import { changeView, viewChange } from './script/view-change';
-import { sort, sortCards, urlParams } from './script/sort';
 import { MainPageView } from './script/pages/MainPageView';
-
-const addressSort = urlParams.get('sort');
-const addressView = urlParams.get('view');
-
-export let defaultData: Readonly<ICard[]>;
-
 
 const page = new MainPageView;
 

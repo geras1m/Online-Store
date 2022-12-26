@@ -28,7 +28,6 @@ export class MainPageController {
     }
 
     dualSlider(fromPrice: string, toPrice: string, fromStock: string, toStock: string) {
-
         const fromSliderPrice = <HTMLInputElement>document.querySelector('#fromSliderPrice');
         const toSliderPrice = <HTMLInputElement>document.querySelector('#toSliderPrice');
         const fromSliderStock = <HTMLInputElement>document.querySelector('#fromSliderStock');
