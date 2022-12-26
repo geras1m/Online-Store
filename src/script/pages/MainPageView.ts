@@ -48,8 +48,6 @@ export class MainPageView {
     this.render.items(this.selectedCards);
     this.render.Checkbox(this.selectedCards, 'category', <HTMLElement>document.querySelector('.category'));
     this.render.Checkbox(this.selectedCards, 'brand', <HTMLElement>document.querySelector('.brand'));
-    // this.controller.dualSlider('fromSliderPrice', 'toSliderPrice', 'fromSliderStock', 'toSliderStock');
-    console.dir(document.querySelectorAll('.form-check-input'))
     this.controller.resetFilters(this.selectedCards, this.filteredData);
     this.viewChange();
     this.controller.sort();
@@ -66,11 +64,11 @@ export class MainPageView {
       document.querySelectorAll('.form-check-input').forEach(item => {
         if (this.categoryFilter?.split(' ').includes(item.id)) {
           item.setAttribute('checked', 'checked');
-          this.controller.model.elemEvent(this.selectedCards, this.filteredData);
+          this.controller.model.elemEvent(this.selectedCards, filteredData);
         }
         if (this.brandFilter?.split(' ').includes(item.id)) {
           item.setAttribute('checked', 'checked');
-          this.controller.model.elemEvent(this.selectedCards, this.filteredData);
+          this.controller.model.elemEvent(this.selectedCards, filteredData);
         }
       })
     }
@@ -133,7 +131,6 @@ export class MainPageView {
     toSliderPrice.min = priseArray[0].toString();
     toSliderPrice.max = priseArray[1].toString();
     toSliderPrice.value = priseArray[1].toString();
-
     fromSliderStock.min = stockArray[0].toString();
     fromSliderStock.max = stockArray[1].toString();
     fromSliderStock.value = stockArray[0].toString();
@@ -143,4 +140,3 @@ export class MainPageView {
     this.controller.addFilterListeners(this.filteredData, defaultData);
   }
 }
-
