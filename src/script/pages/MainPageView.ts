@@ -8,6 +8,11 @@ export class MainPageView {
   addressSort: string | null;
   URL: URLSearchParams;
   addressView: string | null;
+  categoryFilter: string | null;
+  brandFilter: string | null;
+  rangePrice: string[];
+  rangeStock: string[];
+  filteredData: ICard[];
 
   constructor() {
     this.rootNode = <HTMLElement>document.getElementById('main');
@@ -17,6 +22,11 @@ export class MainPageView {
     this.URL = new URLSearchParams(window.location.search);
     this.addressSort = this.URL.get('sort');
     this.addressView = this.URL.get('view');
+    this.categoryFilter = this.URL.get('category');
+    this.brandFilter = this.URL.get('brand');
+    this.rangePrice = [this.URL.get('price_min'), this.URL.get('price_max')] as string[];
+    this.rangeStock = [this.URL.get('stock_min'), this.URL.get('stock_max')] as string[];
+    this.filteredData = this.selectedCards.map(item => item);
   }
 
   createMainElement(): void {
@@ -34,7 +44,7 @@ export class MainPageView {
         <section class="row items">
             <div class="col-3 filter">
                 <div class="filter-btn btn-group" role="group" aria-label="Basic example">
-                    <button class="btn" type="button">Reset filters</button>
+                    <button id="resetFilters" class="btn" type="button">Reset filters</button>
                     <button class="btn" type="button">Copy link</button>
                 </div>
                 <div class="accordion" id="accordionPanelsStayOpenExample">
@@ -134,7 +144,8 @@ export class MainPageView {
     data.products.forEach((el: ICard) => {
       this.selectedCards.push(el as ICard)
     });
-    console.log(this.selectedCards);
+    // console.log(this.selectedCards);
+    await this.createMainElement();
     await this.renderCards();
   }
 
@@ -171,10 +182,14 @@ export class MainPageView {
               </div>`;
       CARDS_BOX.insertAdjacentHTML('beforeend', card);
     }
+
     this.createCheckbox(this.selectedCards, 'category', <HTMLDivElement>document.querySelector('.category'));
     this.createCheckbox(this.selectedCards, 'brand', <HTMLDivElement>document.querySelector('.brand'));
-    this.controller.dualSlider('fromSliderPrice', 'toSliderPrice', 'fromSliderStock', 'toSliderStock');
+    // this.controller.dualSlider('fromSliderPrice', 'toSliderPrice', 'fromSliderStock', 'toSliderStock');
+    console.dir(document.querySelectorAll('.form-check-input'))
+    this.controller.resetFilters(this.selectedCards, this.filteredData);
     this.viewChange();
+    this.controller.sort();
     this.filterData(this.selectedCards);
     if (this.addressSort) {
       const array = this.addressSort.toString().split("-");
@@ -183,6 +198,44 @@ export class MainPageView {
     if (this.addressView) {
       this.controller.changeView(this.addressView);
     }
+    if (this.categoryFilter || this.brandFilter){
+      const filteredData: ICard[] = this.selectedCards.map(item => item);
+      document.querySelectorAll('.form-check-input').forEach(item => {
+        if(this.categoryFilter?.split(' ').includes(item.id)){
+          item.setAttribute('checked', 'checked');
+          this.controller.model.elemEvent(this.selectedCards, filteredData);
+        }
+        if(this.brandFilter?.split(' ').includes(item.id)){
+          item.setAttribute('checked', 'checked');
+          this.controller.model.elemEvent(this.selectedCards, filteredData);
+        }
+      })
+    }
+    if (this.rangePrice[0] && this.rangePrice[1]){
+      const filteredData: ICard[] = this.selectedCards.map(item => item);
+      const PRICE_MIN = <HTMLSpanElement>document.querySelector('.price-range>.text-start>.min-price');
+      const PRICE_MAX = <HTMLSpanElement>document.querySelector('.price-range>.text-end>.max-price');
+      const FROM_RANGE = <HTMLInputElement>document.querySelector('#fromSliderPrice');
+      const TO_RANGE = <HTMLInputElement>document.querySelector('#toSliderPrice');
+      PRICE_MIN.innerText = `${this.rangePrice[0]}`;
+      PRICE_MAX.innerText = `${this.rangePrice[1]}`;
+      FROM_RANGE.value = PRICE_MIN.innerText;
+      TO_RANGE.value = PRICE_MAX.innerText;
+      this.controller.model.elemEvent(this.selectedCards, filteredData);
+    }
+    if (this.rangeStock[0] && this.rangeStock[0]){
+      const filteredData: ICard[] = this.selectedCards.map(item => item);
+      const STOCK_MIN = <HTMLDivElement>document.querySelector('.stock-range>.text-start');
+      const STOCK_MAX = <HTMLDivElement>document.querySelector('.stock-range>.text-end');
+      const FROM_RANGE = <HTMLInputElement>document.querySelector('#fromSliderStock');
+      const TO_RANGE = <HTMLInputElement>document.querySelector('#toSliderStock');
+      STOCK_MIN.innerText = `${this.rangeStock[0]}`;
+      STOCK_MAX.innerText = `${this.rangeStock[1]}`;
+      FROM_RANGE.value = this.rangeStock[0];
+      TO_RANGE.value = this.rangeStock[1];
+      this.controller.model.elemEvent(this.selectedCards, filteredData);
+    }
+    this.controller.dualSlider('fromSliderPrice', 'toSliderPrice', 'fromSliderStock', 'toSliderStock');
   }
 
   createCheckbox(data: Array<ICard>, attribute: 'category' | 'brand', path: HTMLElement) {
@@ -251,3 +304,4 @@ export class MainPageView {
     this.controller.addFilterListeners(filteredData, defaultData);
   }
 }
+

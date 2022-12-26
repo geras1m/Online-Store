@@ -86,8 +86,8 @@ export class MainPageModel {
   controlFromSlider(fromSlider: HTMLInputElement, toSlider: HTMLInputElement) {
     const [from, to] = this.getParsed(fromSlider, toSlider);
     this.fillSlider(fromSlider, toSlider, '#C6C6C6', '#1566d7', toSlider);
-    if (from > to) {
-      fromSlider.value = to.toString();
+    if (from + +fromSlider.max * 0.1 > to) {
+      fromSlider.value = (to - +fromSlider.max * 0.1).toString();
     }
   }
 
@@ -95,10 +95,10 @@ export class MainPageModel {
     const [from, to] = this.getParsed(fromSlider, toSlider);
     this.fillSlider(fromSlider, toSlider, '#C6C6C6', '#1566d7', toSlider);
     this.setToggleAccessible(toSlider, `${toSet}`);
-    if (from <= to) {
-      toSlider.value = to.toString();
+    if (from + +fromSlider.max * 0.1 <= to) {
+      toSlider.value = (to).toString();
     } else {
-      toSlider.value = from.toString();
+      toSlider.value = (from + +fromSlider.max * 0.1).toString();
     }
   }
 
@@ -113,13 +113,13 @@ export class MainPageModel {
     const fromPosition: number = +from.value - +to.min;
     const toPosition: number = +to.value - +to.min;
     controlSlider.style.background = `linear-gradient(
-  to right,
-  ${sliderColor} 0%,
-  ${sliderColor} ${(fromPosition) / (rangeDistance) * 100}%,
-  ${rangeColor} ${((fromPosition) / (rangeDistance)) * 100}%,
-  ${rangeColor} ${(toPosition) / (rangeDistance) * 100}%,
-  ${sliderColor} ${(toPosition) / (rangeDistance) * 100}%,
-  ${sliderColor} 100%)`;
+    to right,
+    ${sliderColor} 0%,
+    ${sliderColor} ${(fromPosition) / (rangeDistance) * 100}%,
+    ${rangeColor} ${((fromPosition) / (rangeDistance)) * 100}%,
+    ${rangeColor} ${(toPosition) / (rangeDistance) * 100}%,
+    ${sliderColor} ${(toPosition) / (rangeDistance) * 100}%,
+    ${sliderColor} 100%)`;
   }
 
   setToggleAccessible(currentTarget: HTMLInputElement, item: string) {
@@ -130,40 +130,79 @@ export class MainPageModel {
       toSlider.style.zIndex = '0';
     }
   }
+
+  resetFilterBtn(defaultData: ICard[], filteredData: ICard[]){
+    const PRICE_MIN = <HTMLSpanElement>document.querySelector('.price-range>.text-start>.min-price');
+    const PRICE_MAX = <HTMLSpanElement>document.querySelector('.price-range>.text-end>.max-price');
+    const FROM_RANGE = <HTMLInputElement>document.querySelector('#fromSliderPrice');
+    const TO_RANGE = <HTMLInputElement>document.querySelector('#toSliderPrice');
+    document.querySelectorAll('.form-check-input').forEach(item => {
+      item.removeAttribute('checked');
+    });
+    document.querySelectorAll('.form-check-label').forEach(item => {
+      item.classList.remove('grey-color');
+    });
+    const minMaxPrice: number[] = this.findMinMaxValueInArray(defaultData, "price");
+    FROM_RANGE.value = minMaxPrice[0].toString();
+    TO_RANGE.value = minMaxPrice[1].toString();
+    PRICE_MIN.innerHTML = minMaxPrice[0].toString();
+    PRICE_MAX.innerHTML = minMaxPrice[1].toString();
+    this.elemEvent(filteredData, defaultData);
+  }
+
   elemEvent(filteredData: ICard[], defaultData: ICard[]): void {
     const CARDS_BOX = <HTMLDivElement>document.querySelector('.items-cards');
     const fromSliderPrice = <HTMLInputElement>document.querySelector('#fromSliderPrice');
     const toSliderPrice = <HTMLInputElement>document.querySelector('#toSliderPrice');
     const fromSliderStock = <HTMLInputElement>document.querySelector('#fromSliderStock');
     const toSliderStock = <HTMLInputElement>document.querySelector('#toSliderStock');
+    const PRICE_MIN = <HTMLSpanElement>document.querySelector('.price-range>.text-start>.min-price');
+    const PRICE_MAX = <HTMLSpanElement>document.querySelector('.price-range>.text-end>.max-price');
+    const STOCK_MIN = <HTMLDivElement>document.querySelector('.stock-range>.text-start');
+    const STOCK_MAX = <HTMLDivElement>document.querySelector('.stock-range>.text-end');
+    const NUMBER_OF_FOUND_ELEM = <HTMLSpanElement>document.querySelector('.items-found');
     const checkedCategories: string[] = [...document.querySelectorAll('.accordion-body.category input:checked')]
       .map(item => item.id);
     const checkedBrands: string[] = [...document.querySelectorAll('.accordion-body.brand input:checked')]
       .map(item => item.id);
 
-
     if (checkedBrands.length === 0 && checkedCategories.length === 0) {
       filteredData = defaultData.map(item => item);
-
-      filteredData = filteredData.filter(item =>
-        item.price >= +fromSliderPrice.value && item.price <= +toSliderPrice.value &&
-        item.stock >= +fromSliderStock.value && item.stock <= +toSliderStock.value);
-      // console.log(fromSliderPrice.value, toSliderPrice.value)
     } else if (checkedBrands.length > 0 && checkedCategories.length > 0) {
       filteredData = defaultData.filter(item => (
-        checkedCategories.includes(item.category) && checkedBrands.includes(item.brand) &&
-        item.price >= +fromSliderPrice.value && item.price <= +toSliderPrice.value &&
-        item.stock >= +fromSliderStock.value && item.stock <= +toSliderStock.value));
-      // console.log(fromSliderPrice.value, toSliderPrice.value)
+        checkedCategories.includes(item.category) && checkedBrands.includes(item.brand)));
     } else {
       filteredData = defaultData.filter(item =>
         checkedCategories.includes(item.category) || checkedBrands.includes(item.brand));
-      // console.log(priceMinValue, priceMaxValue)
-      filteredData = filteredData.filter(item =>
-        item.price >= +fromSliderPrice.value && item.price <= +toSliderPrice.value &&
-        item.stock >= +fromSliderStock.value && item.stock <= +toSliderStock.value)
-      // console.log(fromSliderPrice.value, toSliderPrice.value)
     }
+
+    filteredData = filteredData.filter(item =>
+      item.price >= +fromSliderPrice.value && item.price <= +toSliderPrice.value &&
+      item.stock >= +fromSliderStock.value && item.stock <= +toSliderStock.value);
+
+    NUMBER_OF_FOUND_ELEM.innerHTML = `${filteredData.length}`;
+
+    const arrCategory: string[] = [...new Set( filteredData.map(item => item.category))];
+    const arrBrand: string[] = [...new Set( filteredData.map(item => item.brand))];
+    document.querySelectorAll('.form-check-label').forEach(item => {
+      if(arrCategory.includes(item.innerHTML.trim()) || arrBrand.includes(item.innerHTML.trim())){
+        item.classList.remove('grey-color');
+      }else{
+        item.classList.add('grey-color');
+      }
+    })
+
+    PRICE_MIN.innerText = `${fromSliderPrice.value}`;
+    PRICE_MAX.innerText = `${toSliderPrice.value}`;
+    STOCK_MIN.innerText = `${fromSliderStock.value}`;
+    STOCK_MAX.innerText = `${toSliderStock.value}`;
+
+    this.addQueryParam('price_min', PRICE_MIN.innerText);
+    this.addQueryParam('price_max', PRICE_MAX.innerText);
+    this.addQueryParam('stock_min', STOCK_MIN.innerText);
+    this.addQueryParam('stock_max', STOCK_MAX.innerText);
+    this.addQueryParam('category', checkedCategories.join(' '));
+    this.addQueryParam('brand', checkedBrands.join(' '));
 
     CARDS_BOX.innerHTML = '';
     if (filteredData.length === 0) {
@@ -172,7 +211,8 @@ export class MainPageModel {
       const data = filteredData;
       for (let i = 0; i < data.length; i++) {
         const finalPrice = ((data[i].price / 100) * (100 - data[i].discountPercentage)).toFixed(1);
-        const card = `<div class="card h-100" data-id = '${data[i].id}' data-price = "${finalPrice}" data-rating = "${data[i].rating}" data-discount = "${data[i].discountPercentage}">
+        const card = `
+        <div class="card h-100" data-id = '${data[i].id}' data-price = "${finalPrice}" data-rating = "${data[i].rating}" data-discount = "${data[i].discountPercentage}">
                 <img src="${data[i].thumbnail}" class="img-thumbnail" alt="Card image">
                 <div class="card-body">
                   <h5 class="card-title">${data[i].title}</h5>
@@ -197,6 +237,12 @@ export class MainPageModel {
               </div>`;
         CARDS_BOX.insertAdjacentHTML('beforeend', card);
       }
+    }
+
+    if (new URLSearchParams(window.location.search).get('sort')){
+      const sortSrt = new URLSearchParams(window.location.search).get('sort') as string;
+      const array = sortSrt.toString().split("-");
+      this.sortCards(array[0], array[1]);
     }
   }
 }
