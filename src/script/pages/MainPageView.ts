@@ -71,7 +71,6 @@ export class MainPageView {
       })
     }
     if (this.rangePrice[0] && this.rangePrice[1]) {
-      const filteredData: ICard[] = this.selectedCards.map(item => item);
       const PRICE_MIN = <HTMLSpanElement>document.querySelector('.price-range>.text-start>.min-price');
       const PRICE_MAX = <HTMLSpanElement>document.querySelector('.price-range>.text-end>.max-price');
       const FROM_RANGE = <HTMLInputElement>document.querySelector('#fromSliderPrice');
@@ -80,10 +79,9 @@ export class MainPageView {
       PRICE_MAX.innerText = `${this.rangePrice[1]}`;
       FROM_RANGE.value = PRICE_MIN.innerText;
       TO_RANGE.value = PRICE_MAX.innerText;
-      this.controller.model.elemEvent(this.selectedCards, filteredData);
+      this.controller.model.elemEvent(this.selectedCards, this.filteredData);
     }
     if (this.rangeStock[0] && this.rangeStock[0]) {
-      const filteredData: ICard[] = this.selectedCards.map(item => item);
       const STOCK_MIN = <HTMLDivElement>document.querySelector('.stock-range>.text-start');
       const STOCK_MAX = <HTMLDivElement>document.querySelector('.stock-range>.text-end');
       const FROM_RANGE = <HTMLInputElement>document.querySelector('#fromSliderStock');
@@ -92,7 +90,7 @@ export class MainPageView {
       STOCK_MAX.innerText = `${this.rangeStock[1]}`;
       FROM_RANGE.value = this.rangeStock[0];
       TO_RANGE.value = this.rangeStock[1];
-      this.controller.model.elemEvent(this.selectedCards, filteredData);
+      this.controller.model.elemEvent(this.selectedCards, this.filteredData);
     }
     this.controller.dualSlider('fromSliderPrice', 'toSliderPrice', 'fromSliderStock', 'toSliderStock');
   }
@@ -119,9 +117,8 @@ export class MainPageView {
     const PRICE_MAX = <HTMLSpanElement>document.querySelector('.price-range>.text-end>.max-price');
     const STOCK_MIN = <HTMLDivElement>document.querySelector('.stock-range>.text-start');
     const STOCK_MAX = <HTMLDivElement>document.querySelector('.stock-range>.text-end');
-    const filteredData: ICard[] = defaultData.map(item => item);
-    const priseArray: number[] = this.controller.model.findMinMaxValueInArray(filteredData, 'price');
-    const stockArray: number[] = this.controller.model.findMinMaxValueInArray(filteredData, 'stock');
+    const priseArray: number[] = this.controller.model.findMinMaxValueInArray(this.filteredData, 'price');
+    const stockArray: number[] = this.controller.model.findMinMaxValueInArray(this.filteredData, 'stock');
     PRICE_MIN.innerText = `${priseArray[0]}`;
     PRICE_MAX.innerText = `${priseArray[1]}`;
     STOCK_MIN.innerText = `${stockArray[0]}`;
@@ -139,8 +136,7 @@ export class MainPageView {
     toSliderStock.min = stockArray[0].toString();
     toSliderStock.max = stockArray[1].toString();
     toSliderStock.value = stockArray[1].toString();
-
-    this.controller.addFilterListeners(filteredData, defaultData);
+    this.controller.addFilterListeners(this.filteredData, defaultData);
   }
 }
 
