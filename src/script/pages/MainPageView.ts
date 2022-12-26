@@ -1,3 +1,4 @@
+import { LoadData } from "../services/loader";
 import { Render } from "../services/render";
 import { ICard } from "../types";
 import { MainPageController } from "./MainPageController";
@@ -15,6 +16,7 @@ export class MainPageView {
   rangeStock: string[];
   filteredData: ICard[];
   render: Render;
+  data: LoadData;
 
   constructor() {
     this.rootNode = <HTMLElement>document.getElementById('main');
@@ -30,20 +32,22 @@ export class MainPageView {
     this.rangeStock = [this.URL.get('stock_min'), this.URL.get('stock_max')] as string[];
     this.filteredData = this.selectedCards.map(item => item);
     this.render = new Render;
+    this.data = new LoadData;
   }
 
-  async createMainElement() {
+  createMainElement(): void {
     this.rootNode.innerHTML = this.render.templateMain();
-    const result = await fetch('https://dummyjson.com/products?limit=100');
-    const arr = await result.json();
-    arr.products.forEach((el: ICard) => {
-      this.selectedCards.push(el as ICard)
-    });
   }
+
 
   async loadData() {
+    const arr = await this.data.load();
+    this.selectedCards = arr;
+    this.filteredData = arr;
     this.createMainElement();
-    await this.render.items(this.selectedCards);
+    this.render.items(this.selectedCards);
+    this.render.Checkbox(this.selectedCards, 'category', <HTMLElement>document.querySelector('.category'));
+    this.render.Checkbox(this.selectedCards, 'brand', <HTMLElement>document.querySelector('.brand'));
     // this.controller.dualSlider('fromSliderPrice', 'toSliderPrice', 'fromSliderStock', 'toSliderStock');
     console.dir(document.querySelectorAll('.form-check-input'))
     this.controller.resetFilters(this.selectedCards, this.filteredData);
@@ -62,11 +66,11 @@ export class MainPageView {
       document.querySelectorAll('.form-check-input').forEach(item => {
         if (this.categoryFilter?.split(' ').includes(item.id)) {
           item.setAttribute('checked', 'checked');
-          this.controller.model.elemEvent(this.selectedCards, filteredData);
+          this.controller.model.elemEvent(this.selectedCards, this.filteredData);
         }
         if (this.brandFilter?.split(' ').includes(item.id)) {
           item.setAttribute('checked', 'checked');
-          this.controller.model.elemEvent(this.selectedCards, filteredData);
+          this.controller.model.elemEvent(this.selectedCards, this.filteredData);
         }
       })
     }

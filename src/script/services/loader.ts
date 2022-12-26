@@ -1,14 +1,13 @@
 import { ICard } from '../types';
 
-class LoadData {
-  async load(url:string): Promise<ICard[]> {
-    const result = await fetch(url);
+export class LoadData {
+  async load() {
+    const result = await fetch('https://dummyjson.com/products?limit=100');
     const data = await result.json();
-    return data.products;
-  }
-  async build() {
-    return (await this.load('https://dummyjson.com/products?limit=100') as Array<ICard>)
+    const arr: ICard[] = [];
+    await data.products.forEach((el: ICard) => {
+      arr.push(el as ICard)
+    });
+    return arr;
   }
 }
-
-export default new LoadData;

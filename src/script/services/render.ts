@@ -1,4 +1,3 @@
-
 import { ICard } from '../types';
 
 export class Render {
@@ -107,19 +106,7 @@ export class Render {
     `;
   }
 
-  async items(array?: ICard[], target?: HTMLElement) {
-    const result = await fetch('https://dummyjson.com/products?limit=100');
-    const arr = await result.json();
-    let data: ICard[] = [];
-    if (array) {
-      data = array;
-    } else {
-      arr.products.forEach((el: ICard) => {
-        data.push(el as ICard)
-      });
-    }
-    await this.Checkbox(data, 'category', <HTMLElement>document.querySelector('.category'));
-    await this.Checkbox(data, 'brand', <HTMLElement>document.querySelector('.brand'));
+  items(data: ICard[], target?: HTMLElement) {
     let CARDS_BOX = <HTMLElement>document.querySelector('.items-cards');
     if (target) {
       CARDS_BOX = target;
@@ -151,7 +138,6 @@ export class Render {
               </div>`;
       CARDS_BOX.insertAdjacentHTML('beforeend', card);
     }
-
   }
 
   Checkbox(data: Array<ICard>, attribute: 'category' | 'brand', path: HTMLElement) {
