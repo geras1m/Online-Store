@@ -1,4 +1,3 @@
-import { MainPageController } from '../pages/MainPageController';
 import { ICard } from '../types';
 
 
