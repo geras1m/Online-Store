@@ -52,6 +52,7 @@ export class MainPageView {
     this.viewChange();
     this.controller.sort();
     this.filterData(this.selectedCards);
+    this.render.header(this.selectedCards);
     if (this.addressSort) {
       const array = this.addressSort.toString().split("-");
       this.controller.model.sortCards(array[0], array[1]);
@@ -95,6 +96,7 @@ export class MainPageView {
       this.controller.model.elemEvent(this.selectedCards, this.filteredData);
     }
     this.controller.dualSlider('fromSliderPrice', 'toSliderPrice', 'fromSliderStock', 'toSliderStock');
+    this.controller.addItemBtnsListeners(this.selectedCards);
   }
 
   viewChange(): void {

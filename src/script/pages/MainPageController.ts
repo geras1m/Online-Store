@@ -48,9 +48,12 @@ export class MainPageController {
         toSliderStock.oninput = () => this.model.controlToSlider(fromSliderStock, toSliderStock, `${toStock}`);
     }
 
-    resetFilters(defaultData: ICard[], filteredData: ICard[]){
+    resetFilters(defaultData: ICard[], filteredData: ICard[]) {
         const RESET_BTN = <HTMLButtonElement>document.querySelector('#resetFilters');
-        RESET_BTN.addEventListener('click', () => this.model.resetFilterBtn(defaultData, filteredData));
+        RESET_BTN.addEventListener('click', () => {
+            this.model.resetFilterBtn(defaultData, filteredData)
+            this.addItemBtnsListeners(defaultData)
+        });
     }
 
     changeView(view: string) {
@@ -86,17 +89,57 @@ export class MainPageController {
         const BRANDS: NodeListOf<HTMLInputElement> = document.querySelectorAll('.accordion-body.brand input');
 
         CATEGORIES.forEach(elem => {
-            elem.addEventListener('click', () => this.model.elemEvent(filteredData, defaultData));
+            elem.addEventListener('click', () => {
+                this.model.elemEvent(filteredData, defaultData)
+                this.addItemBtnsListeners(defaultData)
+            });
         });
 
         BRANDS.forEach(elem => {
-            elem.addEventListener('click', () => this.model.elemEvent(filteredData, defaultData));
+            elem.addEventListener('click', () => {
+                this.model.elemEvent(filteredData, defaultData)
+                this.addItemBtnsListeners(defaultData)
+            });
         });
 
-        fromSliderPrice.addEventListener('input', () => this.model.elemEvent(filteredData, defaultData));
-        toSliderPrice.addEventListener('input', () => this.model.elemEvent(filteredData, defaultData));
+        fromSliderPrice.addEventListener('input', () => {
+            this.model.elemEvent(filteredData, defaultData)
+            this.addItemBtnsListeners(defaultData)
+        });
+        toSliderPrice.addEventListener('input', () => {
+            this.model.elemEvent(filteredData, defaultData)
+            this.addItemBtnsListeners(defaultData)
+        });
 
-        fromSliderStock.addEventListener('input', () => this.model.elemEvent(filteredData, defaultData));
-        toSliderStock.addEventListener('input', () => this.model.elemEvent(filteredData, defaultData));
+        fromSliderStock.addEventListener('input', () => {
+            this.model.elemEvent(filteredData, defaultData)
+            this.addItemBtnsListeners(defaultData)
+        });
+        toSliderStock.addEventListener('input', () => {
+            this.model.elemEvent(filteredData, defaultData)
+            this.addItemBtnsListeners(defaultData)
+        });
+    }
+
+    addItemBtnsListeners(defaultData: ICard[]) {
+        const addBtns = document.querySelectorAll('.add');
+        const removeBtns = document.querySelectorAll('.remove');
+        if (addBtns) {
+            addBtns.forEach(el => {
+                el.addEventListener('click', () => {
+                    this.model.addToCart(el);
+                    this.model.updateHeader(defaultData, 'add', el)
+                });
+            });
+        }
+
+        if (removeBtns) {
+            removeBtns.forEach(el => {
+                el.addEventListener('click', () => {
+                    this.model.removeFromCart(el);
+                    this.model.updateHeader(defaultData, 'remove', el)
+                });
+            });
+        }
     }
 }

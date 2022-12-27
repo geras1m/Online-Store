@@ -66,3 +66,16 @@
 .add:hover {
   background-color: $active-color;
 }
+
+.add-text {
+  display: none;
+}
+
+.default {
+  .remove,  .item-count{
+    display: none;
+  }
+  .add-text {
+    display: inline;
+  }
+}
