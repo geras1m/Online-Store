@@ -97,6 +97,10 @@ header {
   background-color: #FFB745;
 }
 
+.remove:hover {
+  background-color: #FFB745;
+}
+
 .add-text {
   display: none;
 }
