@@ -135,7 +135,7 @@ export class MainPageModel {
       toSlider.style.zIndex = '0';
     }
   }
-
+  
   resetFilterBtn(defaultData: ICard[], filteredData: ICard[]){
     const PRICE_MIN = <HTMLSpanElement>document.querySelector('.price-range>.text-start>.min-price');
     const PRICE_MAX = <HTMLSpanElement>document.querySelector('.price-range>.text-end>.max-price');

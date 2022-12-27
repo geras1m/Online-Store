@@ -131,7 +131,11 @@ export class Render {
                     <span class="price">€${data[i].price}</span>
                     <small class="text-muted sale">-${data[i].discountPercentage}%</small>
                     €<span class="final-price h4">${finalPrice}</span>
-                    <button type="button" class="btn add">+Add to cart</button>
+                    <span class="filter-btn btn-group card-btns" role="group">
+                      <button type="button" class="btn remove hidden">-</button>
+                      <button type="button" class="btn item-count hidden" disabled>0</button>
+                      <button type="button" class="btn add">+ <span class='add-text'>Add to cart<span></button>
+                    </span>
                   </p>
                   </p>
                 </div>

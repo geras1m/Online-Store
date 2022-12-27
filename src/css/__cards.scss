@@ -12,11 +12,17 @@
 .card {
   border: none;
   cursor: pointer;
+
+  .btn {
+    border-radius: 2px;
+  }
+
   &:hover {
     background-color: #4174cb60;
     transition: 1s;
   }
 }
+
 .row-cols-md-4 {
   & img {
     max-height: 150px;
@@ -24,6 +30,7 @@
     margin-top: 2px;
   }
 }
+
 .row-cols-md-1 {
   & img {
     max-height: 150px;
@@ -35,7 +42,7 @@
     flex-direction: row;
     min-height: 10px;
   }
-  .add {
+  .card-btns {
     width: auto;
   }
 }
