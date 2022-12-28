@@ -22,7 +22,6 @@ export class MainPageView {
     this.rootNode = <HTMLElement>document.getElementById('main');
     this.selectedCards = [];
     this.controller = new MainPageController();
-    this.controller.sort();
     this.URL = new URLSearchParams(window.location.search);
     this.addressSort = this.URL.get('sort');
     this.addressView = this.URL.get('view');
@@ -50,8 +49,9 @@ export class MainPageView {
     this.render.Checkbox(this.selectedCards, 'brand', <HTMLElement>document.querySelector('.brand'));
     this.controller.resetFilters(this.selectedCards, this.filteredData);
     this.viewChange();
-    this.controller.sort();
+    this.controller.sort(this.selectedCards);
     this.filterData(this.selectedCards);
+    this.render.header(this.selectedCards);
     if (this.addressSort) {
       const array = this.addressSort.toString().split("-");
       this.controller.model.sortCards(array[0], array[1]);
@@ -95,6 +95,7 @@ export class MainPageView {
       this.controller.model.elemEvent(this.selectedCards, this.filteredData);
     }
     this.controller.dualSlider('fromSliderPrice', 'toSliderPrice', 'fromSliderStock', 'toSliderStock');
+    this.controller.addItemBtnsListeners(this.selectedCards);
   }
 
   viewChange(): void {

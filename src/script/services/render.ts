@@ -1,6 +1,8 @@
 import { ICard } from '../types';
 
+
 export class Render {
+
   templateMain() {
     return `
     <div class="container">
@@ -113,29 +115,65 @@ export class Render {
     }
     for (let i = 0; i < data.length; i++) {
       const finalPrice = ((data[i].price / 100) * (100 - data[i].discountPercentage)).toFixed(1);
-      const card = `<div class="card h-100" data-id = '${data[i].id}' data-price = "${finalPrice}" data-rating = "${data[i].rating}" data-discount = "${data[i].discountPercentage}">
-                <img src="${data[i].thumbnail}" class="img-thumbnail" alt="Card image">
-                <div class="card-body">
-                  <h5 class="card-title">${data[i].title}</h5>
-                  <p class="text-muted card-text">
-                  <small class="stock">In stock: ${data[i].stock}</small>
-                  <p>
-                    <small class="text-muted category">${data[i].category},</small>
-                    <small class="text-muted brand">${data[i].brand},</small>
-                    <small class="text-muted rating">${data[i].rating}★</small>
-                  </p>
-                  <p>
-                    <small class="text-muted description hidden">${data[i].description}</small>
-                  </p>
-                  <p class="text-end">
-                    <span class="price">€${data[i].price}</span>
-                    <small class="text-muted sale">-${data[i].discountPercentage}%</small>
-                    €<span class="final-price h4">${finalPrice}</span>
-                    <button type="button" class="btn add">+Add to cart</button>
-                  </p>
-                  </p>
-                </div>
-              </div>`;
+      let card = `<div class="card h-100" data-id = '${data[i].id}' data-price = "${finalPrice}" data-rating = "${data[i].rating}" data-discount = "${data[i].discountPercentage}">
+      <img src="${data[i].thumbnail}" class="img-thumbnail" alt="Card image">
+      <div class="card-body">
+        <h5 class="card-title">${data[i].title}</h5>
+        <p class="text-muted card-text">
+        <small class="stock">In stock: ${data[i].stock}</small>
+        <p>
+          <small class="text-muted category">${data[i].category},</small>
+          <small class="text-muted brand">${data[i].brand},</small>
+          <small class="text-muted rating">${data[i].rating}★</small>
+        </p>
+        <p>
+          <small class="text-muted description hidden">${data[i].description}</small>
+        </p>
+        <p class="text-end">
+          <span class="price">€${data[i].price}</span>
+          <small class="text-muted sale">-${data[i].discountPercentage}%</small>
+          €<span class="final-price h4">${finalPrice}</span>
+          <span class="btn-group card-btns default" role="group">
+            <button type="button" class="btn remove">-</button>
+            <button type="button" class="btn item-count" disabled>0</button>
+            <button type="button" class="btn add">+ <span class='add-text'>Add to cart<span></button>
+          </span>
+        </p>
+        </p>
+      </div>
+    </div>`;
+      for (let j = 0; j < localStorage.length; j++) {
+        if (data[i].id === Number(localStorage.key(j))) {
+          console.log(data[i].id, Number(localStorage.key(j)))
+          card = `<div class="card h-100" data-id = '${data[i].id}' data-price = "${finalPrice}" data-rating = "${data[i].rating}" data-discount = "${data[i].discountPercentage}">
+              <img src="${data[i].thumbnail}" class="img-thumbnail" alt="Card image">
+              <div class="card-body">
+                <h5 class="card-title">${data[i].title}</h5>
+                <p class="text-muted card-text">
+                <small class="stock">In stock: ${data[i].stock}</small>
+                <p>
+                  <small class="text-muted category">${data[i].category},</small>
+                  <small class="text-muted brand">${data[i].brand},</small>
+                  <small class="text-muted rating">${data[i].rating}★</small>
+                </p>
+                <p>
+                  <small class="text-muted description hidden">${data[i].description}</small>
+                </p>
+                <p class="text-end">
+                  <span class="price">€${data[i].price}</span>
+                  <small class="text-muted sale">-${data[i].discountPercentage}%</small>
+                  €<span class="final-price h4">${finalPrice}</span>
+                  <span class="btn-group card-btns" role="group">
+                    <button type="button" class="btn remove">-</button>
+                    <button type="button" class="btn item-count" disabled>${localStorage.getItem(String(data[i].id))}</button>
+                    <button type="button" class="btn add">+ <span class='add-text'>Add to cart<span></button>
+                  </span>
+                </p>
+                </p>
+              </div>
+            </div>`;
+        }
+      }
       CARDS_BOX.insertAdjacentHTML('beforeend', card);
     }
   }
@@ -159,6 +197,28 @@ export class Render {
       </label>
       </div>`;
       path.innerHTML += checkbox;
+    }
+  }
+
+  header(data: ICard[]) {
+    const cartItemsEl = document.querySelector('.cart__items');
+    const TotalSumEl = document.querySelector('.cart-sum__number');
+    let cartItems = 0;
+    let TotalSum = 0;
+    for (let i = 0; i < data.length; i++) {
+      const finalPrice = ((data[i].price / 100) * (100 - data[i].discountPercentage)).toFixed(1);
+      if (localStorage.length) {
+        for (let j = 0; j < localStorage.length; j++) {
+          if (data[i].id === Number(localStorage.key(j))) {
+            cartItems = cartItems + Number(localStorage.getItem(String(data[i].id)))
+            TotalSum = TotalSum + (Number(finalPrice) * Number(localStorage.getItem(String(data[i].id))));
+          }
+        }
+      }
+    }
+    if (cartItemsEl && TotalSumEl) {
+      cartItemsEl.innerHTML = String(cartItems);
+      TotalSumEl.innerHTML = String(TotalSum.toFixed(1));
     }
   }
 }
