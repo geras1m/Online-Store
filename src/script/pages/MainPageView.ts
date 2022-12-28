@@ -48,6 +48,7 @@ export class MainPageView {
     this.render.Checkbox(this.selectedCards, 'category', <HTMLElement>document.querySelector('.category'));
     this.render.Checkbox(this.selectedCards, 'brand', <HTMLElement>document.querySelector('.brand'));
     this.controller.resetFilters(this.selectedCards, this.filteredData);
+    this.controller.addCopyLinkBtn();
     this.viewChange();
     this.controller.sort(this.selectedCards);
     this.filterData(this.selectedCards);

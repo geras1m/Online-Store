@@ -173,6 +173,20 @@ export class MainPageModel {
     this.controlToSlider(STOCK_FROM_RANGE, STOCK_TO_RANGE, 'toSliderPrice');
   }
 
+  copyUrlAddress(){
+    const COPY_LINK_BTN = <HTMLButtonElement>document.querySelector('.copy-link');
+    const urlAddress: string = window.location.href;
+    navigator.clipboard.writeText(urlAddress);
+    COPY_LINK_BTN.innerText = 'Copied !';
+    COPY_LINK_BTN.style.color = 'white';
+    COPY_LINK_BTN.style.backgroundColor = 'orange';
+    setTimeout(()=>{
+      COPY_LINK_BTN.innerText = 'Copy link';
+      COPY_LINK_BTN.style.backgroundColor = '#4174CB';
+      COPY_LINK_BTN.style.color = 'white';
+    }, 1000);
+  }
+
   elemEvent(filteredData: ICard[], defaultData: ICard[]): void {
     const CARDS_BOX = <HTMLDivElement>document.querySelector('.items-cards');
     const fromSliderPrice = <HTMLInputElement>document.querySelector('#fromSliderPrice');

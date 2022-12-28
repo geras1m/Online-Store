@@ -1,7 +1,7 @@
-import { Cart } from "../services/cart";
-import { Header } from "../services/header";
-import { ICard } from "../types";
-import { MainPageModel } from "./MainPageModel";
+import {Cart} from "../services/cart";
+import {Header} from "../services/header";
+import {ICard} from "../types";
+import {MainPageModel} from "./MainPageModel";
 
 export class MainPageController {
     model: MainPageModel;
@@ -144,5 +144,10 @@ export class MainPageController {
                 });
             });
         }
+    }
+
+    addCopyLinkBtn() {
+        const COPY_LINK_BTN = <HTMLButtonElement>document.querySelector('.copy-link');
+        COPY_LINK_BTN.addEventListener('click', this.model.copyUrlAddress);
     }
 }

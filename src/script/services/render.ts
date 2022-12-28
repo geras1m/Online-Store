@@ -15,7 +15,7 @@ export class Render {
             <div class="col-3 filter">
                 <div class="filter-btn btn-group" role="group" aria-label="Basic example">
                     <button id="resetFilters" class="btn" type="button">Reset filters</button>
-                    <button class="btn" type="button">Copy link</button>
+                    <button class="btn copy-link" type="button">Copy link</button>
                 </div>
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                     <div class="accordion-item">
