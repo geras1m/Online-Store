@@ -1,6 +1,11 @@
+import { Render } from "../services/render";
 import { ICard } from "../types";
 
 export class MainPageModel {
+  render: Render;
+  constructor() {
+    this.render = new Render;
+  }
 
   sortCards(arg: string, order: string) {
     const cardBlock = <HTMLDivElement>document.querySelector(".items-cards");
@@ -131,7 +136,7 @@ export class MainPageModel {
     }
   }
 
-  resetFilterBtn(defaultData: ICard[], filteredData: ICard[]){
+  resetFilterBtn(defaultData: ICard[], filteredData: ICard[]) {
     const PRICE_MIN = <HTMLSpanElement>document.querySelector('.price-range>.text-start>.min-price');
     const PRICE_MAX = <HTMLSpanElement>document.querySelector('.price-range>.text-end>.max-price');
     const STOCK_MIN = <HTMLDivElement>document.querySelector('.stock-range>.text-start');
@@ -200,12 +205,12 @@ export class MainPageModel {
 
     NUMBER_OF_FOUND_ELEM.innerHTML = `${filteredData.length}`;
 
-    const arrCategory: string[] = [...new Set( filteredData.map(item => item.category))];
-    const arrBrand: string[] = [...new Set( filteredData.map(item => item.brand))];
+    const arrCategory: string[] = [...new Set(filteredData.map(item => item.category))];
+    const arrBrand: string[] = [...new Set(filteredData.map(item => item.brand))];
     document.querySelectorAll('.form-check-label').forEach(item => {
-      if(arrCategory.includes(item.innerHTML.trim()) || arrBrand.includes(item.innerHTML.trim())){
+      if (arrCategory.includes(item.innerHTML.trim()) || arrBrand.includes(item.innerHTML.trim())) {
         item.classList.remove('grey-color');
-      }else{
+      } else {
         item.classList.add('grey-color');
       }
     })
@@ -229,40 +234,15 @@ export class MainPageModel {
       CARDS_BOX.innerHTML = `<p class="no-products">No products found</p>`;
     } else {
       const data = filteredData;
-      for (let i = 0; i < data.length; i++) {
-        const finalPrice = ((data[i].price / 100) * (100 - data[i].discountPercentage)).toFixed(1);
-        const card = `
-        <div class="card h-100" data-id = '${data[i].id}' data-price = "${finalPrice}" data-rating = "${data[i].rating}" data-discount = "${data[i].discountPercentage}">
-                <img src="${data[i].thumbnail}" class="img-thumbnail" alt="Card image">
-                <div class="card-body">
-                  <h5 class="card-title">${data[i].title}</h5>
-                  <p class="text-muted card-text">
-                  <small class="stock">In stock: ${data[i].stock}</small>
-                  <p>
-                    <small class="text-muted category">${data[i].category},</small>
-                    <small class="text-muted brand">${data[i].brand},</small>
-                    <small class="text-muted rating">${data[i].rating}★</small>
-                  </p>
-                  <p>
-                    <small class="text-muted description hidden">${data[i].description}</small>
-                  </p>
-                  <p class="text-end">
-                    <span class="price">€${data[i].price}</span>
-                    <small class="text-muted sale">-${data[i].discountPercentage}%</small>
-                    €<span class="final-price h4">${finalPrice}</span>
-                    <button type="button" class="btn add">+Add to cart</button>
-                  </p>
-                  </p>
-                </div>
-              </div>`;
-        CARDS_BOX.insertAdjacentHTML('beforeend', card);
-      }
+      this.render.items(data);
     }
 
-    if (new URLSearchParams(window.location.search).get('sort')){
+    if (new URLSearchParams(window.location.search).get('sort')) {
       const sortSrt = new URLSearchParams(window.location.search).get('sort') as string;
       const array = sortSrt.toString().split("-");
       this.sortCards(array[0], array[1]);
     }
   }
 }
+
+
