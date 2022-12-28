@@ -241,68 +241,6 @@ export class MainPageModel {
       this.sortCards(array[0], array[1]);
     }
   }
-
-  addToCart(target: Element) {
-    const itemCount = target.parentElement?.querySelector('.item-count');
-    let counter = Number(target.parentElement?.querySelector('.item-count')?.innerHTML);
-    const card: HTMLElement | null = target.closest('.card');
-    if (itemCount) {
-      counter++;
-      itemCount.innerHTML = counter.toString();
-    }
-    if (card) {
-      localStorage.setItem(String(card.dataset.id), String(counter))
-      target.parentElement?.classList.remove('default');
-    }
-  }
-
-  removeFromCart(target: Element) {
-    const itemCount = target.parentElement?.querySelector('.item-count');
-    let counter = Number(target.parentElement?.querySelector('.item-count')?.innerHTML);
-    const card: HTMLElement | null = target.closest('.card');
-    if (itemCount) {
-      counter--;
-      itemCount.innerHTML = counter.toString();
-    }
-    if (card) {
-      localStorage.setItem(String(card.dataset.id), String(counter))
-      target.parentElement?.classList.remove('default');
-      if (counter === 0) {
-        target.parentElement?.classList.add('default');
-        localStorage.removeItem(String(card.dataset.id));
-      }
-    }
-  }
-
-  updateHeader(arr: ICard[], command: string, target: Element) {
-    const cartItemsEl = document.querySelector('.cart__items');
-    const TotalSumEl = document.querySelector('.cart-sum__number');
-    const card: HTMLElement | null = target.closest('.card');
-    let cartItems = Number(cartItemsEl?.innerHTML);
-    let TotalSum = Number(TotalSumEl?.innerHTML);
-    arr.forEach(el => {
-      if (el.id === Number(card?.dataset.id)) {
-        const finalPrice = Number(((el.price / 100) * (100 - el.discountPercentage)).toFixed(1));
-        if (command === 'add') {
-          TotalSum = TotalSum + finalPrice;
-          cartItems += 1;
-          console.log(Number(localStorage.getItem(String(el.id))));
-        } else if (command === 'remove') {
-          TotalSum = TotalSum - finalPrice;
-          cartItems -= 1;
-          console.log(Number(localStorage.getItem(String(el.id))));
-        }
-      }
-    })
-    if (!localStorage.length) {
-      TotalSum = 0;
-      cartItems = 0;
-    }
-    if (cartItemsEl && TotalSumEl) {
-      cartItemsEl.innerHTML = String(cartItems);
-      TotalSumEl.innerHTML = String(TotalSum.toFixed(1));
-    }
-  }
 }
 
 

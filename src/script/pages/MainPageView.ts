@@ -22,7 +22,6 @@ export class MainPageView {
     this.rootNode = <HTMLElement>document.getElementById('main');
     this.selectedCards = [];
     this.controller = new MainPageController();
-    this.controller.sort();
     this.URL = new URLSearchParams(window.location.search);
     this.addressSort = this.URL.get('sort');
     this.addressView = this.URL.get('view');
@@ -50,7 +49,7 @@ export class MainPageView {
     this.render.Checkbox(this.selectedCards, 'brand', <HTMLElement>document.querySelector('.brand'));
     this.controller.resetFilters(this.selectedCards, this.filteredData);
     this.viewChange();
-    this.controller.sort();
+    this.controller.sort(this.selectedCards);
     this.filterData(this.selectedCards);
     this.render.header(this.selectedCards);
     if (this.addressSort) {

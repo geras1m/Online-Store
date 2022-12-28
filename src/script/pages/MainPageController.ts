@@ -1,14 +1,20 @@
+import { Cart } from "../services/cart";
+import { Header } from "../services/header";
 import { ICard } from "../types";
 import { MainPageModel } from "./MainPageModel";
 
 export class MainPageController {
     model: MainPageModel;
+    header: Header;
+    cart: Cart;
 
     constructor() {
         this.model = new MainPageModel();
+        this.header = new Header();
+        this.cart = new Cart();
     }
 
-    sort() {
+    sort(defaultData: ICard[]) {
         const sortBtns: NodeListOf<HTMLElement> = document.querySelectorAll('.dropdown-item');
         sortBtns.forEach(element => {
             element.addEventListener('click', (event) => {
@@ -23,6 +29,7 @@ export class MainPageController {
                     param = 'rating';
                 }
                 this.model.sortCards(param, order);
+                this.addItemBtnsListeners(defaultData)
             })
         });
     }
@@ -127,8 +134,8 @@ export class MainPageController {
         if (addBtns) {
             addBtns.forEach(el => {
                 el.addEventListener('click', () => {
-                    this.model.addToCart(el);
-                    this.model.updateHeader(defaultData, 'add', el)
+                    this.cart.addToCart(el);
+                    this.header.update(defaultData, 'add', el)
                 });
             });
         }
@@ -136,8 +143,8 @@ export class MainPageController {
         if (removeBtns) {
             removeBtns.forEach(el => {
                 el.addEventListener('click', () => {
-                    this.model.removeFromCart(el);
-                    this.model.updateHeader(defaultData, 'remove', el)
+                    this.cart.removeFromCart(el);
+                    this.header.update(defaultData, 'remove', el)
                 });
             });
         }
