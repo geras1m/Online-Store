@@ -52,6 +52,7 @@ export class MainPageView {
     this.viewChange();
     this.controller.sort(this.selectedCards);
     this.filterData(this.selectedCards);
+    this.controller.inputSearch(this.selectedCards, this.filteredData);
     this.render.header(this.selectedCards);
     if (this.addressSort) {
       const array = this.addressSort.toString().split("-");

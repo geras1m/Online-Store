@@ -150,4 +150,9 @@ export class MainPageController {
         const COPY_LINK_BTN = <HTMLButtonElement>document.querySelector('.copy-link');
         COPY_LINK_BTN.addEventListener('click', this.model.copyUrlAddress);
     }
+
+    inputSearch(filteredData: ICard[], defaultData: ICard[]){
+        const INPUT_SEARCH = <HTMLInputElement>document.querySelector('.form-control');
+        INPUT_SEARCH.addEventListener('input', () => this.model.elemEvent(filteredData, defaultData))
+    }
 }

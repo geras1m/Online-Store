@@ -202,6 +202,7 @@ export class MainPageModel {
       .map(item => item.id);
     const checkedBrands: string[] = [...document.querySelectorAll('.accordion-body.brand input:checked')]
       .map(item => item.id);
+    const INPUT_SEARCH = <HTMLInputElement>document.querySelector('.form-control');
 
     if (checkedBrands.length === 0 && checkedCategories.length === 0) {
       filteredData = defaultData.map(item => item);
@@ -217,7 +218,7 @@ export class MainPageModel {
       item.price >= +fromSliderPrice.value && item.price <= +toSliderPrice.value &&
       item.stock >= +fromSliderStock.value && item.stock <= +toSliderStock.value);
 
-    NUMBER_OF_FOUND_ELEM.innerHTML = `${filteredData.length}`;
+
 
     const arrCategory: string[] = [...new Set(filteredData.map(item => item.category))];
     const arrBrand: string[] = [...new Set(filteredData.map(item => item.brand))];
@@ -233,6 +234,20 @@ export class MainPageModel {
     PRICE_MAX.innerText = `${toSliderPrice.value}`;
     STOCK_MIN.innerText = `${fromSliderStock.value}`;
     STOCK_MAX.innerText = `${toSliderStock.value}`;
+
+    const VALUE_INPUT = INPUT_SEARCH.value;
+    if (VALUE_INPUT.length > 1) {
+      filteredData = filteredData.filter(item =>
+          item.title.toLowerCase().includes(VALUE_INPUT.toLowerCase().trim()) ||
+          item.brand.toLowerCase().includes(VALUE_INPUT.toLowerCase().trim()) ||
+          item.category.toLowerCase().includes(VALUE_INPUT.toLowerCase().trim()) ||
+          item.description.toLowerCase().includes(VALUE_INPUT.toLowerCase().trim()) ||
+          item.price.toString().startsWith(VALUE_INPUT.toLowerCase().trim()) ||
+          item.discountPercentage.toString().startsWith(VALUE_INPUT.toLowerCase().trim()) ||
+          item.rating.toString().startsWith(VALUE_INPUT.toLowerCase().trim()) ||
+          item.stock.toString().startsWith(VALUE_INPUT.toLowerCase().trim())
+      );
+    }
 
     //Прописать условия__________________________________________________________
     this.addQueryParam('price_min', PRICE_MIN.innerText);
@@ -256,6 +271,7 @@ export class MainPageModel {
       const array = sortSrt.toString().split("-");
       this.sortCards(array[0], array[1]);
     }
+    NUMBER_OF_FOUND_ELEM.innerHTML = `${filteredData.length}`;
   }
 }
 
