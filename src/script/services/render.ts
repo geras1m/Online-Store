@@ -108,15 +108,32 @@ export class Render {
     `;
   }
 
-  items(data: ICard[], target?: HTMLElement) {
+  items(data: ICard[], target?: HTMLElement, flag?: string) {
     let CARDS_BOX = <HTMLElement>document.querySelector('.items-cards');
     if (target) {
       CARDS_BOX = target;
     }
     for (let i = 0; i < data.length; i++) {
       const finalPrice = ((data[i].price / 100) * (100 - data[i].discountPercentage)).toFixed(1);
-      let card = `<div class="card h-100" data-id = '${data[i].id}' data-price = "${finalPrice}" data-rating = "${data[i].rating}" data-discount = "${data[i].discountPercentage}">
-      <img src="${data[i].thumbnail}" class="img-thumbnail" alt="Card image">
+      let card = `<a href='#/item/${data[i].id}' class="card h-100" data-id = '${data[i].id}' data-price = "${finalPrice}" data-rating = "${data[i].rating}" data-discount = "${data[i].discountPercentage}">
+      <div id="carouselItemPicture${i}" class="carousel carousel-dark slide car${i}">
+      <div class="carousel-indicators indicators${i}">
+        <button type="button" data-bs-target="#carouselItemPicture${i}" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 0"></button>
+      </div>
+      <div class="carousel-inner inner${i}">
+        <div class="carousel-item active">
+          <img src="${data[i].thumbnail}" class="d-block w-100 img-thumbnail" alt="Card image">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselItemPicture${i}" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselItemPicture${i}" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+      </div>
       <div class="card-body">
         <h5 class="card-title">${data[i].title}</h5>
         <p class="text-muted card-text">
@@ -130,9 +147,11 @@ export class Render {
           <small class="text-muted description hidden">${data[i].description}</small>
         </p>
         <p class="text-end">
+          <span class="text-end-price">
           <span class="price">€${data[i].price}</span>
           <small class="text-muted sale">-${data[i].discountPercentage}%</small>
-          €<span class="final-price h4">${finalPrice}</span>
+          <span class="final-price h4">€${finalPrice}</span>
+          </span>
           <span class="btn-group card-btns default" role="group">
             <button type="button" class="btn remove">-</button>
             <button type="button" class="btn item-count" disabled>0</button>
@@ -141,12 +160,29 @@ export class Render {
         </p>
         </p>
       </div>
-    </div>`;
+    </a>`;
       for (let j = 0; j < localStorage.length; j++) {
         if (data[i].id === Number(localStorage.key(j))) {
           console.log(data[i].id, Number(localStorage.key(j)))
-          card = `<div class="card h-100" data-id = '${data[i].id}' data-price = "${finalPrice}" data-rating = "${data[i].rating}" data-discount = "${data[i].discountPercentage}">
-              <img src="${data[i].thumbnail}" class="img-thumbnail" alt="Card image">
+          card = `<a href='#/item/${data[i].id}' class="card h-100" data-id = '${data[i].id}' data-price = "${finalPrice}" data-rating = "${data[i].rating}" data-discount = "${data[i].discountPercentage}">
+                <div id="carouselItemPicture${i}" class="carousel carousel-dark slide car${i}">
+                  <div class="carousel-indicators indicators${i}">
+                    <button type="button" data-bs-target="#carouselItemPicture${i}" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 0"></button>
+                  </div>
+                  <div class="carousel-inner inner${i}">
+                    <div class="carousel-item active">
+                      <img src="${data[i].thumbnail}" class="d-block w-100 img-thumbnail" alt="Card image">
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselItemPicture${i}" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselItemPicture${i}" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+              </div>
               <div class="card-body">
                 <h5 class="card-title">${data[i].title}</h5>
                 <p class="text-muted card-text">
@@ -160,9 +196,11 @@ export class Render {
                   <small class="text-muted description hidden">${data[i].description}</small>
                 </p>
                 <p class="text-end">
+                  <span class="text-end-price">
                   <span class="price">€${data[i].price}</span>
                   <small class="text-muted sale">-${data[i].discountPercentage}%</small>
-                  €<span class="final-price h4">${finalPrice}</span>
+                  <span class="final-price h4">€${finalPrice}</span>
+                  </span>
                   <span class="btn-group card-btns" role="group">
                     <button type="button" class="btn remove">-</button>
                     <button type="button" class="btn item-count" disabled>${localStorage.getItem(String(data[i].id))}</button>
@@ -171,10 +209,40 @@ export class Render {
                 </p>
                 </p>
               </div>
-            </div>`;
+            </a>`;
         }
       }
       CARDS_BOX.insertAdjacentHTML('beforeend', card);
+      if (flag) {
+        CARDS_BOX.innerHTML = card;
+      }
+      this.images(data, i, flag);
+    }
+  }
+
+  images(data: ICard[], num: number, flag?: string) {
+    const imageHTML = document.querySelector(`.car${num}`);
+    const indicators = document.querySelector(`.indicators${num}`);
+    const inner = document.querySelector(`.inner${num}`);
+    if (data[num].images.length > 1 && imageHTML && indicators && inner) {
+      let count = 1;
+      for (let t = 0; t < data[num].images.length; t++) {
+        if (data[num].images[t] === data[num].thumbnail || data[0].images[t] === "https://i.dummyjson.com/data/products/1/1.jpg" || data[0].images[t] === "https://i.dummyjson.com/data/products/1/2.jpg") {
+          continue;
+        }
+        indicators.innerHTML += `<button type="button" data-bs-target="#carouselItemPicture${num}" data-bs-slide-to="${count}" aria-label="Slide ${count}"></button>`;
+        inner.innerHTML += `<div class="carousel-item">
+         <img src="${data[num].images[t]}" class="d-block w-100 img-thumbnail" alt="Card image">
+        </div>`;
+        count++;
+      }
+    } else if (imageHTML) {
+      imageHTML.innerHTML = `<img src="${data[num].thumbnail}" class="d-block w-100 img-thumbnail" alt="Card image">`;
+      imageHTML.classList.remove('carousel');
+    }
+    if (imageHTML && !flag) {
+      imageHTML.innerHTML = `<img src="${data[num].thumbnail}" class="d-block w-100 img-thumbnail" alt="Card image">`;
+      imageHTML.classList.remove('carousel');
     }
   }
 
@@ -220,5 +288,27 @@ export class Render {
       cartItemsEl.innerHTML = String(cartItems);
       TotalSumEl.innerHTML = String(TotalSum.toFixed(1));
     }
+  }
+
+  templateItem() {
+    return `
+    <div class="col container">
+      <div class="breadcrumbs">
+      </div>
+      <div class="item">
+      </div>
+    </div>
+    `;
+  }
+
+  breadcrumbs(data: ICard[]) {
+    const CARDS_BOX = <HTMLElement>document.querySelector('.breadcrumbs');
+
+    const card = `<small class="text-muted category"> <a href="../dist/">STORE</a> /</small>
+          <small class="text-muted category">${data[0].category} /</small>
+          <small class="text-muted brand">${data[0].brand} /</small>
+          <small class="text-muted title">${data[0].title}</small>
+  `;
+    CARDS_BOX.innerHTML = card;
   }
 }

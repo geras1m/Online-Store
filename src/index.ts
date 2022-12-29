@@ -1,8 +1,8 @@
-import { MainPageView } from './script/pages/MainPageView';
+import Config from '../src/script/router/config';
+import Router from '../src/script/router/router';
 
-const page = new MainPageView;
-
-page.loadData();
+const routes = Config.getRoutes();
+Router.addAllPath(routes);
 
 // fetch('https://dummyjson.com/products?limit=100')
 //     .then(response => response.json())

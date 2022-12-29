@@ -56,6 +56,7 @@ header {
 .card:hover {
   background-color: rgba(65, 116, 203, 0.3764705882);
   transition: 1s;
+  color: inherit;
 }
 
 .row-cols-md-4 img {
@@ -123,6 +124,44 @@ header {
   align-items: center;
   color: #F2F2F2;
   padding: 10px 2%;
+}
+
+.item img {
+  height: 350px;
+  object-fit: contain;
+  margin-top: 2px;
+}
+.item .card {
+  display: flex;
+  flex-direction: column;
+  min-height: 10px;
+  padding: 10px 20px;
+  pointer-events: none;
+}
+.item .card:hover {
+  background-color: white;
+}
+.item .card-btns {
+  width: auto;
+  pointer-events: all;
+}
+.item .description {
+  display: inline;
+  font-size: large;
+}
+.item .carousel {
+  pointer-events: all;
+}
+.item .text-end {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+.item .text-end .text-end-price {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 180px;
 }
 
 a {

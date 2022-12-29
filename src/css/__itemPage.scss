@@ -1,0 +1,43 @@
+.item {
+  & img {
+    height: 350px;
+    object-fit: contain;
+    margin-top: 2px;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    min-height: 10px;
+    padding: 10px 20px;
+    &:hover {
+      background-color: white;
+    }
+    pointer-events: none;
+  }
+
+  .card-btns {
+    width: auto;
+    pointer-events: all;
+  }
+
+  .description {
+    display: inline;
+    font-size: large;
+  }
+
+  .carousel {
+    pointer-events: all;
+  }
+
+  .text-end {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    .text-end-price {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 180px;
+    }
+  }
+}
