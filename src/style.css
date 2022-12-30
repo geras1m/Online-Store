@@ -151,6 +151,12 @@ header {
 }
 .item .carousel {
   pointer-events: all;
+  cursor: -webkit-zoom-in;
+  cursor: zoom-in;
+}
+.item .carousel .carousel-inner:hover, .item .carousel :active {
+  z-index: 3;
+  transform: scale(1.7);
 }
 .item .text-end {
   display: flex;
@@ -162,6 +168,12 @@ header {
   justify-content: space-between;
   width: 100%;
   max-width: 180px;
+}
+
+.breadcrumbs {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 
 a {

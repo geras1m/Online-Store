@@ -304,10 +304,13 @@ export class Render {
   breadcrumbs(data: ICard[]) {
     const CARDS_BOX = <HTMLElement>document.querySelector('.breadcrumbs');
 
-    const card = `<small class="text-muted category"> <a href="../dist/">STORE</a> /</small>
+    const card = `<span class='path'>
+          <small class="text-muted category"> <a href="../dist/">STORE</a> /</small>
           <small class="text-muted category">${data[0].category} /</small>
           <small class="text-muted brand">${data[0].brand} /</small>
           <small class="text-muted title">${data[0].title}</small>
+          </span>
+          <button type="button" class="btn buy-now">Buy now</button>
   `;
     CARDS_BOX.innerHTML = card;
   }
