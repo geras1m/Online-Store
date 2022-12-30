@@ -10,6 +10,7 @@ export class MainPageView {
   addressSort: string | null;
   URL: URLSearchParams;
   addressView: string | null;
+  search: string | null;
   categoryFilter: string | null;
   brandFilter: string | null;
   rangePrice: string[];
@@ -25,6 +26,7 @@ export class MainPageView {
     this.URL = new URLSearchParams(window.location.search);
     this.addressSort = this.URL.get('sort');
     this.addressView = this.URL.get('view');
+    this.search = this.URL.get('search');
     this.categoryFilter = this.URL.get('category');
     this.brandFilter = this.URL.get('brand');
     this.rangePrice = [this.URL.get('price_min'), this.URL.get('price_max')] as string[];
@@ -60,6 +62,11 @@ export class MainPageView {
     }
     if (this.addressView) {
       this.controller.changeView(this.addressView);
+    }
+    if (this.search){
+      const INPUT_SEARCH = <HTMLInputElement>document.querySelector('.form-control');
+      INPUT_SEARCH.value = this.search;
+      this.controller.model.elemEvent(this.selectedCards, this.selectedCards);
     }
     if (this.categoryFilter || this.brandFilter) {
       const filteredData: ICard[] = this.selectedCards.map(item => item);

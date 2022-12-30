@@ -208,7 +208,6 @@ export class MainPageModel {
       .map(item => item.id);
     const checkedBrands: string[] = [...document.querySelectorAll('.accordion-body.brand input:checked')]
       .map(item => item.id);
-      console.log(checkedBrands)
     const INPUT_SEARCH = <HTMLInputElement>document.querySelector('.form-control');
 
     if (checkedBrands.length === 0 && checkedCategories.length === 0) {
@@ -240,20 +239,24 @@ export class MainPageModel {
     STOCK_MIN.innerText = `${fromSliderStock.value}`;
     STOCK_MAX.innerText = `${toSliderStock.value}`;
 
-    const VALUE_INPUT = INPUT_SEARCH.value;
+    const VALUE_INPUT = INPUT_SEARCH.value.toLowerCase().trim();
     if (VALUE_INPUT.length > 1) {
       filteredData = filteredData.filter(item =>
-          item.title.toLowerCase().includes(VALUE_INPUT.toLowerCase().trim()) ||
-          item.brand.toLowerCase().includes(VALUE_INPUT.toLowerCase().trim()) ||
-          item.category.toLowerCase().includes(VALUE_INPUT.toLowerCase().trim()) ||
-          item.description.toLowerCase().includes(VALUE_INPUT.toLowerCase().trim()) ||
-          item.price.toString().startsWith(VALUE_INPUT.toLowerCase().trim()) ||
-          item.discountPercentage.toString().startsWith(VALUE_INPUT.toLowerCase().trim()) ||
-          item.rating.toString().startsWith(VALUE_INPUT.toLowerCase().trim()) ||
-          item.stock.toString().startsWith(VALUE_INPUT.toLowerCase().trim())
+        item.title.toLowerCase().includes(VALUE_INPUT) ||
+        item.brand.toLowerCase().includes(VALUE_INPUT) ||
+        item.category.toLowerCase().includes(VALUE_INPUT) ||
+        item.description.toLowerCase().includes(VALUE_INPUT) ||
+        item.price.toString().startsWith(VALUE_INPUT) ||
+        item.discountPercentage.toString().startsWith(VALUE_INPUT) ||
+        item.rating.toString().startsWith(VALUE_INPUT) ||
+        item.stock.toString().startsWith(VALUE_INPUT)
       );
+      this.addQueryParam('search', VALUE_INPUT);
+    }else {
+      const searchParam = new URLSearchParams(window.location.search);
+      this.deleteQueryParam('search', searchParam);
     }
-    
+
     if (+fromSliderPrice.value !== 10){
       this.addQueryParam('price_min', fromSliderPrice.value);
     }else {
@@ -288,13 +291,11 @@ export class MainPageModel {
     }
 
     if (checkedBrands.length !== 0){
-        console.log(checkedBrands.join(' '))
-        this.addQueryParam('brand', checkedBrands.join('-'));
+      this.addQueryParam('brand', checkedBrands.join('-'));
     }else {
       const searchParam = new URLSearchParams(window.location.search);
       this.deleteQueryParam('brand', searchParam);
     }
-
 
     CARDS_BOX.innerHTML = '';
     if (filteredData.length === 0) {

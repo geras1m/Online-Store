@@ -105,20 +105,20 @@ export class MainPageController {
             });
         });
 
-        fromSliderPrice.addEventListener('input', () => {
+        fromSliderPrice.addEventListener('change', () => {
             this.model.elemEvent(filteredData, defaultData)
             this.addItemBtnsListeners(defaultData)
         });
-        toSliderPrice.addEventListener('input', () => {
+        toSliderPrice.addEventListener('change', () => {
             this.model.elemEvent(filteredData, defaultData)
             this.addItemBtnsListeners(defaultData)
         });
 
-        fromSliderStock.addEventListener('input', () => {
+        fromSliderStock.addEventListener('change', () => {
             this.model.elemEvent(filteredData, defaultData)
             this.addItemBtnsListeners(defaultData)
         });
-        toSliderStock.addEventListener('input', () => {
+        toSliderStock.addEventListener('change', () => {
             this.model.elemEvent(filteredData, defaultData)
             this.addItemBtnsListeners(defaultData)
         });
