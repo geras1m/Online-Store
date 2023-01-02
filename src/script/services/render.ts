@@ -9,7 +9,6 @@ export class Render {
         <section class="search-bar input-group mb-3">
             <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username"
                    aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button">Search</button>
         </section>
         <section class="row items">
             <div class="col-3 filter">
