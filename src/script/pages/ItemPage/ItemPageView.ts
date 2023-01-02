@@ -28,38 +28,6 @@ export class ItemPageView {
     this.render.items(this.item, <HTMLElement>document.querySelector('.item'), 'yes');
     this.render.breadcrumbs(this.item);
     this.render.header(arr);
-    this.addItemBtnsListeners(this.item);
+    this.cart.addItemBtnsListeners(this.item);
   }
-
-  addItemBtnsListeners(defaultData: ICard[]) {
-    let addBtns = document.querySelectorAll('.add');
-    let removeBtns = document.querySelectorAll('.remove');
-    if (addBtns) {
-        addBtns.forEach(el => {
-            el.replaceWith(el.cloneNode(true));
-        });
-        addBtns = document.querySelectorAll('.add');
-        addBtns.forEach(el => {
-            el.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.cart.addToCart(el);
-                this.header.update(defaultData, 'add', el)
-            });
-        });
-    }
-
-    if (removeBtns) {
-        removeBtns.forEach(el => {
-            el.replaceWith(el.cloneNode(true));
-        });
-        removeBtns = document.querySelectorAll('.remove');
-        removeBtns.forEach(el => {
-            el.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.cart.removeFromCart(el);
-                this.header.update(defaultData, 'remove', el)
-            });
-        });
-    }
-}
 }
