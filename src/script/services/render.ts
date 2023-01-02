@@ -215,10 +215,14 @@ export class Render {
             </a>`;
         }
       }
-      CARDS_BOX.insertAdjacentHTML('beforeend', card);
-      if (flag === 'yes') {
-        CARDS_BOX.innerHTML = card;
-      }
+      // CARDS_BOX.insertAdjacentHTML('beforeend', card);
+      // if (flag === 'yes') {
+      //   CARDS_BOX.innerHTML = card;
+      // }
+      CARDS_BOX.innerHTML += card;
+      // if (flag) {
+      //   CARDS_BOX.innerHTML = card;
+      // }
       this.images(data, i, flag);
       count++;
     }
@@ -279,8 +283,8 @@ export class Render {
   }
 
   header(data: ICard[]) {
-    const cartItemsEl = document.querySelector('.cart__items');
-    const TotalSumEl = document.querySelector('.cart-sum__number');
+    const cartItemsEl = document.querySelectorAll('.cart__items');
+    const TotalSumEl = document.querySelectorAll('.cart-sum__number');
     let cartItems = 0;
     let TotalSum = 0;
     for (let i = 0; i < data.length; i++) {
@@ -295,8 +299,8 @@ export class Render {
       }
     }
     if (cartItemsEl && TotalSumEl) {
-      cartItemsEl.innerHTML = String(cartItems);
-      TotalSumEl.innerHTML = String(TotalSum.toFixed(1));
+      cartItemsEl.forEach(el => el.innerHTML = String(cartItems))
+      TotalSumEl.forEach(el => el.innerHTML = String(TotalSum.toFixed(1)))
     }
   }
 
@@ -329,7 +333,7 @@ export class Render {
     return `
     <div class="container text-center">
     <div class="row">
-        <div class="col-10 row-cols-1">
+        <div class="col row-cols-1">
             <div class="cart-head col row">
                 <div class="col">Products In Cart </div>
                 <div class="col">Limit <input type="number" id="typeNumber" value='10' min="1">
@@ -342,7 +346,7 @@ export class Render {
             </div>
             <div class="cart-items col row-cols-md-1"></div>
         </div>
-        <div class="col-2 summary text-center">
+        <div class="col-3 summary text-center">
             <p>Summary</p>
             <p>Products: <span class="cart__items">0</span></p>
             <p>Total: €<span class="cart-sum__number">0.0</span></p>

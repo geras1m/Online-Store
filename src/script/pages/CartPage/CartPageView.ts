@@ -28,44 +28,45 @@ export class CartPageView {
     for (let i = 0; i < localStorage.length; i++) {
       keys.push(localStorage.key(i));
     }
-    console.log(keys);
     this.item = arr.filter(e => keys.includes(String(e.id)));
-    console.log(this.item);
-    this.render.items(this.item, <HTMLElement>document.querySelector('.cart-items'), 'cart');
+    const itemsPath = <HTMLElement>document.querySelector('.cart-items');
+    this.render.items(this.item, itemsPath, 'cart');
+    this.render.header(this.item);
     this.addItemBtnsListeners(this.item);
+    if (this.item.length <= 0 && itemsPath) {
+      itemsPath.innerHTML = 'Items not found';
+    }
   }
 
   addItemBtnsListeners(defaultData: ICard[]) {
-    const addBtns = document.querySelectorAll('.add');
-    const removeBtns = document.querySelectorAll('.remove');
+    let addBtns = document.querySelectorAll('.add');
+    let removeBtns = document.querySelectorAll('.remove');
     if (addBtns) {
-      addBtns.forEach(el => {
-        el.removeEventListener('click', (e) => {
-          e.preventDefault();
-          this.cart.addToCart(el);
-          this.header.update(defaultData, 'add', el)
-      });
-        el.addEventListener('click', (e) => {
-          e.preventDefault();
-          this.cart.addToCart(el);
-          this.header.update(defaultData, 'add', el)
+        addBtns.forEach(el => {
+            el.replaceWith(el.cloneNode(true));
         });
-      });
+        addBtns = document.querySelectorAll('.add');
+        addBtns.forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.cart.addToCart(el);
+                this.header.update(defaultData, 'add', el)
+            });
+        });
     }
 
     if (removeBtns) {
-      removeBtns.forEach(el => {
-        el.removeEventListener('click', (e) => {
-          e.preventDefault();
-          this.cart.removeFromCart(el);
-          this.header.update(defaultData, 'remove', el)
-      });
-        el.addEventListener('click', (e) => {
-          e.preventDefault();
-          this.cart.removeFromCart(el);
-          this.header.update(defaultData, 'remove', el)
+        removeBtns.forEach(el => {
+            el.replaceWith(el.cloneNode(true));
         });
-      });
+        removeBtns = document.querySelectorAll('.remove');
+        removeBtns.forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.cart.removeFromCart(el);
+                this.header.update(defaultData, 'remove', el)
+            });
+        });
     }
   }
 }
