@@ -133,7 +133,8 @@ export class MainPageController {
         const removeBtns = document.querySelectorAll('.remove');
         if (addBtns) {
             addBtns.forEach(el => {
-                el.addEventListener('click', () => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
                     this.cart.addToCart(el);
                     this.header.update(defaultData, 'add', el)
                 });
@@ -142,7 +143,8 @@ export class MainPageController {
 
         if (removeBtns) {
             removeBtns.forEach(el => {
-                el.addEventListener('click', () => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
                     this.cart.removeFromCart(el);
                     this.header.update(defaultData, 'remove', el)
                 });
