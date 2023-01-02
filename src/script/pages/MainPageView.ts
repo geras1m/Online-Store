@@ -41,7 +41,7 @@ export class MainPageView {
   }
 
 
-  async loadData() {
+  async load() {
     const arr = await this.data.load();
     this.selectedCards = arr;
     this.filteredData = arr;
