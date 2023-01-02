@@ -82,31 +82,35 @@ export class MainPageView {
       })
     }
     if (this.rangePrice[0]) {
+      const result: string = this.rangePrice[0].slice(0, -2);
       const PRICE_MIN = <HTMLSpanElement>document.querySelector('.price-range>.text-start>.min-price');
       const FROM_RANGE = <HTMLInputElement>document.querySelector('#fromSliderPrice');
-      PRICE_MIN.innerText = `${this.rangePrice[0]}`;
+      PRICE_MIN.innerText = `${result}`;
       FROM_RANGE.value = PRICE_MIN.innerText;
       this.controller.model.elemEvent(this.selectedCards, this.filteredData);
     }
     if ( this.rangePrice[1]) {
+      const result: string = this.rangePrice[1].slice(0, -2);
       const PRICE_MAX = <HTMLSpanElement>document.querySelector('.price-range>.text-end>.max-price');
       const TO_RANGE = <HTMLInputElement>document.querySelector('#toSliderPrice');
-      PRICE_MAX.innerText = `${this.rangePrice[1]}`;
+      PRICE_MAX.innerText = `${result}`;
       TO_RANGE.value = PRICE_MAX.innerText;
       this.controller.model.elemEvent(this.selectedCards, this.filteredData);
     }
     if (this.rangeStock[0]) {
+      const result: string = this.rangeStock[0].slice(0, -2);
       const STOCK_MIN = <HTMLDivElement>document.querySelector('.stock-range>.text-start');
       const FROM_RANGE = <HTMLInputElement>document.querySelector('#fromSliderStock');
-      STOCK_MIN.innerText = `${this.rangeStock[0]}`;
-      FROM_RANGE.value = this.rangeStock[0];
+      STOCK_MIN.innerText = `${result}`;
+      FROM_RANGE.value = result;
       this.controller.model.elemEvent(this.selectedCards, this.filteredData);
     }
     if (this.rangeStock[1]) {
+      const result: string = this.rangeStock[1].slice(0, -2);
       const STOCK_MAX = <HTMLDivElement>document.querySelector('.stock-range>.text-end');
       const TO_RANGE = <HTMLInputElement>document.querySelector('#toSliderStock');
-      STOCK_MAX.innerText = `${this.rangeStock[1]}`;
-      TO_RANGE.value = this.rangeStock[1];
+      STOCK_MAX.innerText = `${result}`;
+      TO_RANGE.value = result;
       this.controller.model.elemEvent(this.selectedCards, this.filteredData);
     }
     this.controller.dualSlider('fromSliderPrice', 'toSliderPrice', 'fromSliderStock', 'toSliderStock');

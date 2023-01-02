@@ -258,26 +258,26 @@ export class MainPageModel {
     }
 
     if (+fromSliderPrice.value !== 10){
-      this.addQueryParam('price_min', fromSliderPrice.value);
+      this.addQueryParam('price_min', `${fromSliderPrice.value}--`);
     }else {
       const searchParam = new URLSearchParams(window.location.search);
       this.deleteQueryParam('price_min', searchParam);
     }
     if (+toSliderPrice.value !== 1749) {
-      this.addQueryParam('price_max', toSliderPrice.value);
+      this.addQueryParam('price_max', `${toSliderPrice.value}--`);
     }else{
       const searchParam = new URLSearchParams(window.location.search);
       this.deleteQueryParam('price_max', searchParam);
     }
 
     if (+fromSliderStock.value !== 2){
-      this.addQueryParam('stock_min', fromSliderStock.value);
+      this.addQueryParam('stock_min', `${fromSliderStock.value}--`);
     }else {
       const searchParam = new URLSearchParams(window.location.search);
       this.deleteQueryParam('stock_min', searchParam);
     }
     if (+toSliderStock.value !== 150) {
-      this.addQueryParam('stock_max', toSliderStock.value);
+      this.addQueryParam('stock_max', `${toSliderStock.value}--`);
     }else{
       const searchParam = new URLSearchParams(window.location.search);
       this.deleteQueryParam('stock_max', searchParam);
