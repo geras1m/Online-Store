@@ -65,6 +65,12 @@ export class MainPageModel {
     history.pushState(null, '', newPath);
   }
 
+  deleteQueryParam(param: string, searchParam: URLSearchParams ){
+    searchParam.delete(param);
+    const newPath = window.location.pathname + '?' + searchParam.toString();
+    history.pushState(null, '', newPath);
+  }
+
   addActive(target: Element) {
     const parent = target.parentElement;
     if (parent != null) {
@@ -173,6 +179,20 @@ export class MainPageModel {
     this.controlToSlider(STOCK_FROM_RANGE, STOCK_TO_RANGE, 'toSliderPrice');
   }
 
+  copyUrlAddress(){
+    const COPY_LINK_BTN = <HTMLButtonElement>document.querySelector('.copy-link');
+    const urlAddress: string = window.location.href;
+    navigator.clipboard.writeText(urlAddress);
+    COPY_LINK_BTN.innerText = 'Copied !';
+    COPY_LINK_BTN.style.color = 'white';
+    COPY_LINK_BTN.style.backgroundColor = 'orange';
+    setTimeout(()=>{
+      COPY_LINK_BTN.innerText = 'Copy link';
+      COPY_LINK_BTN.style.backgroundColor = '#4174CB';
+      COPY_LINK_BTN.style.color = 'white';
+    }, 1000);
+  }
+
   elemEvent(filteredData: ICard[], defaultData: ICard[]): void {
     const CARDS_BOX = <HTMLDivElement>document.querySelector('.items-cards');
     const fromSliderPrice = <HTMLInputElement>document.querySelector('#fromSliderPrice');
@@ -188,6 +208,7 @@ export class MainPageModel {
       .map(item => item.id);
     const checkedBrands: string[] = [...document.querySelectorAll('.accordion-body.brand input:checked')]
       .map(item => item.id);
+    const INPUT_SEARCH = <HTMLInputElement>document.querySelector('.form-control');
 
     if (checkedBrands.length === 0 && checkedCategories.length === 0) {
       filteredData = defaultData.map(item => item);
@@ -202,8 +223,6 @@ export class MainPageModel {
     filteredData = filteredData.filter(item =>
       item.price >= +fromSliderPrice.value && item.price <= +toSliderPrice.value &&
       item.stock >= +fromSliderStock.value && item.stock <= +toSliderStock.value);
-
-    NUMBER_OF_FOUND_ELEM.innerHTML = `${filteredData.length}`;
 
     const arrCategory: string[] = [...new Set(filteredData.map(item => item.category))];
     const arrBrand: string[] = [...new Set(filteredData.map(item => item.brand))];
@@ -220,12 +239,63 @@ export class MainPageModel {
     STOCK_MIN.innerText = `${fromSliderStock.value}`;
     STOCK_MAX.innerText = `${toSliderStock.value}`;
 
-    this.addQueryParam('price_min', PRICE_MIN.innerText);
-    this.addQueryParam('price_max', PRICE_MAX.innerText);
-    this.addQueryParam('stock_min', STOCK_MIN.innerText);
-    this.addQueryParam('stock_max', STOCK_MAX.innerText);
-    this.addQueryParam('category', checkedCategories.join(' '));
-    this.addQueryParam('brand', checkedBrands.join(' '));
+    const VALUE_INPUT = INPUT_SEARCH.value.toLowerCase().trim();
+    if (VALUE_INPUT.length > 1) {
+      filteredData = filteredData.filter(item =>
+        item.title.toLowerCase().includes(VALUE_INPUT) ||
+        item.brand.toLowerCase().includes(VALUE_INPUT) ||
+        item.category.toLowerCase().includes(VALUE_INPUT) ||
+        item.description.toLowerCase().includes(VALUE_INPUT) ||
+        item.price.toString().startsWith(VALUE_INPUT) ||
+        item.discountPercentage.toString().startsWith(VALUE_INPUT) ||
+        item.rating.toString().startsWith(VALUE_INPUT) ||
+        item.stock.toString().startsWith(VALUE_INPUT)
+      );
+      this.addQueryParam('search', VALUE_INPUT);
+    }else {
+      const searchParam = new URLSearchParams(window.location.search);
+      this.deleteQueryParam('search', searchParam);
+    }
+
+    if (+fromSliderPrice.value !== 10){
+      this.addQueryParam('price_min', fromSliderPrice.value);
+    }else {
+      const searchParam = new URLSearchParams(window.location.search);
+      this.deleteQueryParam('price_min', searchParam);
+    }
+    if (+toSliderPrice.value !== 1749) {
+      this.addQueryParam('price_max', toSliderPrice.value);
+    }else{
+      const searchParam = new URLSearchParams(window.location.search);
+      this.deleteQueryParam('price_max', searchParam);
+    }
+
+    if (+fromSliderStock.value !== 2){
+      this.addQueryParam('stock_min', fromSliderStock.value);
+    }else {
+      const searchParam = new URLSearchParams(window.location.search);
+      this.deleteQueryParam('stock_min', searchParam);
+    }
+    if (+toSliderStock.value !== 150) {
+      this.addQueryParam('stock_max', toSliderStock.value);
+    }else{
+      const searchParam = new URLSearchParams(window.location.search);
+      this.deleteQueryParam('stock_max', searchParam);
+    }
+
+    if (checkedCategories.length !== 0){
+      this.addQueryParam('category', checkedCategories.join(' '));
+    }else {
+      const searchParam = new URLSearchParams(window.location.search);
+      this.deleteQueryParam('category', searchParam);
+    }
+
+    if (checkedBrands.length !== 0){
+      this.addQueryParam('brand', checkedBrands.join('-'));
+    }else {
+      const searchParam = new URLSearchParams(window.location.search);
+      this.deleteQueryParam('brand', searchParam);
+    }
 
     CARDS_BOX.innerHTML = '';
     if (filteredData.length === 0) {
@@ -240,6 +310,7 @@ export class MainPageModel {
       const array = sortSrt.toString().split("-");
       this.sortCards(array[0], array[1]);
     }
+    NUMBER_OF_FOUND_ELEM.innerHTML = `${filteredData.length}`;
   }
 }
 

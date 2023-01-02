@@ -9,13 +9,12 @@ export class Render {
         <section class="search-bar input-group mb-3">
             <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username"
                    aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button">Search</button>
         </section>
         <section class="row items">
             <div class="col-3 filter">
                 <div class="filter-btn btn-group" role="group" aria-label="Basic example">
                     <button id="resetFilters" class="btn" type="button">Reset filters</button>
-                    <button class="btn" type="button">Copy link</button>
+                    <button class="btn copy-link" type="button">Copy link</button>
                 </div>
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                     <div class="accordion-item">
@@ -290,6 +289,7 @@ export class Render {
     }
   }
 
+
   templateItem() {
     return `
     <div class="col container">
@@ -315,3 +315,4 @@ export class Render {
     CARDS_BOX.innerHTML = card;
   }
 }
+

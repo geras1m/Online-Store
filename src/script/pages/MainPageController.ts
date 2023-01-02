@@ -1,7 +1,7 @@
-import { Cart } from "../services/cart";
-import { Header } from "../services/header";
-import { ICard } from "../types";
-import { MainPageModel } from "./MainPageModel";
+import {Cart} from "../services/cart";
+import {Header} from "../services/header";
+import {ICard} from "../types";
+import {MainPageModel} from "./MainPageModel";
 
 export class MainPageController {
     model: MainPageModel;
@@ -39,16 +39,12 @@ export class MainPageController {
         const toSliderPrice = <HTMLInputElement>document.querySelector('#toSliderPrice');
         const fromSliderStock = <HTMLInputElement>document.querySelector('#fromSliderStock');
         const toSliderStock = <HTMLInputElement>document.querySelector('#toSliderStock');
-        // const fromSliderPrice = <HTMLInputElement>document.querySelector(`#${fromPrice}`);
-        // const toSliderPrice = <HTMLInputElement>document.querySelector(`#${toPrice}`);
         this.model.fillSlider(fromSliderPrice, toSliderPrice, '#C6C6C6', '#1566d7', toSliderPrice);
         this.model.setToggleAccessible(toSliderPrice, `${toPrice}`);
 
         fromSliderPrice.oninput = () => this.model.controlFromSlider(fromSliderPrice, toSliderPrice);
         toSliderPrice.oninput = () => this.model.controlToSlider(fromSliderPrice, toSliderPrice, `${toPrice}`);
 
-        // const fromSliderStock = <HTMLInputElement>document.querySelector(`#${fromStock}`);
-        // const toSliderStock = <HTMLInputElement>document.querySelector(`#${toStock}`);
         this.model.fillSlider(fromSliderStock, toSliderStock, '#C6C6C6', '#1566d7', toSliderStock);
 
         fromSliderStock.oninput = () => this.model.controlFromSlider(fromSliderStock, toSliderStock);
@@ -109,20 +105,20 @@ export class MainPageController {
             });
         });
 
-        fromSliderPrice.addEventListener('input', () => {
+        fromSliderPrice.addEventListener('change', () => {
             this.model.elemEvent(filteredData, defaultData)
             this.addItemBtnsListeners(defaultData)
         });
-        toSliderPrice.addEventListener('input', () => {
+        toSliderPrice.addEventListener('change', () => {
             this.model.elemEvent(filteredData, defaultData)
             this.addItemBtnsListeners(defaultData)
         });
 
-        fromSliderStock.addEventListener('input', () => {
+        fromSliderStock.addEventListener('change', () => {
             this.model.elemEvent(filteredData, defaultData)
             this.addItemBtnsListeners(defaultData)
         });
-        toSliderStock.addEventListener('input', () => {
+        toSliderStock.addEventListener('change', () => {
             this.model.elemEvent(filteredData, defaultData)
             this.addItemBtnsListeners(defaultData)
         });
@@ -150,5 +146,15 @@ export class MainPageController {
                 });
             });
         }
+    }
+
+    addCopyLinkBtn() {
+        const COPY_LINK_BTN = <HTMLButtonElement>document.querySelector('.copy-link');
+        COPY_LINK_BTN.addEventListener('click', this.model.copyUrlAddress);
+    }
+
+    inputSearch(filteredData: ICard[], defaultData: ICard[]){
+        const INPUT_SEARCH = <HTMLInputElement>document.querySelector('.form-control');
+        INPUT_SEARCH.addEventListener('input', () => this.model.elemEvent(filteredData, defaultData))
     }
 }

@@ -10,6 +10,7 @@ export class MainPageView {
   addressSort: string | null;
   URL: URLSearchParams;
   addressView: string | null;
+  search: string | null;
   categoryFilter: string | null;
   brandFilter: string | null;
   rangePrice: string[];
@@ -25,6 +26,7 @@ export class MainPageView {
     this.URL = new URLSearchParams(window.location.search);
     this.addressSort = this.URL.get('sort');
     this.addressView = this.URL.get('view');
+    this.search = this.URL.get('search');
     this.categoryFilter = this.URL.get('category');
     this.brandFilter = this.URL.get('brand');
     this.rangePrice = [this.URL.get('price_min'), this.URL.get('price_max')] as string[];
@@ -48,9 +50,11 @@ export class MainPageView {
     this.render.Checkbox(this.selectedCards, 'category', <HTMLElement>document.querySelector('.category'));
     this.render.Checkbox(this.selectedCards, 'brand', <HTMLElement>document.querySelector('.brand'));
     this.controller.resetFilters(this.selectedCards, this.filteredData);
+    this.controller.addCopyLinkBtn();
     this.viewChange();
     this.controller.sort(this.selectedCards);
     this.filterData(this.selectedCards);
+    this.controller.inputSearch(this.selectedCards, this.filteredData);
     this.render.header(this.selectedCards);
     if (this.addressSort) {
       const array = this.addressSort.toString().split("-");
@@ -59,6 +63,11 @@ export class MainPageView {
     if (this.addressView) {
       this.controller.changeView(this.addressView);
     }
+    if (this.search){
+      const INPUT_SEARCH = <HTMLInputElement>document.querySelector('.form-control');
+      INPUT_SEARCH.value = this.search;
+      this.controller.model.elemEvent(this.selectedCards, this.selectedCards);
+    }
     if (this.categoryFilter || this.brandFilter) {
       const filteredData: ICard[] = this.selectedCards.map(item => item);
       document.querySelectorAll('.form-check-input').forEach(item => {
@@ -66,31 +75,37 @@ export class MainPageView {
           item.setAttribute('checked', 'checked');
           this.controller.model.elemEvent(this.selectedCards, filteredData);
         }
-        if (this.brandFilter?.split(' ').includes(item.id)) {
+        if (this.brandFilter?.split('-').includes(item.id)) {
           item.setAttribute('checked', 'checked');
           this.controller.model.elemEvent(this.selectedCards, filteredData);
         }
       })
     }
-    if (this.rangePrice[0] && this.rangePrice[1]) {
+    if (this.rangePrice[0]) {
       const PRICE_MIN = <HTMLSpanElement>document.querySelector('.price-range>.text-start>.min-price');
-      const PRICE_MAX = <HTMLSpanElement>document.querySelector('.price-range>.text-end>.max-price');
       const FROM_RANGE = <HTMLInputElement>document.querySelector('#fromSliderPrice');
-      const TO_RANGE = <HTMLInputElement>document.querySelector('#toSliderPrice');
       PRICE_MIN.innerText = `${this.rangePrice[0]}`;
-      PRICE_MAX.innerText = `${this.rangePrice[1]}`;
       FROM_RANGE.value = PRICE_MIN.innerText;
+      this.controller.model.elemEvent(this.selectedCards, this.filteredData);
+    }
+    if ( this.rangePrice[1]) {
+      const PRICE_MAX = <HTMLSpanElement>document.querySelector('.price-range>.text-end>.max-price');
+      const TO_RANGE = <HTMLInputElement>document.querySelector('#toSliderPrice');
+      PRICE_MAX.innerText = `${this.rangePrice[1]}`;
       TO_RANGE.value = PRICE_MAX.innerText;
       this.controller.model.elemEvent(this.selectedCards, this.filteredData);
     }
-    if (this.rangeStock[0] && this.rangeStock[0]) {
+    if (this.rangeStock[0]) {
       const STOCK_MIN = <HTMLDivElement>document.querySelector('.stock-range>.text-start');
-      const STOCK_MAX = <HTMLDivElement>document.querySelector('.stock-range>.text-end');
       const FROM_RANGE = <HTMLInputElement>document.querySelector('#fromSliderStock');
-      const TO_RANGE = <HTMLInputElement>document.querySelector('#toSliderStock');
       STOCK_MIN.innerText = `${this.rangeStock[0]}`;
-      STOCK_MAX.innerText = `${this.rangeStock[1]}`;
       FROM_RANGE.value = this.rangeStock[0];
+      this.controller.model.elemEvent(this.selectedCards, this.filteredData);
+    }
+    if (this.rangeStock[1]) {
+      const STOCK_MAX = <HTMLDivElement>document.querySelector('.stock-range>.text-end');
+      const TO_RANGE = <HTMLInputElement>document.querySelector('#toSliderStock');
+      STOCK_MAX.innerText = `${this.rangeStock[1]}`;
       TO_RANGE.value = this.rangeStock[1];
       this.controller.model.elemEvent(this.selectedCards, this.filteredData);
     }
