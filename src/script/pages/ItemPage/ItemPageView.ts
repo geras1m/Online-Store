@@ -35,6 +35,11 @@ export class ItemPageView {
     const removeBtns = document.querySelectorAll('.remove');
     if (addBtns) {
         addBtns.forEach(el => {
+            el.removeEventListener('click', (e) => {
+                e.preventDefault()
+                this.cart.addToCart(el);
+                this.header.update(defaultData, 'add', el)
+            });
             el.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.cart.addToCart(el);
@@ -45,6 +50,11 @@ export class ItemPageView {
 
     if (removeBtns) {
         removeBtns.forEach(el => {
+            el.removeEventListener('click', (e) => {
+                e.preventDefault();
+                this.cart.removeFromCart(el);
+                this.header.update(defaultData, 'remove', el)
+            });
             el.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.cart.removeFromCart(el);

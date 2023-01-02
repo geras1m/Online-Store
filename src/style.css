@@ -14,7 +14,7 @@ header {
   padding: 20px 1px;
 }
 
-.cart__items {
+header .cart__items {
   background-color: #FFB745;
   border-radius: 50%;
   padding: 1px 7px;
@@ -22,7 +22,7 @@ header {
   z-index: 1;
   position: relative;
 }
-.cart__items::before {
+header .cart__items::before {
   content: "";
   height: 40px;
   width: 40px;
@@ -176,6 +176,15 @@ header {
   justify-content: space-between;
 }
 
+.input-group-text img {
+  width: 100%;
+  max-width: 30px;
+}
+
+.page-btns {
+  max-width: 100px;
+}
+
 a {
   text-decoration: none;
   color: currentColor;
@@ -279,4 +288,8 @@ input[type=range] {
 
 .grey-color {
   color: #949494;
+}
+
+#main {
+  min-height: calc(100vh - 147px);
 }
