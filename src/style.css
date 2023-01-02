@@ -154,7 +154,7 @@ header {
   cursor: -webkit-zoom-in;
   cursor: zoom-in;
 }
-.item .carousel .carousel-inner:hover, .item .carousel :active {
+.item .carousel .carousel-inner:active {
   z-index: 3;
   transform: scale(1.7);
 }

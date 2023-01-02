@@ -31,7 +31,7 @@
     cursor: -webkit-zoom-in;
     cursor: zoom-in;
 
-    .carousel-inner:hover,:active {
+    .carousel-inner:active {
       z-index: 3;
       transform: scale(1.7);
     }
