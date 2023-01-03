@@ -238,7 +238,7 @@ export class Render {
     if (data[num].images.length > 1 && imageHTML && indicators && inner) {
       let count = 1;
       for (let t = 0; t < data[num].images.length; t++) {
-        if (data[num].images[t] === data[num].thumbnail || data[0].images[t] === "https://i.dummyjson.com/data/products/1/1.jpg" || data[0].images[t] === "https://i.dummyjson.com/data/products/1/2.jpg") {
+        if (data[num].images[t] === data[num].thumbnail || data[0].images[t] === "https://i.dummyjson.com/data/products/1/1.jpg" || data[0].images[t] === "https://i.dummyjson.com/data/products/1/2.jpg" || data[num].images[t] === "https://i.dummyjson.com/data/products/77/3.jpg") {
           continue;
         }
         indicators.innerHTML += `<button type="button" data-bs-target="#carouselItemPicture${num}" data-bs-slide-to="${count}" aria-label="Slide ${count}"></button>`;
@@ -354,7 +354,7 @@ export class Render {
                 <span class="input-group-text" id="promo">Promo code</span>
                 <input type="text" class="form-control" aria-label="Promo code input" aria-describedby="promo">
             </div>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#buy-now-modal">
+            <button type="button" class="btn btn-primary buy-now-cart" data-bs-toggle="modal" data-bs-target="#buy-now-modal">
                 Buy now
             </button>
             <div class="modal fade" id="buy-now-modal" tabindex="-1" aria-labelledby="buy-now-modalLabel"

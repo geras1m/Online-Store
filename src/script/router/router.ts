@@ -58,7 +58,9 @@ export class Router implements IRouter {
   }
 
   navigate(path = ''): void {
-    const test:string = window.location.href.slice(-2).replace( /^\D+/g, '');
+    const arr = window.location.href.split('/');
+    const test:string = arr[arr.length - 1].replace( /^\D+/g, '');
+    console.log(test);
     window.location.href = `${window.location.href.replace(/#(.*)$/, '')}#/${this.getPath(path)}`;
     if (test) {
       window.location.href = `${window.location.href.replace(/#(.*)$/, '')}#/${this.getPath(path)}/${test}`;

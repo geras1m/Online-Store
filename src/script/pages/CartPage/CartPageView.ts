@@ -10,6 +10,8 @@ export class CartPageView {
   rootNode: HTMLElement;
   render: Render;
   cart: Cart;
+  URL: URLSearchParams;
+  addressModal: string | null;
 
 
   constructor() {
@@ -18,6 +20,8 @@ export class CartPageView {
     this.item = [];
     this.render = new Render;
     this.cart = new Cart();
+    this.URL = new URLSearchParams(window.location.search);
+    this.addressModal = this.URL.get('modal');
   }
 
   async load() {
@@ -35,5 +39,29 @@ export class CartPageView {
     if (this.item.length <= 0 && itemsPath) {
       itemsPath.innerHTML = 'Items not found';
     }
+    if (this.addressModal) {
+      const cartBtn = document.querySelector('.buy-now-cart') as HTMLElement | null;
+      if (cartBtn) {
+        cartBtn.click();
+        this.removeQueryParams();
+      }
+    }
+  }
+
+  removeQueryParams() {
+    const close = document.querySelector('.btn-close');
+    const background = document.getElementById('buy-now-modal');
+    const arr = window.location.href.split('/');
+    arr[4] = '#';
+    close?.addEventListener('click', () => {
+      window.location.href = arr.join('/');
+    });
+
+    background?.addEventListener('click', function(event) {
+      if (event.currentTarget !== event.target) {
+        return;
+      }
+      window.location.href = arr.join('/');
+    }, false)
   }
 }

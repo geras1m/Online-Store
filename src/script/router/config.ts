@@ -1,3 +1,4 @@
+import { ErrorPageController } from "../pages/404/ErrorPageController";
 import { CartPageController } from "../pages/CartPage/CartPageController";
 import { ItemPageController } from "../pages/ItemPage/ItemPageController";
 import { MainPageView } from "../pages/MainPageView";
@@ -7,11 +8,14 @@ class Config {
   mainPage: MainPageView;
   itemPage: ItemPageController;
   cartPage: CartPageController;
+  errPage: ErrorPageController;
 
   constructor() {
     this.mainPage = new MainPageView();
     this.itemPage = new ItemPageController();
     this.cartPage = new CartPageController();
+    this.errPage = new ErrorPageController();
+
   }
 
   public getRoutes(): IRouteOption[] {
@@ -28,8 +32,11 @@ class Config {
         path: /cart/,
         callback: () => this.cartPage.createPage(),
       },
+      {
+        path: /./,
+        callback: () => this.errPage.createPage(),
+      },
     ];
-
     return currRoutes;
   }
 }

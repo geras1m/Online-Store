@@ -1,11 +1,14 @@
+import { ErrorPageController } from "../404/ErrorPageController";
 import { ItemPageView } from "./ItemPageView";
 
 
 export class ItemPageController {
   view: ItemPageView;
+  errPage: ErrorPageController;
 
   constructor() {
     this.view = new ItemPageView();
+    this.errPage = new ErrorPageController();
   }
 
   public createPage(): void {
@@ -13,11 +16,11 @@ export class ItemPageController {
     if (arr[arr.length - 1] === 'item') {
       window.location.href = arr.slice(arr.length).join('/');
     }
-    let id = arr[arr.length - 1];
-    if (id === '00') {
-      id = '100';
+    const id = arr[arr.length - 1];
+    if (Number(id) > 100 || Number(id) < 1 || !/^\d+$/.test(id)) {
+      this.errPage.createPage();
+    } else {
+      this.view.load(Number(id));
     }
-    console.log(id);
-    this.view.load(Number(id));
   }
 }
