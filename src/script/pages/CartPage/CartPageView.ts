@@ -2,6 +2,7 @@ import { Cart } from "../../services/cart";
 import { LoadData } from "../../services/loader";
 import { Render } from "../../services/render";
 import { ICard } from "../../types";
+import { Pagination } from "../../services/pagination";
 
 export class CartPageView {
   data: LoadData;
@@ -11,6 +12,7 @@ export class CartPageView {
   cart: Cart;
   URL: URLSearchParams;
   addressModal: string | null;
+  pagination: Pagination;
 
 
   constructor() {
@@ -21,6 +23,7 @@ export class CartPageView {
     this.cart = new Cart();
     this.URL = new URLSearchParams(window.location.search);
     this.addressModal = this.URL.get('modal');
+    this.pagination = new Pagination();
   }
 
   async load() {
@@ -32,9 +35,10 @@ export class CartPageView {
     }
     this.item = arr.filter(e => keys.includes(String(e.id)));
     const itemsPath = <HTMLElement>document.querySelector('.cart-items');
-    this.render.items(this.item, itemsPath, 'cart');
+    // this.render.items(this.item, itemsPath, 'cart');
     this.render.header(this.item);
     this.cart.addItemBtnsListeners(this.item);
+
     if (this.item.length <= 0 && itemsPath) {
       itemsPath.innerHTML = 'Items not found';
     }
@@ -45,6 +49,7 @@ export class CartPageView {
         this.removeQueryParams();
       }
     }
+    this.pagination.pagination(this.item);
   }
 
   removeQueryParams() {

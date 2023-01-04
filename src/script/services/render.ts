@@ -336,13 +336,16 @@ export class Render {
         <div class="col row-cols-1">
             <div class="cart-head col row">
                 <div class="col">Products In Cart </div>
-                <div class="col">Limit <input type="number" id="typeNumber" value='10' min="1">
+                <div class="col">Limit <input type="number" id="typeNumber" value='3' min="1">
                 </div>
-                <span class="btn-group page-btns" role="group">
+                <ul class="pagination">
+                  
+                </ul>
+                <!--<span class="btn-group page-btns" role="group">
                     <button type="button" class="btn prev-page">-</button>
                     <button type="button" class="btn page-count" disabled>1</button>
                     <button type="button" class="btn next-page">+</button>
-                </span>
+                </span>-->
             </div>
             <div class="cart-items col row-cols-md-1"></div>
         </div>
