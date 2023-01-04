@@ -1,5 +1,4 @@
 import { Cart } from "../../services/cart";
-import { Header } from "../../services/header";
 import { LoadData } from "../../services/loader";
 import { Render } from "../../services/render";
 import { ICard } from "../../types";

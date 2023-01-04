@@ -1,11 +1,17 @@
 import { ICard } from "../types";
 import { Header } from "./header";
+import { LoadData } from "./loader";
+import { Render } from "./render";
 
 export class Cart {
   header: Header;
+  render: Render;
+  data: LoadData;
 
   constructor() {
     this.header = new Header();
+    this.render = new Render;
+    this.data = new LoadData;
   }
 
   addItemBtnsListeners(defaultData: ICard[]) {
@@ -33,7 +39,7 @@ export class Cart {
         removeBtns.forEach(el => {
             el.addEventListener('click', (e) => {
                 e.preventDefault();
-                this.removeFromCart(el);
+                this.removeFromCart(el, defaultData);
                 this.header.update(defaultData, 'remove', el)
             });
         });
@@ -53,7 +59,7 @@ export class Cart {
     }
   }
 
-  removeFromCart(target: Element) {
+  removeFromCart(target: Element, defaultData?: ICard[]) {
     const itemCount = target.parentElement?.querySelector('.item-count');
     let counterCart = Number(target.parentElement?.querySelector('.item-count')?.innerHTML);
     const card: HTMLElement | null = target.closest('.card');
@@ -67,6 +73,21 @@ export class Cart {
       if (counterCart === 0) {
         target.parentElement?.classList.add('default');
         localStorage.removeItem(String(card.dataset.id));
+        const cart = <HTMLElement>document.querySelector('.cart-items');
+        if (cart && defaultData) {
+          console.log(0)
+          const keys: (string | null)[] = [];
+          for (let i = 0; i < localStorage.length; i++) {
+            keys.push(localStorage.key(i));
+          }
+          const items = defaultData.filter(e => keys.includes(String(e.id)));
+          cart.innerHTML = '';
+          this.render.items(items, cart, 'cart');
+          const itemNumbers = document.querySelectorAll('.item-number');
+          if (itemNumbers) {
+            itemNumbers.forEach(el => el.classList.remove('hidden'));
+          }
+        }
       }
     }
   }
