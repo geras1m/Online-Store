@@ -87,6 +87,10 @@ export class Cart {
           if (itemNumbers) {
             itemNumbers.forEach(el => el.classList.remove('hidden'));
           }
+          this.addItemBtnsListeners(defaultData);
+          if (items.length <= 0 && cart) {
+            cart.innerHTML = 'Items not found';
+          }
         }
       }
     }
