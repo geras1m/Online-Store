@@ -238,7 +238,7 @@ export class Render {
     if (data[num].images.length > 1 && imageHTML && indicators && inner) {
       let count = 1;
       for (let t = 0; t < data[num].images.length; t++) {
-        if (data[num].images[t] === data[num].thumbnail || data[0].images[t] === "https://i.dummyjson.com/data/products/1/1.jpg" || data[0].images[t] === "https://i.dummyjson.com/data/products/1/2.jpg" || data[num].images[t] === "https://i.dummyjson.com/data/products/77/3.jpg") {
+        if (data[num].images[t] === data[num].thumbnail || data[0].images[t] === "https://i.dummyjson.com/data/products/1/1.jpg" || data[0].images[t] === "https://i.dummyjson.com/data/products/1/2.jpg" || data[num].images[t] === "https://i.dummyjson.com/data/products/77/3.jpg" || data[num].images[t] === "https://i.dummyjson.com/data/products/5/1.jpg") {
           continue;
         }
         indicators.innerHTML += `<button type="button" data-bs-target="#carouselItemPicture${num}" data-bs-slide-to="${count}" aria-label="Slide ${count}"></button>`;
