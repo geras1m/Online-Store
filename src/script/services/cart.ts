@@ -57,12 +57,14 @@ export class Cart {
       localStorage.setItem(String(card.dataset.id), String(counterCart))
       target.parentElement?.classList.remove('default');
     }
+    this.render.addDisabled(target);
   }
 
   removeFromCart(target: Element, defaultData?: ICard[]) {
     const itemCount = target.parentElement?.querySelector('.item-count');
     let counterCart = Number(target.parentElement?.querySelector('.item-count')?.innerHTML);
     const card: HTMLElement | null = target.closest('.card');
+
     if (itemCount) {
       counterCart--;
       itemCount.innerHTML = counterCart.toString();
@@ -93,6 +95,16 @@ export class Cart {
           }
         }
       }
+    }
+    this.removeDisabled(target);
+  }
+
+  removeDisabled (target: Element) {
+    const stock = Number(target.parentElement?.parentElement?.parentElement?.querySelector('.stock__num')?.innerHTML);
+    const addBtn = target.parentElement?.querySelector('.add');
+    console.log(stock);
+    if (stock > Number(target.parentElement?.querySelector('.item-count')?.innerHTML) && addBtn && addBtn.hasAttribute('disabled')) {
+      addBtn.removeAttribute('disabled');
     }
   }
 }

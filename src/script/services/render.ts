@@ -140,7 +140,7 @@ export class Render {
       <div class="card-body">
         <h5 class="card-title">${data[i].title}</h5>
         <p class="text-muted card-text">
-        <small class="stock">In stock: ${data[i].stock}</small>
+        <small class="stock">In stock: <span class="stock__num">${data[i].stock}</span></small>
         <p>
           <small class="text-muted category">${data[i].category},</small>
           <small class="text-muted brand">${data[i].brand},</small>
@@ -189,7 +189,7 @@ export class Render {
               <div class="card-body">
                 <h5 class="card-title">${data[i].title}</h5>
                 <p class="text-muted card-text">
-                <small class="stock">In stock: ${data[i].stock}</small>
+                <small class="stock">In stock: <span class="stock__num">${data[i].stock}</span></small>
                 <p>
                   <small class="text-muted category">${data[i].category},</small>
                   <small class="text-muted brand">${data[i].brand},</small>
@@ -226,8 +226,29 @@ export class Render {
       this.images(data, i, flag);
       count++;
     }
+    this.addDisabled();
     if (flag === 'cart' && itemNumbers) {
       itemNumbers.forEach(el => el.classList.remove('hidden'));
+    }
+  }
+
+  addDisabled(target?: Element) {
+    if (target) {
+      const stock = Number(target.parentElement?.parentElement?.parentElement?.querySelector('.stock__num')?.innerHTML);
+      const addBtn = target.parentElement?.querySelector('.add');
+      console.log(stock);
+      if (stock === Number(target.parentElement?.querySelector('.item-count')?.innerHTML) && addBtn) {
+        addBtn.setAttribute('disabled', '');
+      }
+    } else {
+      const items = document.querySelectorAll('.item-count');
+      items.forEach(el => {
+        const stock = el.parentElement?.parentElement?.parentElement?.querySelector('.stock__num');
+        const addBtn = el.parentElement?.querySelector('.add') as HTMLInputElement;
+        if (stock?.innerHTML === el.innerHTML && addBtn) {
+          addBtn.setAttribute('disabled', '');
+        }
+      })
     }
   }
 
