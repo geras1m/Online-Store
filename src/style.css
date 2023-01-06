@@ -181,6 +181,13 @@ header .cart__items::before {
   max-width: 30px;
 }
 
+.modal-body input:valid {
+  border: 2px solid rgb(17, 199, 142);
+}
+.modal-body input:invalid {
+  border: 2px solid rgb(227, 7, 95);
+}
+
 .page-btns {
   max-width: 100px;
 }

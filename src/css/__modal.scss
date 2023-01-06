@@ -2,3 +2,11 @@
   width: 100%;
   max-width: 30px;
 }
+.modal-body {
+  input:valid {
+    border: 2px solid rgb(17, 199, 142);
+  }
+  input:invalid {
+    border: 2px solid rgb(227, 7, 95);
+  }
+}

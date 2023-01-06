@@ -45,6 +45,18 @@ export class CartPageView {
         this.removeQueryParams();
       }
     }
+    this.checkInput();
+  }
+
+  checkInput() {
+    const field = <HTMLInputElement>document.querySelector('.card-month');
+    if (field) {
+      field.addEventListener('input', () =>{
+        if (field.value.length === 2 && !field.value.includes('/')) {
+          field.value += '/';
+        }
+      })
+    }
   }
 
   removeQueryParams() {

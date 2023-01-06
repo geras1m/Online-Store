@@ -388,67 +388,66 @@ export class Render {
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="row g-3 needs-validation">
+                            <form class="row g-3">
                                 <div class="form-floating mb-3">
                                     <input type="email" class="form-control" id="floatingEmale"
                                         placeholder="name@example.com" required>
                                     <label for="floatingEmale">Email address</label>
                                 </div>
-                                <div class="mb-3 form-floating">
+                                <div class="mb-3 form-floating position-relative">
                                     <input type="text" class="form-control" id="validationName"
-                                        placeholder="Alex Smith" required>
+                                        placeholder="Alex Smith" minlength='3' required title="Must contain at least two words, only letters allowed!" pattern='(([a-zA-Z]+){3,}\\s){1,}([a-zA-Z]+){3,}'>
                                     <label for="validationName">Name</label>
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>
                                 </div>
                                 <div class="mb-3 form-floating">
                                     <input type="tel" id="typePhone" class="form-control"
-                                        placeholder="+375290000000" required>
+                                        placeholder="+375290000000" minlength="10" value='+' pattern='^[\\+]{1}.\\d*' title="Must start with '+' and only contain numbers." required>
                                     <label class="form-label" for="typePhone">Phone number</label>
                                 </div>
                                 <div class="col-md-9 form-floating">
-                                    <input type="text" class="form-control" id="validationCustom03"
-                                        placeholder="New York" required>
+                                    <input type="text" class="form-control"
+                                        id="validationCustom03"
+                                        placeholder="New York"
+                                        pattern='(([a-zA-Z\\d]+){5,}\\s){2,}([a-zA-Z\\d]+){5,}'
+                                        title="Must contain at least 3 words with at least 5 characters!" required>
                                     <label for="validationCustom03">Adress</label>
-                                    <div class="invalid-feedback">
-                                        Please provide a valid adress.
-                                    </div>
                                 </div>
                                 <div class="col-md-3 form-floating">
-                                    <input type="text" class="form-control" id="validationCustom05"
-                                        placeholder="220017" required>
+                                    <input type="tel" class="form-control" id="validationCustom05"
+                                        placeholder="220017" minlength='6'
+                                        pattern='\\d*'
+                                        title="Must contain at least 6 numbers" required>
                                     <label for="validationCustom05">Zip</label>
-                                    <div class="invalid-feedback">
-                                        Please provide a valid zip.
-                                    </div>
                                 </div>
-                                <div class="col">
+                                <div class="col credit-card">
                                     <div class="row">
                                         <div class="col">
-                                            <div class="credit-card">
+                                            <div class="credit-card text-start">
                                                 <div class="card-header">
-                                                    <strong>Credit Card</strong>
-                                                    <small>enter your card details</small>
+                                                    <strong>Payment Details</strong>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-sm-12">
-                                                            <div class="form-group">
-                                                                <label for="name">Card Holder Name</label>
+                                                            <div class="form-group form-floating">
                                                                 <input class="form-control" id="name" type="text"
-                                                                    placeholder="Enter your Card Holder Name"
+                                                                    placeholder="Card Holder Name"
                                                                     required>
+                                                                <label for="name">Card Holder Name</label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-sm-12">
                                                             <div class="form-group">
-                                                                <label for="ccnumber">Credit Card Number</label>
+                                                                <label for="ccnumber"><small>Credit Card Number</small></label>
                                                                 <div class="input-group">
                                                                     <input class="form-control" type="text"
-                                                                        placeholder="0000 0000 0000 0000" required>
+                                                                        placeholder="0000 0000 0000 0000"
+                                                                        pattern='\\d*'
+                                                                        minlength='16'
+                                                                        maxlength='16'
+                                                                        title="Must contain only numbers!" required>
                                                                     <div class="input-group-append">
                                                                         <span class="input-group-text">
                                                                             <img src="https://cdn-icons-png.flaticon.com/512/4341/4341764.png"
@@ -459,49 +458,26 @@ export class Render {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="form-group col-sm-4">
-                                                            <label for="ccmonth">Month</label>
-                                                            <select class="form-control" id="ccmonth">
-                                                                <option>1</option>
-                                                                <option>2</option>
-                                                                <option>3</option>
-                                                                <option>4</option>
-                                                                <option>5</option>
-                                                                <option>6</option>
-                                                                <option>7</option>
-                                                                <option>8</option>
-                                                                <option>9</option>
-                                                                <option>10</option>
-                                                                <option>11</option>
-                                                                <option>12</option>
-                                                            </select>
+                                                    <small class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label for="cvv">Month/Year</label>
+                                                                <input class="form-control card-month" id="cvv" type="text"
+                                                                    placeholder="01/23" maxlength='5'
+                                                                    pattern='(1[0-2]|0[1-9])/(2[3-9]|3[1-9]|4[1-9])'
+                                                                    title="Must contain only numbers!" required>
+                                                            </div>
                                                         </div>
-                                                        <div class="form-group col-sm-4">
-                                                            <label for="ccyear">Year</label>
-                                                            <select class="form-control" id="ccyear">
-                                                                <option>2023</option>
-                                                                <option>2024</option>
-                                                                <option>2025</option>
-                                                                <option>2026</option>
-                                                                <option>2027</option>
-                                                                <option>2028</option>
-                                                                <option>2029</option>
-                                                                <option>2030</option>
-                                                                <option>2031</option>
-                                                                <option>2032</option>
-                                                                <option>2033</option>
-                                                                <option>2034</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-sm-4">
+                                                        <div class="col">
                                                             <div class="form-group">
                                                                 <label for="cvv">CVV/CVC</label>
                                                                 <input class="form-control" id="cvv" type="text"
-                                                                    placeholder="123" required>
+                                                                    placeholder="123" minlength='3' maxlength='3'
+                                                                    pattern='\\d*'
+                                                                    title="Must contain only numbers!" required>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </small>
                                                 </div>
                                             </div>
                                         </div>
