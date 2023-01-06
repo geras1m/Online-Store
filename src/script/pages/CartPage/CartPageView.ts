@@ -37,7 +37,7 @@ export class CartPageView {
     const itemsPath = <HTMLElement>document.querySelector('.cart-items');
     // this.render.items(this.item, itemsPath, 'cart');
     this.render.header(this.item);
-    this.cart.addItemBtnsListeners(this.item);
+
 
     if (this.item.length <= 0 && itemsPath) {
       itemsPath.innerHTML = 'Items not found';
@@ -49,7 +49,8 @@ export class CartPageView {
         this.removeQueryParams();
       }
     }
-    this.pagination.pagination(this.item);
+    this.pagination.pagination(this.item, () => this.cart.addItemBtnsListeners(this.item));
+    // this.cart.addItemBtnsListeners(this.item);
   }
 
   removeQueryParams() {

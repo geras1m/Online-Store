@@ -1,5 +1,4 @@
 export interface ICard {
-    "order"?: number,
     "id": number,
     "title": string,
     "description": string,
@@ -10,5 +9,6 @@ export interface ICard {
     "brand": string,
     "category": string,
     "thumbnail": string,
-    "images": string[]
+    "images": string[],
+    "order"?: number,
 }

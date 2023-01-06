@@ -86,7 +86,7 @@ export class Cart {
           const items = defaultData.filter(e => keys.includes(String(e.id)));
           cart.innerHTML = '';
           // this.render.items(items, cart, 'cart');
-          this.pagination.pagination(items)
+          this.pagination.pagination(items,() => this.addItemBtnsListeners(items))
           const itemNumbers = document.querySelectorAll('.item-number');
           if (itemNumbers) {
             itemNumbers.forEach(el => el.classList.remove('hidden'));
