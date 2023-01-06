@@ -155,6 +155,9 @@ export class MainPageController {
 
     inputSearch(filteredData: ICard[], defaultData: ICard[]){
         const INPUT_SEARCH = <HTMLInputElement>document.querySelector('.form-control');
-        INPUT_SEARCH.addEventListener('input', () => this.model.elemEvent(filteredData, defaultData))
+        INPUT_SEARCH.addEventListener('input', () => {
+            this.model.elemEvent(filteredData, defaultData)
+            this.addItemBtnsListeners(filteredData)
+        })
     }
 }
