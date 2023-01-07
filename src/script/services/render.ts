@@ -167,7 +167,7 @@ export class Render {
       for (let j = 0; j < localStorage.length; j++) {
         if (data[i].id === Number(localStorage.key(j))) {
           card = `<a href='#/item/${data[i].id}' class="card h-100" data-id = '${data[i].id}' data-price = "${finalPrice}" data-rating = "${data[i].rating}" data-discount = "${data[i].discountPercentage}">
-                <div class="item-number hidden">${count}</div>
+               <!-- <div class="item-number hidden">${count}</div> -->
                 <div id="carouselItemPicture${i}" class="carousel carousel-dark slide car${i}">
                   <div class="carousel-indicators indicators${i}">
                     <button type="button" data-bs-target="#carouselItemPicture${i}" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 0"></button>

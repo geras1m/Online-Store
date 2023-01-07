@@ -49,7 +49,9 @@ export class CartPageView {
         this.removeQueryParams();
       }
     }
+
     this.pagination.pagination(this.item, () => this.cart.addItemBtnsListeners(this.item));
+
     // this.cart.addItemBtnsListeners(this.item);
   }
 
@@ -59,14 +61,14 @@ export class CartPageView {
     const arr = window.location.href.split('/');
     arr[4] = '#';
     close?.addEventListener('click', () => {
-      window.location.href = arr.join('/');
+      history.pushState(null, '', arr.join('/'));
     });
 
     background?.addEventListener('click', function(event) {
       if (event.currentTarget !== event.target) {
         return;
       }
-      window.location.href = arr.join('/');
+      history.pushState(null, '', arr.join('/'));
     }, false)
   }
 }
