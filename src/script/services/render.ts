@@ -11,7 +11,10 @@ export class Render {
                    aria-describedby="button-addon2">
         </section>
         <section class="row items">
-            <div class="col-3 filter">
+            <div class="col-3 filter offcanvas offcanvas-start" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" data-bs-scroll="true" data-bs-spy="scroll">
+                <div class="offcanvas-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
                 <div class="filter-btn btn-group" role="group" aria-label="Basic example">
                     <button id="resetFilters" class="btn" type="button">Reset filters</button>
                     <button class="btn copy-link" type="button">Copy link</button>
@@ -73,10 +76,12 @@ export class Render {
                         <input id="toSliderStock" type="range" value="100" min="0" max="100"/>
                     </div>
                 </div>
-
             </div>
             <div class="col cards">
                 <div class="row text-center cards__header">
+                    <a class="btn filter-btn col text-start" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+                    ↞Filters
+                    </a>
                     <div class="col sort-menu">
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -367,7 +372,7 @@ export class Render {
             </div>
             <div class="cart-items col row-cols-md-1"></div>
         </div>
-        <div class="col-3 summary text-center">
+        <div class="col summary text-center">
             <p>Summary</p>
             <p>Products: <span class="cart__items">0</span></p>
             <p>Total: €<span class="cart-sum__number">0.0</span></p>
@@ -383,12 +388,12 @@ export class Render {
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="buy-now-modalLabel">Modal title</h1>
+                            <h1 class="modal-title fs-5" id="buy-now-modalLabel">Purchase form</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="row g-3">
+                            <form class="row g-3 modal-form">
                                 <div class="form-floating mb-3">
                                     <input type="email" class="form-control" id="floatingEmale"
                                         placeholder="name@example.com" required>
@@ -440,18 +445,18 @@ export class Render {
                                                     <div class="row">
                                                         <div class="col-sm-12">
                                                             <div class="form-group">
-                                                                <label for="ccnumber"><small>Credit Card Number</small></label>
+                                                                <label for="ccnumber"><small>Credit Card Number (try starting from 1, 2 and 3)</small></label>
                                                                 <div class="input-group">
-                                                                    <input class="form-control" type="text"
-                                                                        placeholder="0000 0000 0000 0000"
+                                                                    <input class="form-control card-num" type="text"
+                                                                        placeholder="0000000000000000"
                                                                         pattern='\\d*'
                                                                         minlength='16'
                                                                         maxlength='16'
                                                                         title="Must contain only numbers!" required>
                                                                     <div class="input-group-append">
                                                                         <span class="input-group-text">
-                                                                            <img src="https://cdn-icons-png.flaticon.com/512/4341/4341764.png"
-                                                                                alt="Credit card icon">
+                                                                            <img src="https://www.freeiconspng.com/thumbs/credit-card-icon-png/credit-card-black-png-0.png"
+                                                                                alt="Credit card icon" class="card-img">
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -484,7 +489,12 @@ export class Render {
                                     </div>
                                 </div>
                                 <div class="col-12 modal-footer">
-                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                  <button class="btn btn-primary col-12" type="submit" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Submit</button>
+                                  <div class="collapse" id="collapseExample">
+                                    <div class="card-body invalid-message">
+                                      Please fill out all fields correctly!
+                                    </div>
+                                  </div>
                                 </div>
                             </form>
                         </div>
@@ -493,8 +503,10 @@ export class Render {
             </div>
         </div>
     </div>
+
 </div>
-    `;
+
+`;
   }
 }
 

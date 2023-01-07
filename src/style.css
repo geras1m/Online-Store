@@ -113,6 +113,10 @@ header .cart__items::before {
   display: inline;
 }
 
+.item-count {
+  pointer-events: none;
+}
+
 .footer {
   background-color: #4174CB;
   margin-top: 10px;
@@ -176,9 +180,8 @@ header .cart__items::before {
   justify-content: space-between;
 }
 
-.input-group-text img {
-  width: 100%;
-  max-width: 30px;
+.input-group-append img {
+  max-height: 40px;
 }
 
 .modal-body input:valid {
@@ -187,9 +190,32 @@ header .cart__items::before {
 .modal-body input:invalid {
   border: 2px solid rgb(227, 7, 95);
 }
+.modal-body .invalid-message {
+  color: rgb(227, 7, 95);
+}
+
+.custom-tooltip {
+  --bs-tooltip-bg: var(--bs-primary);
+  z-index: 100000000;
+}
+
+.tooltip {
+  z-index: 100000000;
+}
+
+.alert {
+  padding: 20px;
+  background-color: rgb(17, 199, 142);
+  color: white;
+  margin-bottom: 15px;
+}
 
 .page-btns {
   max-width: 100px;
+}
+
+.summary {
+  max-width: 300px;
 }
 
 a {
@@ -203,7 +229,25 @@ a {
   background-color: #4174CB;
 }
 
-.filter-btn, .dropdown-toggle, .add {
+.accordion-collapse {
+  max-height: 33.3333333333vh;
+  overflow-y: auto;
+}
+
+.filter {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.offcanvas-header {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.filter-btn,
+.dropdown-toggle,
+.add {
   width: 100%;
 }
 
@@ -299,4 +343,17 @@ input[type=range] {
 
 #main {
   min-height: calc(100vh - 147px);
+}
+
+.filter-btn {
+  border: 1px solid;
+  background-color: white;
+  color: #333333;
+}
+.filter-btn img {
+  max-width: 35px;
+}
+.filter-btn:hover {
+  color: #4174CB;
+  border: 1px solid #4174CB;
 }

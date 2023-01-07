@@ -46,18 +46,50 @@ export class CartPageView {
       }
     }
     this.checkInput();
+    this.modalSubmit();
   }
 
   checkInput() {
-    const field = <HTMLInputElement>document.querySelector('.card-month');
-    if (field) {
-      field.addEventListener('input', () =>{
-        if (field.value.length === 2 && !field.value.includes('/')) {
-          field.value += '/';
+    const fieldDate = <HTMLInputElement>document.querySelector('.card-month');
+    const fieldCardNum = <HTMLInputElement>document.querySelector('.card-num');
+    const fieldCardIMG = <HTMLImageElement>document.querySelector('.card-img');
+    if (fieldDate) {
+      fieldDate.addEventListener('input', () =>{
+        if (fieldDate.value.length === 2 && !fieldDate.value.includes('/')) {
+          fieldDate.value += '/';
+        }
+      })
+    }
+    if (fieldCardNum && fieldCardIMG) {
+      fieldCardNum.addEventListener('input', () => {
+        if (fieldCardNum.value[0] === '2') {
+          fieldCardIMG.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Visa.svg/1200px-Visa.svg.png';
+        }
+        else if (fieldCardNum.value[0] === '1') {
+          fieldCardIMG.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/2560px-MasterCard_Logo.svg.png';
+        } else if (fieldCardNum.value[0] === '3') {
+          fieldCardIMG.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UnionPay_logo.svg/1200px-UnionPay_logo.svg.png';
+        } else {
+          fieldCardIMG.src = 'https://www.freeiconspng.com/thumbs/credit-card-icon-png/credit-card-black-png-0.png';
         }
       })
     }
   }
+
+  modalSubmit() {
+    const form = <HTMLFormElement>document.querySelector('.modal-form');
+    const closeBtn = <HTMLButtonElement>document.querySelector('.btn-close');
+    form.addEventListener('submit', () => {
+      closeBtn.click();
+      localStorage.clear();
+      this.rootNode.innerHTML = ` <div class="alert container text-center">
+      All items has been purchased! You will be redirected to the main page.
+      </div> `;
+      setTimeout(() => {
+        window.location.href = '/dist/#/';
+      }, 4000);
+    })
+}
 
   removeQueryParams() {
     const close = document.querySelector('.btn-close');
