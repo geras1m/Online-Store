@@ -149,3 +149,13 @@ input[type="range"] {
     color: $accent-color;
   }
 }
+
+.code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-sum__number__final {
+  color: $active-color;
+}

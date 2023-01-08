@@ -374,10 +374,14 @@ export class Render {
         <div class="col summary text-center">
             <p>Summary</p>
             <p>Products: <span class="cart__items">0</span></p>
-            <p>Total: €<span class="cart-sum__number">0.0</span></p>
+            <p>Total: €<span class="cart-sum__number">0.0</span><span class="cart-sum__number__final fs-4"></span></p>
+            <p>Sale: -<span class="cart-total-sale">0.0</span>%</p>
+            <div class="promo-codes">
+            </div>
+            <small>Try RS-10 / RS-15 / RS-20</small>
             <div class="input-group mb-3">
-                <span class="input-group-text" id="promo">Promo code</span>
-                <input type="text" class="form-control" aria-label="Promo code input" aria-describedby="promo">
+                <input type="text" class="form-control promo-input" aria-label="Promo code input" aria-describedby="promo">
+                <span class="input-group-text btn btm-primary promo-btn disabled">Promo code</span>
             </div>
             <button type="button" class="btn btn-primary buy-now-cart" data-bs-toggle="modal" data-bs-target="#buy-now-modal">
                 Buy now

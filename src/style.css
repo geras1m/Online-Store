@@ -356,3 +356,13 @@ input[type=range] {
 .dropdown-toggle:hover {
   color: #4174CB;
 }
+
+.code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-sum__number__final {
+  color: #FFB745;
+}

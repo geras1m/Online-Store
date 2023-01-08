@@ -47,6 +47,42 @@ export class CartPageView {
     }
     this.checkInput();
     this.modalSubmit();
+    this.promoCodes();
+  }
+
+  promoCodes() {
+    const input = document.querySelector('.promo-input') as HTMLInputElement;
+    let addBtn = document.querySelector('.promo-btn') as HTMLButtonElement;
+    let sale = '';
+    input.addEventListener('input', () => {
+      if (input.value === 'RS-10' || input.value === 'RS-15' || input.value === 'RS-20') {
+        addBtn.classList.remove('disabled');
+        addBtn.innerHTML = '+Add';
+        const saleElem = input.value.slice(input.value.length - 2);
+        sale = String(saleElem);
+      } else if (!addBtn.classList.contains('disabled')) {
+        addBtn.classList.add('disabled');
+        addBtn.innerHTML = 'Promo code';
+      }
+    });
+    addBtn.replaceWith(addBtn.cloneNode(true));
+    addBtn = document.querySelector('.promo-btn') as HTMLButtonElement;
+    addBtn.addEventListener('click', () => {this.addCode(sale)})
+  }
+
+  addCode(input: string) {
+    const addBtn = document.querySelector('.promo-btn') as HTMLButtonElement;
+    const totalSumElem = document.querySelectorAll('.cart-sum__number');
+    const tottalSumNumber = Number(totalSumElem[0].innerHTML);
+    const totalSaleElem = document.querySelector('.cart-total-sale');
+    let totalSaleNum = Number(totalSaleElem?.innerHTML);
+    const codes = document.querySelector('.promo-codes') as HTMLElement;
+    totalSaleNum += Number(input);
+    if (totalSaleElem) {
+      totalSaleElem.innerHTML = totalSaleNum.toString();
+    }
+    codes.innerHTML += `<p class='code text-center'>RS-${input}
+    <button type="button" class="btn-close promo-close"></button></p>`;
   }
 
   checkInput() {
@@ -104,7 +140,7 @@ export class CartPageView {
       if (event.currentTarget !== event.target) {
         return;
       }
-      window.location.href = arr.join('/');
+      history.pushState(null, '', arr.join('/'));
     }, false)
   }
 }
