@@ -138,8 +138,8 @@ input[type="range"] {
   min-height: calc(100vh - 147px);
 }
 
-.filter-btn {
-  border: 1px solid;
+.dropdown-toggle {
+  border: none;
   background-color: white;
   color: $font-color;
   img {
@@ -147,6 +147,5 @@ input[type="range"] {
   }
   &:hover {
     color: $accent-color;
-    border: 1px solid $accent-color;
   }
 }

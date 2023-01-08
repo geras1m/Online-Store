@@ -345,15 +345,14 @@ input[type=range] {
   min-height: calc(100vh - 147px);
 }
 
-.filter-btn {
-  border: 1px solid;
+.dropdown-toggle {
+  border: none;
   background-color: white;
   color: #333333;
 }
-.filter-btn img {
+.dropdown-toggle img {
   max-width: 35px;
 }
-.filter-btn:hover {
+.dropdown-toggle:hover {
   color: #4174CB;
-  border: 1px solid #4174CB;
 }

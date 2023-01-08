@@ -84,7 +84,7 @@ export class Render {
                     </a>
                     <div class="col sort-menu">
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            <button class="dropdown-toggle text-start" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                 Sort options
                             </button>
