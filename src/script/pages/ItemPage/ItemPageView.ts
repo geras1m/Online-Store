@@ -34,19 +34,12 @@ export class ItemPageView {
 
   addBuyNow() {
     const buyBtn = document.querySelector('.buy-now');
+    const addBtn = document.querySelector('.add') as HTMLButtonElement;
     buyBtn?.addEventListener('click', () => {
       const arr = window.location.href.split('/');
       const cart = arr.slice(0, arr.length - 3);
-      console.log(cart.join('/') + "?modal=yes#/cart");
+      addBtn.click();
       window.location.href = (cart.join('/') + "/?modal=yes#/cart");
-      // this.addQueryParam('modal', 'yes')
     })
   }
-
-  // addQueryParam(key: string, value: string) {
-  //   const searchParam = new URLSearchParams(window.location.search);
-  //   searchParam.set(key, value);
-  //   const newPath = window.location.pathname + '?' + searchParam.toString();
-  //   history.pushState(null, '', newPath);
-  // }
 }

@@ -240,8 +240,7 @@ export class Render {
   addDisabled(target?: Element) {
     if (target) {
       const stock = Number(target.parentElement?.parentElement?.parentElement?.querySelector('.stock__num')?.innerHTML);
-      const addBtn = target.parentElement?.querySelector('.add');
-      console.log(stock);
+      const addBtn = target.parentElement?.querySelector('.add')
       if (stock === Number(target.parentElement?.querySelector('.item-count')?.innerHTML) && addBtn) {
         addBtn.setAttribute('disabled', '');
       }

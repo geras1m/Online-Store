@@ -77,7 +77,6 @@ export class Cart {
         localStorage.removeItem(String(card.dataset.id));
         const cart = <HTMLElement>document.querySelector('.cart-items');
         if (cart && defaultData) {
-          console.log(0)
           const keys: (string | null)[] = [];
           for (let i = 0; i < localStorage.length; i++) {
             keys.push(localStorage.key(i));
@@ -102,7 +101,6 @@ export class Cart {
   removeDisabled (target: Element) {
     const stock = Number(target.parentElement?.parentElement?.parentElement?.querySelector('.stock__num')?.innerHTML);
     const addBtn = target.parentElement?.querySelector('.add');
-    console.log(stock);
     if (stock > Number(target.parentElement?.querySelector('.item-count')?.innerHTML) && addBtn && addBtn.hasAttribute('disabled')) {
       addBtn.removeAttribute('disabled');
     }
