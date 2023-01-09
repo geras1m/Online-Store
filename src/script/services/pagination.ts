@@ -2,8 +2,6 @@ import {ICard} from '../types';
 import {Render} from "./render";
 
 type EventSubscriber = (data: ICard[]) => void;
-// let previousCountOfItems: number | null = null;
-// let pageCount: number;
 
 export class Pagination {
     render: Render;
@@ -11,23 +9,6 @@ export class Pagination {
     constructor() {
         this.render = new Render;
     }
-
-    /*removeQueryParams() {
-        const close = document.querySelector('.btn-close');
-        const background = document.getElementById('buy-now-modal');
-        const arr = window.location.href.split('/');
-        arr[4] = '#';
-        close?.addEventListener('click', () => {
-            window.location.href = arr.join('/');
-        });
-
-        background?.addEventListener('click', function(event) {
-            if (event.currentTarget !== event.target) {
-                return;
-            }
-            window.location.href = arr.join('/');
-        }, false)
-    }*/
 
     removeQueryParams() {
         const close = document.querySelector('.btn-close');
@@ -48,7 +29,6 @@ export class Pagination {
 
     addQueryParam(key: string, value: string) {
         const searchParam = new URLSearchParams(window.location.search);
-        console.log(searchParam)
         searchParam.set(key, value);
         const newPath = window.location.pathname + '?' + searchParam.toString();
         history.pushState(null, '', newPath);
@@ -64,29 +44,19 @@ export class Pagination {
             el.order = index + 1;
         })
         let currentPage = 1;
-        // let previousPage: number | null = null;
-
         const numberOfCards = <HTMLInputElement>document.querySelector('#typeNumber');
 
         numberOfCards.addEventListener('input', (e) => {
-            // console.log((e.target as HTMLInputElement).value);
             const newNumberOfCards: number = +(e.target as HTMLInputElement).value;
             if (newNumberOfCards >= 0) {
-                const curPage = <HTMLLIElement>document.querySelector('.page-item.active');
-                console.log(curPage)
-
                 if (newNumberOfCards >= item.length || !newNumberOfCards) {
                     displayList(item, item.length, 1);
                     displayPagination(item, item.length);
-                    console.log(11111)
                 } else {
-                    // currentPage = currentPage > 1 ? currentPage : 1;
                     displayList(item, newNumberOfCards, 1);
                     displayPagination(item, newNumberOfCards);
-                    console.log(222222)
                 }
                 const currentBtn: NodeListOf<HTMLLIElement> = document.querySelectorAll('.page-item');
-                console.log(currentBtn);
                 for (let i = 0; i < currentBtn.length; i++) {
                     currentBtn[i].classList.remove('active');
                 }
@@ -116,15 +86,7 @@ export class Pagination {
         const displayPagination = (arrData: ICard[], numOfCards: number): void => {
             const paginationNumbers = <HTMLElement>document.querySelector('.pagination');
             const pageCount = Math.ceil(arrData.length / numOfCards);
-            /*pageCount = Math.ceil(arrData.length / numOfCards);
-
-            if (!previousCountOfItems || previousCountOfItems < pageCount) {
-                previousCountOfItems = pageCount;
-            }
-            console.log(previousCountOfItems, 'after-prev')
-            console.log(pageCount, 'after-now')*/
             paginationNumbers.innerText = '';
-
             for (let i = 0; i < pageCount; i++) {
                 const btn = displayPaginationBtns(i + 1);
                 paginationNumbers.appendChild(btn);
@@ -159,15 +121,5 @@ export class Pagination {
 
         displayList(item, +numberOfCards.value, currentPage);
         displayPagination(item, +numberOfCards.value);
-
-/*        if (previousCountOfItems && previousCountOfItems > pageCount) {
-            console.log(currentPage, '11111');
-
-            // displayList(item, +numberOfCards.value, currentPage)
-            displayPagination(item, +numberOfCards.value);
-
-            previousCountOfItems = pageCount
-            console.log('delete', previousCountOfItems)
-        }*/
     }
 }

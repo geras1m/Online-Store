@@ -13,11 +13,9 @@ export class Header {
         if (command === 'add') {
           TotalSum = TotalSum + finalPrice;
           cartItems += 1;
-          console.log(Number(localStorage.getItem(String(el.id))));
         } else if (command === 'remove') {
           TotalSum = TotalSum - finalPrice;
           cartItems -= 1;
-          console.log(Number(localStorage.getItem(String(el.id))));
         }
       }
     })
@@ -28,8 +26,6 @@ export class Header {
     if (cartItemsEl && TotalSumEl) {
       cartItemsEl.forEach(el => el.innerHTML = String(cartItems))
       TotalSumEl.forEach(el => el.innerHTML = String(TotalSum.toFixed(1)))
-      // cartItemsEl.innerHTML = String(cartItems)
-      // TotalSumEl.innerHTML = String(TotalSum.toFixed(1))
     }
   }
 }

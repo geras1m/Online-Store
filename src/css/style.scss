@@ -11,13 +11,32 @@ a {
   text-decoration: none;
   color: currentColor;
 }
+
 .btn {
   color: $footer-font-color;
   margin: 0;
   background-color: $accent-color;
 }
 
-.filter-btn, .dropdown-toggle, .add {
+.accordion-collapse {
+  max-height: calc(100vh / 3);
+  overflow-y: auto;
+}
+
+.filter {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.offcanvas-header {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.filter-btn,
+.dropdown-toggle,
+.add {
   width: 100%;
 }
 
@@ -26,13 +45,15 @@ a {
 }
 
 .view-btns {
-  & > * {
+  &>* {
     cursor: pointer;
+
     &:hover {
       transform: scale(1.2);
       transition: 1s;
     }
   }
+
   .active {
     filter: invert(67%) sepia(60%) saturate(482%) hue-rotate(350deg) brightness(101%) contrast(102%);
   }
@@ -109,10 +130,32 @@ input[type="range"] {
   z-index: 1;
 }
 
-.grey-color{
+.grey-color {
   color: $disabled-color;
 }
 
-#main{
+#main {
   min-height: calc(100vh - 147px);
+}
+
+.dropdown-toggle {
+  border: none;
+  background-color: white;
+  color: $font-color;
+  img {
+    max-width: 35px;
+  }
+  &:hover {
+    color: $accent-color;
+  }
+}
+
+.code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-sum__number__final {
+  color: $active-color;
 }
