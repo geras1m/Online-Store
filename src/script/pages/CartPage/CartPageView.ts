@@ -119,7 +119,7 @@ export class CartPageView {
       totalSaleElem.innerHTML = totalSaleNum.toString();
       finalSumElem.innerHTML = totalSumNumber.toString();
     }
-    if (sale <= 0 && finalSumElem && totalSaleElem) {
+    if (totalSaleNum <= 0 && finalSumElem && totalSaleElem) {
       finalSumElem.innerHTML = '';
       if (totalSumElem.classList.contains('text-decoration-line-through')) {
         totalSumElem.classList.remove('text-decoration-line-through');
