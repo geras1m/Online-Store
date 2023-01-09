@@ -1,0 +1,161 @@
+@import '__colors';
+@import '__logo&font';
+@import '__header';
+@import '__cards';
+@import '__footer';
+@import '__itemPage';
+@import '__modal';
+@import '__cart';
+
+a {
+  text-decoration: none;
+  color: currentColor;
+}
+
+.btn {
+  color: $footer-font-color;
+  margin: 0;
+  background-color: $accent-color;
+}
+
+.accordion-collapse {
+  max-height: calc(100vh / 3);
+  overflow-y: auto;
+}
+
+.filter {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.offcanvas-header {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.filter-btn,
+.dropdown-toggle,
+.add {
+  width: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+.view-btns {
+  &>* {
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.2);
+      transition: 1s;
+    }
+  }
+
+  .active {
+    filter: invert(67%) sepia(60%) saturate(482%) hue-rotate(350deg) brightness(101%) contrast(102%);
+  }
+}
+
+.no-products {
+  font-weight: 800;
+  text-align: center;
+  margin: 100px auto 0;
+  font-size: 30px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.range_container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 20px auto;
+}
+
+.sliders_control {
+  position: relative;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: all;
+  width: 24px;
+  height: 24px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #C6C6C6;
+  cursor: pointer;
+}
+
+input[type=range]::-moz-range-thumb {
+  -webkit-appearance: none;
+  pointer-events: all;
+  width: 24px;
+  height: 24px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #C6C6C6;
+  cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  background: #f7f7f7;
+}
+
+input[type=range]::-webkit-slider-thumb:active {
+  box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+  -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  background-color: #C6C6C6;
+  pointer-events: none;
+}
+
+#fromSliderPrice {
+  height: 0;
+  z-index: 1;
+}
+
+#fromSliderStock {
+  height: 0;
+  z-index: 1;
+}
+
+.grey-color {
+  color: $disabled-color;
+}
+
+#main {
+  min-height: calc(100vh - 147px);
+}
+
+.dropdown-toggle {
+  border: none;
+  background-color: white;
+  color: $font-color;
+  img {
+    max-width: 35px;
+  }
+  &:hover {
+    color: $accent-color;
+  }
+}
+
+.code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-sum__number__final {
+  color: $active-color;
+}
