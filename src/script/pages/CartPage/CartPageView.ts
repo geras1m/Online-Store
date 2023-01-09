@@ -56,10 +56,13 @@ export class CartPageView {
     let sale = '';
     input.addEventListener('input', () => {
       if (input.value === 'RS-10' || input.value === 'RS-15' || input.value === 'RS-20') {
-        addBtn.classList.remove('disabled');
-        addBtn.innerHTML = '+Add';
         const saleElem = input.value.slice(input.value.length - 2);
         sale = String(saleElem);
+        if (document.querySelector(`.${sale}`)) {
+          return;
+        }
+        addBtn.classList.remove('disabled');
+        addBtn.innerHTML = '+Add';
       } else if (!addBtn.classList.contains('disabled')) {
         addBtn.classList.add('disabled');
         addBtn.innerHTML = 'Promo code';
@@ -94,7 +97,7 @@ export class CartPageView {
       totalSumElem.classList.add('text-decoration-line-through');
     }
     const id = String((Math.random() * 1000).toFixed()) + input;
-    codes.innerHTML += `<p class='code text-center' id='${id}'>RS-${input}
+    codes.innerHTML += `<p class='code text-center ${input}' id='${id}'>RS-${input}
     <button type="button" class="btn-close promo-close"></button></p>`;
     document.getElementById('id')?.querySelector('.promo-close')?.addEventListener('click', (e) => {
       this.deleteCode(id);
