@@ -58,9 +58,6 @@ export class CartPageView {
       if (input.value === 'RS-10' || input.value === 'RS-15' || input.value === 'RS-20') {
         const saleElem = input.value.slice(input.value.length - 2);
         sale = String(saleElem);
-        // if (document.getElementById(sale)) {
-        //   return;
-        // }
         addBtn.classList.remove('disabled');
         addBtn.innerHTML = '+Add';
       } else if (!addBtn.classList.contains('disabled')) {
@@ -73,6 +70,8 @@ export class CartPageView {
     addBtn.addEventListener('click', () => {
       this.addCode(sale)
       input.value = '';
+      addBtn.classList.add('disabled');
+      addBtn.innerHTML = 'Promo code';
     })
   }
 
@@ -97,8 +96,9 @@ export class CartPageView {
       totalSumElem.classList.add('text-decoration-line-through');
     }
     const id = String((Math.random() * 1000).toFixed()) + input;
-    codes.innerHTML += `<p class='code text-center' id='${id}'>RS-${input}
+    const newCode = `<p class='code text-center' id='${id}'>RS-${input}
     <button type="button" class="btn-close promo-close"></button></p>`;
+    codes.insertAdjacentHTML("beforeend", newCode);
     this.deleteCode(id);
   }
 
@@ -119,12 +119,6 @@ export class CartPageView {
       if (totalSaleElem && finalSumElem) {
         totalSaleElem.innerHTML = totalSaleNum.toString();
         finalSumElem.innerHTML = totalSumNumber.toFixed(1).toString();
-      //   const codesArr = document.querySelectorAll('.code');
-      //   codesArr.forEach(el => () => {
-      //     const elem = document.getElementById(el.id)?.querySelector('.btn-close');
-      //      console.log(elem);
-      //     if (elem) elem.addEventListener('click', () => console.log(1));
-      //  })
       }
       if (totalSaleNum <= 0 && finalSumElem && totalSaleElem) {
         finalSumElem.innerHTML = '';
@@ -140,7 +134,7 @@ export class CartPageView {
     const fieldCardNum = <HTMLInputElement>document.querySelector('.card-num');
     const fieldCardIMG = <HTMLImageElement>document.querySelector('.card-img');
     if (fieldDate) {
-      fieldDate.addEventListener('input', () =>{
+      fieldDate.addEventListener('input', () => {
         if (fieldDate.value.length === 2 && !fieldDate.value.includes('/')) {
           fieldDate.value += '/';
         }
@@ -178,7 +172,7 @@ export class CartPageView {
         window.location.href = '/dist/#/';
       }, 4000);
     })
-}
+  }
 
   removeQueryParams() {
     const close = document.querySelector('.btn-close');
@@ -188,7 +182,7 @@ export class CartPageView {
     close?.addEventListener('click', () => {
       window.location.href = arr.join('/');
     });
-    background?.addEventListener('click', function(event) {
+    background?.addEventListener('click', function (event) {
       if (event.currentTarget !== event.target) {
         return;
       }

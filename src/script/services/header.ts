@@ -5,6 +5,10 @@ export class Header {
     const cartItemsEl = document.querySelectorAll('.cart__items');
     const TotalSumEl = document.querySelectorAll('.cart-sum__number');
     const card: HTMLElement | null = target.closest('.card');
+    const finalSumElem = document.querySelector('.cart-sum__number__final');
+    let finalSum = Number(finalSumElem?.innerHTML);
+    const totalSaleElem = document.querySelector('.cart-total-sale');
+    const totalSaleNum = Number(totalSaleElem?.innerHTML);
     let cartItems = Number(cartItemsEl[0].innerHTML);
     let TotalSum = Number(TotalSumEl[0].innerHTML);
     arr.forEach(el => {
@@ -13,9 +17,11 @@ export class Header {
         if (command === 'add') {
           TotalSum = TotalSum + finalPrice;
           cartItems += 1;
+          finalSum = TotalSum - ((TotalSum / 100) * totalSaleNum);
         } else if (command === 'remove') {
           TotalSum = TotalSum - finalPrice;
           cartItems -= 1;
+          finalSum = TotalSum - ((TotalSum / 100) * totalSaleNum);
         }
       }
     })
@@ -26,6 +32,7 @@ export class Header {
     if (cartItemsEl && TotalSumEl) {
       cartItemsEl.forEach(el => el.innerHTML = String(cartItems))
       TotalSumEl.forEach(el => el.innerHTML = String(TotalSum.toFixed(1)))
+      if (finalSumElem && Number(finalSumElem.innerHTML) > 0) finalSumElem.innerHTML = finalSum.toString();
     }
   }
 }
