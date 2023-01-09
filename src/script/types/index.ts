@@ -9,5 +9,6 @@ export interface ICard {
     "brand": string,
     "category": string,
     "thumbnail": string,
-    "images": string[]
+    "images": string[],
+    "order"?: number,
 }
