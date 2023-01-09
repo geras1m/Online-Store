@@ -38,7 +38,9 @@ export class ItemPageView {
     buyBtn?.addEventListener('click', () => {
       const arr = window.location.href.split('/');
       const cart = arr.slice(0, arr.length - 3);
-      addBtn.click();
+      if (!localStorage.getItem(arr[arr.length - 1])) {
+        addBtn.click();
+      }
       window.location.href = (cart.join('/') + "/?modal=yes#/cart");
     })
   }
