@@ -176,7 +176,7 @@ export class CartPageView {
       All items has been purchased! You will be redirected to the main page.
       </div> `;
       setTimeout(() => {
-        window.location.href = '/dist/#/';
+        window.location.href = '';
       }, 4000);
     })
   }
