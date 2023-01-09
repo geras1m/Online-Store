@@ -185,7 +185,7 @@ export class CartPageView {
     const close = document.querySelector('.btn-close');
     const background = document.getElementById('buy-now-modal');
     const arr = window.location.href.split('/');
-    arr[4] = '#';
+    arr[arr.length - 2] = '#';
     close?.addEventListener('click', () => {
       window.location.href = arr.join('/');
     });
