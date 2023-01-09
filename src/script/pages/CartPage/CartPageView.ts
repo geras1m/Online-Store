@@ -65,9 +65,9 @@ export class CartPageView {
       if (input.value === 'RS-10' || input.value === 'RS-15' || input.value === 'RS-20') {
         const saleElem = input.value.slice(input.value.length - 2);
         sale = String(saleElem);
-        if (document.querySelector(`.${sale}`)) {
-          return;
-        }
+        // if (document.getElementById(sale)) {
+        //   return;
+        // }
         addBtn.classList.remove('disabled');
         addBtn.innerHTML = '+Add';
       } else if (!addBtn.classList.contains('disabled')) {
@@ -98,41 +98,48 @@ export class CartPageView {
     totalSumNumber = totalSumNumber - ((totalSumNumber / 100) * totalSaleNum);
     if (totalSaleElem && finalSumElem) {
       totalSaleElem.innerHTML = totalSaleNum.toString();
-      finalSumElem.innerHTML = totalSumNumber.toString();
+      finalSumElem.innerHTML = totalSumNumber.toFixed(1).toString();
     }
     if (!totalSumElem.classList.contains('text-decoration-line-through')) {
       totalSumElem.classList.add('text-decoration-line-through');
     }
     const id = String((Math.random() * 1000).toFixed()) + input;
-    codes.innerHTML += `<p class='code text-center ${input}' id='${id}'>RS-${input}
+    codes.innerHTML += `<p class='code text-center' id='${id}'>RS-${input}
     <button type="button" class="btn-close promo-close"></button></p>`;
-    document.getElementById('id')?.querySelector('.promo-close')?.addEventListener('click', (e) => {
-      this.deleteCode(id);
-    })
+    this.deleteCode(id);
   }
 
   deleteCode(id: string) {
-    const elem = document.getElementById(id) as HTMLElement;
-    const totalSumElem = document.querySelectorAll('.cart-sum__number')[1];
-    let totalSumNumber = Number(totalSumElem.innerHTML);
-    const finalSumElem = document.querySelector('.cart-sum__number__final');
-    const finalSum = Number(finalSumElem?.innerHTML);
-    const totalSaleElem = document.querySelector('.cart-total-sale');
-    let totalSaleNum = Number(totalSaleElem?.innerHTML);
-    const sale = Number(id.slice(id.length - 2));
-    totalSaleNum -= sale;
-    totalSumNumber = totalSumNumber + ((totalSumNumber / 100) * totalSaleNum);
-    if (totalSaleElem && finalSumElem) {
-      totalSaleElem.innerHTML = totalSaleNum.toString();
-      finalSumElem.innerHTML = totalSumNumber.toString();
-    }
-    if (totalSaleNum <= 0 && finalSumElem && totalSaleElem) {
-      finalSumElem.innerHTML = '';
-      if (totalSumElem.classList.contains('text-decoration-line-through')) {
-        totalSumElem.classList.remove('text-decoration-line-through');
+    const closeBtn = document.getElementById(id)?.querySelector('.promo-close');
+    if (closeBtn) closeBtn.addEventListener('click', () => {
+      const elem = document.getElementById(id) as HTMLElement;
+      const totalSumElem = document.querySelectorAll('.cart-sum__number')[1];
+      let totalSumNumber = Number(totalSumElem.innerHTML);
+      const finalSumElem = document.querySelector('.cart-sum__number__final');
+      // const finalSum = Number(finalSumElem?.innerHTML);
+      const totalSaleElem = document.querySelector('.cart-total-sale');
+      let totalSaleNum = Number(totalSaleElem?.innerHTML);
+      const sale = Number(id.slice(id.length - 2));
+      totalSaleNum -= sale;
+      totalSumNumber = totalSumNumber - ((totalSumNumber / 100) * totalSaleNum);
+      elem.remove();
+      if (totalSaleElem && finalSumElem) {
+        totalSaleElem.innerHTML = totalSaleNum.toString();
+        finalSumElem.innerHTML = totalSumNumber.toFixed(1).toString();
+      //   const codesArr = document.querySelectorAll('.code');
+      //   codesArr.forEach(el => () => {
+      //     const elem = document.getElementById(el.id)?.querySelector('.btn-close');
+      //      console.log(elem);
+      //     if (elem) elem.addEventListener('click', () => console.log(1));
+      //  })
       }
-    }
-    elem.remove();
+      if (totalSaleNum <= 0 && finalSumElem && totalSaleElem) {
+        finalSumElem.innerHTML = '';
+        if (totalSumElem.classList.contains('text-decoration-line-through')) {
+          totalSumElem.classList.remove('text-decoration-line-through');
+        }
+      }
+    });
   }
 
   checkInput() {
