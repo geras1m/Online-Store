@@ -67,22 +67,62 @@ export class CartPageView {
     });
     addBtn.replaceWith(addBtn.cloneNode(true));
     addBtn = document.querySelector('.promo-btn') as HTMLButtonElement;
-    addBtn.addEventListener('click', () => {this.addCode(sale)})
+    addBtn.addEventListener('click', () => {
+      this.addCode(sale)
+      input.value = '';
+    })
   }
 
   addCode(input: string) {
-    const addBtn = document.querySelector('.promo-btn') as HTMLButtonElement;
-    const totalSumElem = document.querySelectorAll('.cart-sum__number');
-    const tottalSumNumber = Number(totalSumElem[0].innerHTML);
+    const totalSumElem = document.querySelectorAll('.cart-sum__number')[1];
+    let totalSumNumber = Number(totalSumElem.innerHTML);
+    const finalSumElem = document.querySelector('.cart-sum__number__final');
+    const finalSum = Number(finalSumElem?.innerHTML);
     const totalSaleElem = document.querySelector('.cart-total-sale');
     let totalSaleNum = Number(totalSaleElem?.innerHTML);
     const codes = document.querySelector('.promo-codes') as HTMLElement;
-    totalSaleNum += Number(input);
-    if (totalSaleElem) {
-      totalSaleElem.innerHTML = totalSaleNum.toString();
+    if (finalSum > 0) {
+      totalSumNumber = finalSum;
     }
-    codes.innerHTML += `<p class='code text-center'>RS-${input}
+    totalSaleNum += Number(input);
+    totalSumNumber = totalSumNumber - ((totalSumNumber / 100) * totalSaleNum);
+    if (totalSaleElem && finalSumElem) {
+      totalSaleElem.innerHTML = totalSaleNum.toString();
+      finalSumElem.innerHTML = totalSumNumber.toString();
+    }
+    if (!totalSumElem.classList.contains('text-decoration-line-through')) {
+      totalSumElem.classList.add('text-decoration-line-through');
+    }
+    const id = String((Math.random() * 1000).toFixed()) + input;
+    codes.innerHTML += `<p class='code text-center' id='${id}'>RS-${input}
     <button type="button" class="btn-close promo-close"></button></p>`;
+    document.getElementById('id')?.querySelector('.promo-close')?.addEventListener('click', (e) => {
+      this.deleteCode(id);
+    })
+  }
+
+  deleteCode(id: string) {
+    const elem = document.getElementById(id) as HTMLElement;
+    const totalSumElem = document.querySelectorAll('.cart-sum__number')[1];
+    let totalSumNumber = Number(totalSumElem.innerHTML);
+    const finalSumElem = document.querySelector('.cart-sum__number__final');
+    const finalSum = Number(finalSumElem?.innerHTML);
+    const totalSaleElem = document.querySelector('.cart-total-sale');
+    let totalSaleNum = Number(totalSaleElem?.innerHTML);
+    const sale = Number(id.slice(id.length - 2));
+    totalSaleNum -= sale;
+    totalSumNumber = totalSumNumber + ((totalSumNumber / 100) * totalSaleNum);
+    if (totalSaleElem && finalSumElem) {
+      totalSaleElem.innerHTML = totalSaleNum.toString();
+      finalSumElem.innerHTML = totalSumNumber.toString();
+    }
+    if (sale <= 0 && finalSumElem && totalSaleElem) {
+      finalSumElem.innerHTML = '';
+      if (totalSumElem.classList.contains('text-decoration-line-through')) {
+        totalSumElem.classList.remove('text-decoration-line-through');
+      }
+    }
+    elem.remove();
   }
 
   checkInput() {
@@ -116,6 +156,9 @@ export class CartPageView {
     const form = <HTMLFormElement>document.querySelector('.modal-form');
     const closeBtn = <HTMLButtonElement>document.querySelector('.btn-close');
     form.addEventListener('submit', () => {
+      if (this.addressModal) {
+        this.removeQueryParams();
+      }
       closeBtn.click();
       localStorage.clear();
       this.rootNode.innerHTML = ` <div class="alert container text-center">
@@ -135,7 +178,6 @@ export class CartPageView {
     close?.addEventListener('click', () => {
       window.location.href = arr.join('/');
     });
-
     background?.addEventListener('click', function(event) {
       if (event.currentTarget !== event.target) {
         return;
